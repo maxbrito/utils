@@ -35,7 +35,7 @@ public class regex {
         Pattern pattern = Pattern.compile("\"[^\"]*\"");
         Matcher matcher = pattern.matcher(text);
         while(matcher.find()){
-            text = text.replace(matcher.group(), "ST");
+            text = text.replace(matcher.group(), "##");
             //System.out.println(matcher.group());
         }
 //        System.out.println("->" + text);
@@ -50,10 +50,30 @@ public class regex {
      */
     public static String replaceMethodsWithKeyword(final String line){
         String text = line;
-        Pattern pattern = Pattern.compile("[\\.A-Za-z0-9_]+(?=\\()");
+        Pattern pattern = Pattern.compile(
+                "\\b[a-z\\.A-Z]+\\b(?=\\([a-z\\[\\]]*)"
+               // \b[a-z\.A-Z]+\b(?=\([a-z\[\]]*)
+        );
         Matcher matcher = pattern.matcher(text);
         while(matcher.find()){
-            text = text.replace(matcher.group(), "M");
+            // get what was found
+            final String match = matcher.group().toLowerCase();
+            // set the default result
+            String result = "ºM";
+            
+            // was this a boolean literal?
+            if(utils.text.equals(match, "if")){
+                result = "ºIF";
+            }else
+            if(utils.text.equals(match, "for")){
+                result = "ºFOR";
+            }else
+            if(utils.text.equals(match, "while")){
+                result = "ºWH";
+            }
+                
+                
+            text = text.replace(matcher.group(), result);
         }
         return text;
     }
@@ -65,10 +85,32 @@ public class regex {
      */
     public static String replaceVariablesWithKeyword(final String line){
         String text = line;
-        Pattern pattern = Pattern.compile("([_A-Za-z0-9]{1,50})(?=(| )\\=)");
+        Pattern pattern = Pattern.compile("([_A-Za-z0-9\\.]{1,50})(?=(| )[\\;\\,\\+-\\=\\<\\>\\)\\[\\!])");
         Matcher matcher = pattern.matcher(text);
         while(matcher.find()){
-            text = text.replace(matcher.group(), "V");
+            // get what was found
+            final String match = matcher.group();
+            // set the default result
+            String result = "ºV";
+            
+            // was this a boolean literal?
+            if(utils.text.equals(match, "true")){
+                result = "ºTE";
+            }else
+            if(utils.text.equals(match, "false")){
+                result = "ºF";
+            }else
+            if(utils.text.equals(match, "null")){
+                result = "ºNU";
+            }
+            else
+            if(utils.text.equals(match, "return")){
+                result = "ºR";
+            }
+            
+            // do the normal variable convert
+            text = text.replace(matcher.group(), result);
+            
         }
         return text;
     }
@@ -85,11 +127,9 @@ public class regex {
     public static String replaceWithKeyword(final String oldKeyword, final String newKeyword,
             final String line){
         String text = line;
-        Pattern pattern = Pattern.compile(
-                //"([^A-Za-z0-9]+)"
-                //+ 
-                   oldKeyword
-                + "(|\\s)([^A-Za-z0-9]+)");
+        Pattern pattern = Pattern.compile(""
+                + "\\b"+oldKeyword+"\\b"
+        ); 
         Matcher matcher = pattern.matcher(text);
         while(matcher.find()){
             text = text.replace(matcher.group(), newKeyword);
@@ -106,6 +146,7 @@ public class regex {
     public static String removeWhiteSpaces(final String line){
         return line.replaceAll("\\s+","");
     }
+    
     
     
 }

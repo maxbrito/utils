@@ -249,7 +249,6 @@ public class text {
      * Provides a text that will match a desired dimension, reducing
      * it if necessary.
      */
-
     public static String shortText(String text, int maxLength){
         String result = text;
 
@@ -518,6 +517,7 @@ public class text {
         matcher.appendTail(result);
         return result.toString();
     }
+    
     
     
 }
