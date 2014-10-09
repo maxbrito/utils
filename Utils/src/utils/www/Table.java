@@ -41,7 +41,7 @@ public class Table {
      */
     public Table(final String className){
         if(className == null){
-            tableHeader = "<table class=\"table striped\">\n";
+            tableHeader = "<table class=\"table striped margin20\">\n";
         } else{
             tableHeader = "<table class=\""
                     + className

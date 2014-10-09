@@ -95,6 +95,17 @@ public class html {
         return "<a href=\"" + link + "\">" + title + "</a>";
     }
     
+          /**
+     * Adds a plain normal HTTP link that will open a web page on the default
+     * browser
+     * @param title Title for the link that is read by end-user
+     * @param link URL that is used for opening the site location
+     * @return 
+     */
+    public static String linkNewWindow(String title, String link){
+        return "<a href=\"" + link + "\" target=\"_blank\">" + title + "</a>";
+    }
+    
     /**
      * Search for a given term or expression. It will fill the search box
      * with the selected term and then perform the search operation, displaying

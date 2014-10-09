@@ -25,6 +25,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.NumberFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -421,7 +422,12 @@ public class text {
         if(value == 1){
             return value + " " + text;
         }else{
-            return value + " " + text + "s";  
+            NumberFormat numberFormat = NumberFormat.getInstance();
+            String prettyNumber = numberFormat.format(value);
+
+            
+            
+            return prettyNumber + " " + text + "s";  
         }
     }
     
@@ -518,6 +524,22 @@ public class text {
         return result.toString();
     }
     
-    
+    /**
+     * Count the number of times that a given expression or character is
+     * available inside a string.
+     * @param whatToCount
+     * @param text
+     * @return 
+     */
+    public static int countMatches(final String whatToCount, final String text){
+        Pattern pattern = Pattern.compile(whatToCount);
+        Matcher  matcher = pattern.matcher(text);
+
+        int count = 0;
+        while (matcher.find())
+            count++;
+        
+        return count;
+    }
     
 }

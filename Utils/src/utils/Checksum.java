@@ -1,16 +1,10 @@
 /*
- * SPDXVersion: SPDX-1.1
- * Creator: Person: Nuno Brito (nuno.brito@triplecheck.de)
- * Creator: Organization: TripleCheck (contact@triplecheck.de)
- * Created: 2014-05-13T17:32:10Z
- * LicenseName: EUPL-1.1-without-appendix
- * FileName: Checksum.java  
- * FileType: SOURCE
- * FileCopyrightText: <text> Copyright 2014 Nuno Brito, TripleCheck </text>
- * FileComment: <text> Code for generation checksums </text> 
+ * This class provides support for computing the checksums that are used at our
+ * system. It will attempt to compute them from different sources and provide
+ * a consistent and uniform result.
  */
 
-package utils.thirdparty;
+package utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,7 +18,7 @@ import java.util.zip.CheckedInputStream;
 
 /**
  *
- * @author Nuno Brito, 27th of May 2014 in Paris, France.
+ * @author Nuno Brito
  */
 public class Checksum {
 
