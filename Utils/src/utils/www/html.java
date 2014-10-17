@@ -243,6 +243,12 @@ public class html {
                 );
     }
    
+    public static String linkToSearchCode(final String what) {
+        return html.link("SearchCode", "https://searchcode.com/?q="
+                + what
+        );
+    }
+    
    
     /**
      * Returns a text formatted as an H2 title
@@ -318,4 +324,7 @@ public class html {
     public static String errorMessage(String error_message) {
         return "<b>" + error_message + "</b>";
     }
+    
+    
+    
 }

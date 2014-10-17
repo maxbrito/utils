@@ -120,4 +120,15 @@ public static Date getCompileTimeStamp( Class<?> cls ) throws IOException
    return( time != 0L ) ? new Date( time ) : null;
 }
 
+    /**
+     * Are we running under a Windows machine or not?
+     * @return      True when we are running Windows as host
+     */
+    public static boolean isWindows(){
+            String os = System.getProperty("os.name").toLowerCase();
+            //windows
+        return (os.contains("win"));
+    }
+    
+
 }

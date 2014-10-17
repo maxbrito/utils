@@ -118,7 +118,20 @@ public class time {
             }
    } 
    
-   
+    
+    /**
+     * Get the current time and date in SPDX format
+     * @return the properly formatted SPDX time format
+     */
+    public static String getDate() {
+       // do the time calculation such as 2012-09-03T13:32:12Z
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String textDate = dateFormat.format(date);
+        //TODO for some reason "T" and "Z" are not accepted as parameters
+        return textDate;
+    }
+    
    /** Convert from a normal date to correct milliseconds representation */ 
    public static Date getDate(int yearTo, int monthTo, int dayTo){
        DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd");
