@@ -217,4 +217,25 @@ public class time {
         return textDate.replace(" ", "T") + "Z";
     }
    
+    
+    /**
+     * An error happened. This method will show a message and decreasing
+     * timer until the requested waiting time has expired. This is mostly
+     * used with network connections, which require trying several times.
+     * @param i         Number of seconds to wait
+     * @param message   Error code to show the end-user
+     */
+    public static void doWait(final int i, final String message) {
+        int count = i;
+                System.err.println(message + utils.text.pluralize(count, "second")
+                );
+                count--;
+                while(count>0){
+                    utils.time.wait(1);
+                    System.out.println(count + ".. (" + message + ")");
+                    count--;
+                }
+    }
+    
+    
 }
