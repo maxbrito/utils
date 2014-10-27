@@ -760,4 +760,20 @@ public static long folderSize(File where){
         }
     }
     
+    /**
+     * Provides the canonical path for a given file on disk without the
+     * need to include the exception handling on the original code, making
+     * it more readable.
+     * @param file  A file on disk
+     * @return      A string representing the canonical path
+     */
+    public static String getCanonical(final File file){
+        try{
+          return file.getCanonicalPath();
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
+    
 }
