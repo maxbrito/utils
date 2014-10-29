@@ -30,9 +30,48 @@ public class similarity {
      * @param s1    String 2
      * @return  A value ranging from 0 to 100%
      */
-    public static int levenshteinPercentage(String s0, String s1) {
-        int percentage =(int) (100 - (float) StringUtils.getLevenshteinDistance(s0, s1) * 100 / (float) (s0.length() + s1.length()));
+    public static int levenshteinPercentage(final String s0, final String s1) {
+        final int value = StringUtils.getLevenshteinDistance(s0, s1);
+        int percentage =(int) (100 - (float) value * 100 / (float) (s0.length() + s1.length()));
         return percentage;
+    }
+
+    /**
+     * It seems that the Levenshtein Distance algorithm is too expensive in
+     * terms of computation. So I wrote a cheaper way to get similar result.
+     * @param s0
+     * @param s1
+     * @return 
+     */
+    public static int nunoSteinPercentage(final String s0, final String s1) {
+        int points = 0;
+        
+        final char[] c1 = s0.toCharArray();
+        final char[] c2 = s1.toCharArray();
+        
+        int size;
+        if(c1.length > c2.length){
+            size = c2.length;
+        }else{
+            size = c1.length;
+        }
+        
+        for(int i = 0; i < size; i++){
+            if(c1[i] == c2[i]){
+                points++;
+            }
+        }
+        
+        // get the percentual value
+        return (points * 100) / size;
+    }
+    
+    
+    public static void main(String[] args){
+        String a1 = "HelloHelloHelloHelloHelloHelloHello";
+        String a2 = "HalloHall1HfllfHalloHalloHalloHalloHalloHallow";
+        int result = nunoSteinPercentage(a1, a2);
+        System.out.println(result);
     }
     
 }

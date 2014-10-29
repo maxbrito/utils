@@ -775,5 +775,31 @@ public static long folderSize(File where){
             return null;
         }
     }
+
+    /**
+     * Removes the path portion of a file when relative to a specific folder
+     * that it has as parent
+     * @param sourceCodeFolder  A folder on disk
+     * @param file A file inside a sub-folder of the sourceCodeFolder
+     * @return A string representation of the canonical and relative path
+     */
+    public static String getRelativePath(final File sourceCodeFolder, final File file) {
+      
+        String result = null;
+        
+        try {
+          
+          String path = sourceCodeFolder.getCanonicalPath();
+          String filePath = file.getCanonicalPath();
+          
+          result = filePath.replaceAll(path, "");
+          
+      } catch (IOException ex) {
+          Logger.getLogger(files.class.getName()).log(Level.SEVERE, null, ex);
+      }
+        
+        return result;
+    }
+
     
 }
