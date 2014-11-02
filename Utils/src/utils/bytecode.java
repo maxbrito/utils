@@ -36,8 +36,8 @@ public class bytecode {
      * @param sourceFile    Location of the file on disk
      * @return              The compiled object
      */
-    public static Object getObject(File sourceFile){
-        Class clazz;
+    public static Object getObject(final File sourceFile){
+        final Class clazz;
         try {
             String sourceCode = utils.files.readAsString(sourceFile);
             SimpleCompiler compiler = new SimpleCompiler();
