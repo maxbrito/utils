@@ -1,3 +1,5 @@
+package utils.www;
+
 /*
  * SPDXVersion: SPDX-1.1
  * Creator: Person: Nuno Brito (nuno.brito@triplecheck.de)
@@ -10,7 +12,6 @@
  * FileComment: <text>  </text> 
  */
 
-package utils.www;
 
 import java.io.File;
 

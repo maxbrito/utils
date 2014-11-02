@@ -39,7 +39,7 @@ public class bytecode {
     public static Object getObject(final File sourceFile){
         final Class clazz;
         try {
-            String sourceCode = utils.files.readAsString(sourceFile);
+            final String sourceCode = utils.files.readAsString(sourceFile);
             SimpleCompiler compiler = new SimpleCompiler();
             compiler.cook(sourceCode);
             clazz = compiler.getClassLoader().loadClass(buildClassName(sourceCode, sourceFile));
@@ -64,7 +64,7 @@ public class bytecode {
      * @param className     The name of the class
      * @return              The compiled object
      */
-    public static Object getObjectNoPackage(File sourceFile, final String className){
+    public static Object getObjectNoPackage(final File sourceFile, final String className){
         Class clazz;
         try {
             String sourceCode = utils.files.readAsString(sourceFile);
