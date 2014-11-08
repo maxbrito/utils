@@ -19,7 +19,7 @@ public class internet {
 
     static internet action = new internet();
 
-    String[] test_connectivity = {
+    final String[] test_connectivity = {
         "http://google.com",
         "http://cnn.com",
         "http://digg.com",

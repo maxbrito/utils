@@ -38,20 +38,23 @@ public class bytecode {
      */
     public static Object getObject(final File sourceFile){
         final Class clazz;
+        // read the source code file
+        final String sourceCode = utils.files.readAsString(sourceFile);
+            
         try {
-            final String sourceCode = utils.files.readAsString(sourceFile);
             SimpleCompiler compiler = new SimpleCompiler();
             compiler.cook(sourceCode);
             clazz = compiler.getClassLoader().loadClass(buildClassName(sourceCode, sourceFile));
             return clazz.newInstance();
             
-        } catch (CompileException ex) {
-            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+//        } catch (CompileException ex) {
+//            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            System.out.println("Error processing this source code: \n" + sourceCode);
             Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
