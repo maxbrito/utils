@@ -25,6 +25,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.entity.StandardEntityCollection;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.util.Rotation;
@@ -44,17 +45,18 @@ public class Graphs {
         final JFreeChart chart = 
 //                ChartFactory.createPieChart("", dataset, true, true, false);
        
-        ChartFactory.createPieChart3D("",          // chart title
+        ChartFactory.createPieChart("",          // chart title
             dataset,                // data
             true,                   // include legend
             true,
             false);
          
-        PiePlot3D plot = (PiePlot3D) chart.getPlot();
+        PiePlot plot = (PiePlot) chart.getPlot();
+        //PiePlot3D plot = (PiePlot3D) chart.getPlot();
         //plot.setStartAngle(290);
         plot.setStartAngle(290);
         plot.setDirection(Rotation.CLOCKWISE);
-        plot.setForegroundAlpha(0.5f);
+        //plot.setForegroundAlpha(0.5f);
         
 //        final PiePlot plot = (PiePlot) chart.getPlot();
         plot.setBackgroundPaint(Color.white);
@@ -73,8 +75,12 @@ public class Graphs {
                 .getPercentInstance()));
         plot.setNoDataMessage("No data found.");
         
-        plot.setSectionPaint(1, java.awt.Color.green);
-        plot.setSectionPaint(2, java.awt.Color.CYAN);
+        Color greenColor = new Color(0x8FBC0C);
+        Color redColor = new Color(0xDA6022);
+        
+        
+        plot.setSectionPaint(1, greenColor);
+        plot.setSectionPaint(2, java.awt.Color.RED);
         plot.setSectionOutlinesVisible(false);
         
         
