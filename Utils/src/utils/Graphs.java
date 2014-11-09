@@ -26,12 +26,12 @@ import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.entity.StandardEntityCollection;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.PiePlot;
-import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.util.Rotation;
 
 public class Graphs {
-    public static File generate(File baseFolder, String titles[], int[] values) {
+    public static File generate(File baseFolder, String titles[], int[] values,
+            Color backgroundColor) {
         DefaultPieDataset dataset = new DefaultPieDataset();
 
         // add our data values
@@ -54,19 +54,24 @@ public class Graphs {
         PiePlot plot = (PiePlot) chart.getPlot();
         //PiePlot3D plot = (PiePlot3D) chart.getPlot();
         //plot.setStartAngle(290);
-        plot.setStartAngle(290);
+        plot.setStartAngle(45);
         plot.setDirection(Rotation.CLOCKWISE);
-        //plot.setForegroundAlpha(0.5f);
+        plot.setForegroundAlpha(0.5f);
         
 //        final PiePlot plot = (PiePlot) chart.getPlot();
-        plot.setBackgroundPaint(Color.white);
-       
+        plot.setBackgroundPaint(backgroundColor);
+        
 //        plot.setLegendLabelGenerator(
 //        new StandardPieSectionLabelGenerator("{0} {2}"));
         
         chart.setBorderVisible(false);
         chart.getPlot().setOutlineVisible(false);
         chart.getLegend().setFrame(BlockBorder.NONE);
+        
+        
+        chart.setBackgroundPaint(backgroundColor);
+        chart.getLegend().setBackgroundPaint(backgroundColor);
+        
         //chart.getLegend().setVisible(false);
        
         plot.setCircular(true);
@@ -78,10 +83,11 @@ public class Graphs {
         Color greenColor = new Color(0x8FBC0C);
         Color redColor = new Color(0xDA6022);
         
-        
+//        plot.setSectionPaint(0, java.awt.Color.BLACK);
+//        plot.setSectionPaint(1, java.awt.Color.WHITE);
+        plot.setSectionPaint(0, java.awt.Color.red);
         plot.setSectionPaint(1, greenColor);
-        plot.setSectionPaint(2, java.awt.Color.RED);
-        plot.setSectionOutlinesVisible(false);
+        plot.setSectionOutlinesVisible(true);
         
         
           
