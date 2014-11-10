@@ -68,9 +68,13 @@ public class Graphs {
         chart.getPlot().setOutlineVisible(false);
         chart.getLegend().setFrame(BlockBorder.NONE);
         
-        
+        // get the same background
         chart.setBackgroundPaint(backgroundColor);
         chart.getLegend().setBackgroundPaint(backgroundColor);
+        
+        // hide the shadow effects
+        plot.setShadowXOffset(0);
+        plot.setShadowYOffset(0);
         
         //chart.getLegend().setVisible(false);
        
@@ -95,7 +99,7 @@ public class Graphs {
         new StandardEntityCollection());
     final File file = new File(baseFolder, "chart.png");
         try {
-            ChartUtilities.saveChartAsPNG(file, chart, 190, 160, info);
+            ChartUtilities.saveChartAsPNG(file, chart, 200, 160, info);
         } catch (IOException ex) {
             Logger.getLogger(Graphs.class.getName()).log(Level.SEVERE, null, ex);
         }
