@@ -25,6 +25,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -540,6 +541,40 @@ public class text {
             count++;
         
         return count;
+    }
+   
+    public static String convertToHumanNumbers(final int value){
+        // add the pretty text with a thousands separator
+        DecimalFormat myFormatter = new DecimalFormat("###,###");
+        return myFormatter.format(value);
+    }
+
+    public static String convertToHumanNumbers(final long value){
+        // add the pretty text with a thousands separator
+        DecimalFormat myFormatter = new DecimalFormat("###,###");
+        return myFormatter.format(value);
+    }
+    
+    /**
+     * Given a piece of source code, count the number of lines that are code.
+     * On this calculation, comments are included. However, empty lines aren't
+     * There exist many different manners
+     * @param sourceCodeText
+     * @return Number of LOC (Lines Of Code) found inside the text
+     */
+    public static int getLOC(final String sourceCodeText){
+        final String[] lines = sourceCodeText.split("\n");
+        int LOC = 0;
+        // iterate all lines on the text file
+        for(final String line : lines){
+            // skip the empty lines
+            if(line.isEmpty()){
+                continue;
+            }
+            // count one line
+            LOC++;
+        }
+        return LOC;
     }
     
 }
