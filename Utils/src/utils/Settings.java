@@ -31,6 +31,7 @@ public class Settings {
      * will be kept on disk
      * 
      * @param settingsFile The XML file where all settings will be kept
+     * @param comment   A description about what the settings related to.
      */
     public Settings(File settingsFile, String comment){
         properties = new Properties();
@@ -76,7 +77,7 @@ public class Settings {
         try {
             out = new FileOutputStream(settingsFile);
             properties.storeToXML(out, comment);
-// 2013-MAY-11 psc close it!
+            out.flush();
             out.close();
         } catch (IOException ex) {
             Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
