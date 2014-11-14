@@ -85,12 +85,11 @@ public class Graphs {
         plot.setNoDataMessage("No data found.");
         
         Color greenColor = new Color(0x8FBC0C);
-        Color redColor = new Color(0xDA6022);
+        Color redColor = new Color(0xFF0000);
+        //Color redColor = new Color(0xDA6022);
         
-//        plot.setSectionPaint(0, java.awt.Color.BLACK);
-//        plot.setSectionPaint(1, java.awt.Color.WHITE);
-        plot.setSectionPaint(0, java.awt.Color.red);
-        plot.setSectionPaint(1, greenColor);
+        plot.setSectionPaint(0, greenColor);
+        plot.setSectionPaint(1, redColor);
         plot.setSectionOutlinesVisible(true);
         
         
