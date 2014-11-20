@@ -162,11 +162,17 @@ public class text {
       * @return 
       */  
      public static int justNumbers(String input){
-         String temp = input.replaceAll("[^0-9]", "");
-         if(temp == null){
+         try{
+             String temp = input.replaceAll("[^0-9]", "");
+             // avoid null values
+             if(temp == null){
+                 return -1;
+             }
+             // convert the number
+             return Integer.parseInt(temp);
+         }catch (Exception e){
              return -1;
          }
-         return Integer.parseInt(temp);
      }
 
      /**
