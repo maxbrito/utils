@@ -543,6 +543,12 @@ public class text {
         return count;
     }
    
+    /**
+     * Add separator commas for a value of thousands or millions to ease
+     * the reading for humans
+     * @param value An integer with a positive value
+     * @return The text string with a formatted number
+     */
     public static String convertToHumanNumbers(final int value){
         // add the pretty text with a thousands separator
         DecimalFormat myFormatter = new DecimalFormat("###,###");
