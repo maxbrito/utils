@@ -144,4 +144,33 @@ public class Table {
                 ;
     }
 
+    
+    
+    /**
+     * Creates single table fully aligned horizontally with a single line
+     * @param params an array with text values
+     * @param size the size for each column
+     * @return the text in HTML format
+     */
+    public static String alignedTable(String[] params, int[] size){
+        // add the header
+        String result = "<table style=\"text-align: left;\" border=\"0\"\n" +
+" cellpadding=\"1\" cellspacing=\"1\"><tbody><tr>";
+        int i = -1;
+        for(String param : params){
+            i++;
+            result += "<td style=\"width: "
+                    + size[i]
+                    + "px; vertical-align: top;\">"
+                    + param
+                    + "</td>"
+                    ;
+        }
+        // add the footer
+        result += "</tr></tbody></table>";
+
+        
+        return result;
+    }
+    
 }
