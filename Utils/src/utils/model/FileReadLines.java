@@ -73,9 +73,7 @@ public abstract class FileReadLines {
      */
     private String getNextLine() throws IOException{
            final String line = reader.readLine();
-            // increase the offset, include the "\n" character on the count
-            // we intentionally ignore Windows "\r\n" line breaks on this code
-            currentOffset += line.length() + 1;
+            // increase the line count
             currentLine++;
             return line;
     }
@@ -107,12 +105,15 @@ public abstract class FileReadLines {
      * @param big           The bigzip we want to process
      */
     private void processLines(){
-        String sourceCode;
+        String line;
         // iterate all files inside the archive
         try{
-            while((sourceCode = getNextLine()) != null){
+            while((line = getNextLine()) != null){
+                 // increase the offset, include the "\n" character on the count as +1
+                 // and we intentionally ignore Windows "\r\n" line breaks on this code
+                currentOffset += line.length() + 1;
                 // call the abstract method
-                processSourceCode(sourceCode);
+                processTextLine(line);
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -130,7 +131,7 @@ public abstract class FileReadLines {
      * Do the line counting
      * @param sourceCode    The code to process
      */
-    public abstract void processSourceCode(final String sourceCode);
+    public abstract void processTextLine(final String sourceCode);
     public abstract void monitorMessage();
 
     public int getMonitorWaitingTime() {
@@ -166,9 +167,11 @@ public abstract class FileReadLines {
         thread.start();
     }
  
-    
-    public void processArchive(){
-         // transform into a file
+    /**
+     * Go from top to bottom on a text file
+     */
+    public void processTextFile(){
+         // transform into a file using the canonical path
         final String fileTemp = utils.files.getCanonical(fileInput);
         // get the final version in clean state
         fileInput = new File(fileTemp);
