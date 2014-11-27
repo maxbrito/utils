@@ -49,7 +49,7 @@ public abstract class FileReadLines {
            
             // doublecheck if the file was really created
             if(fileInput.exists() == false){
-                System.out.println("FR58 - Critical error, unable to create"
+                System.out.println("FR52 - Critical error, unable to create"
                         + " variable file: " + fileInput.getAbsolutePath());
                 return;
             }
@@ -62,6 +62,8 @@ public abstract class FileReadLines {
             Logger.getLogger(FileReadLines.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(FileReadLines.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            isRunning = false;
         }
     }
       
@@ -76,7 +78,6 @@ public abstract class FileReadLines {
             currentOffset += line.length() + 1;
             currentLine++;
             return line;
-        
     }
 
     public long getCurrentOffset() {
@@ -92,7 +93,7 @@ public abstract class FileReadLines {
      */
     public void close(){
         try {
-            
+            // close the streams
             reader.close();
             fileReader.close();
             
@@ -119,6 +120,7 @@ public abstract class FileReadLines {
             System.out.println("Failed to read line "
                 + getCurrentLine() + " at offset " + getCurrentOffset()
             );
+        }finally{
             // we are no longer running
             isRunning = false;
         }
@@ -147,19 +149,21 @@ public abstract class FileReadLines {
      * Launch a thread that will check how the indexing is progressing
      */
     void launchMonitoringThread(){
-                Thread thread = new Thread(){
-                @Override
-                public void run(){
-                    utils.time.wait(monitorWaitingTime);
-                    while(isRunning){
-                        monitorMessage();
-                        // just keep waiting
-                        utils.time.wait(monitorWaitingTime);
-                        }
-                        
-                    }
-                };
-            thread.start();
+        Thread thread = new Thread(){
+        @Override
+        public void run(){
+            // initial waiting period to let things start
+            utils.time.wait(monitorWaitingTime);
+            while(isRunning){
+                // call the monitoring message
+                monitorMessage();
+                // just keep waiting
+                utils.time.wait(monitorWaitingTime);
+                }
+            }
+        };
+        // launch the thread
+        thread.start();
     }
  
     
