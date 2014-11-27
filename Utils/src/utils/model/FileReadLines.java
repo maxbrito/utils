@@ -28,12 +28,13 @@ public abstract class FileReadLines {
   
     // available options
     protected int 
-            updateInterval = 5;
+            monitorWaitingTime = 3;
     
     // internal variables
     private BufferedReader reader = null;
     private FileReader fileReader = null;
     private File fileInput = null;
+    private boolean isRunning = false;
     
     // mark the offset on disk
     private long 
@@ -68,17 +69,14 @@ public abstract class FileReadLines {
      * Provides the next line on our text file
      * @return The next line that was available, or null if IOException occurs
      */
-    public String getNextLine(){
-        try {
-            final String line = reader.readLine();
+    private String getNextLine() throws IOException{
+           final String line = reader.readLine();
             // increase the offset, include the "\n" character on the count
             // we intentionally ignore Windows "\r\n" line breaks on this code
             currentOffset += line.length() + 1;
             currentLine++;
             return line;
-        } catch (IOException ex) {
-            return null;
-        }
+        
     }
 
     public long getCurrentOffset() {
@@ -106,15 +104,24 @@ public abstract class FileReadLines {
     /**
      * Go through all the files on the archive
      * @param big           The bigzip we want to process
-     * @throws IOException  If something went wrong
      */
     private void processLines(){
         String sourceCode;
         // iterate all files inside the archive
-        while((sourceCode = getNextLine()) != null){
-            processSourceCode(sourceCode);
+        try{
+            while((sourceCode = getNextLine()) != null){
+                // call the abstract method
+                processSourceCode(sourceCode);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            // output the error coordinates
+            System.out.println("Failed to read line "
+                + getCurrentLine() + " at offset " + getCurrentOffset()
+            );
+            // we are no longer running
+            isRunning = false;
         }
-      
     }
    
     /**
@@ -122,7 +129,19 @@ public abstract class FileReadLines {
      * @param sourceCode    The code to process
      */
     public abstract void processSourceCode(final String sourceCode);
-  
+    public abstract void monitorMessage();
+
+    public int getMonitorWaitingTime() {
+        return monitorWaitingTime;
+    }
+
+    public void setMonitorWaitingTime(int monitorWaitingTime) {
+        this.monitorWaitingTime = monitorWaitingTime;
+    }
+
+    public boolean isIsRunning() {
+        return isRunning;
+    }
     
     /**
      * Launch a thread that will check how the indexing is progressing
@@ -131,17 +150,11 @@ public abstract class FileReadLines {
                 Thread thread = new Thread(){
                 @Override
                 public void run(){
-                    utils.time.wait(3);
-                    while(true){
-                        // get the counter of lines
-                        long counterLines = getCurrentLine();
-                        // get the number properly formatted
-                        final String valueLines 
-                                = utils.text.convertToHumanNumbers(counterLines);
-                        // output the number of lines already read
-                        System.out.println(valueLines + " lines");
+                    utils.time.wait(monitorWaitingTime);
+                    while(isRunning){
+                        monitorMessage();
                         // just keep waiting
-                        utils.time.wait(3);
+                        utils.time.wait(monitorWaitingTime);
                         }
                         
                     }
@@ -155,7 +168,8 @@ public abstract class FileReadLines {
         final String fileTemp = utils.files.getCanonical(fileInput);
         // get the final version in clean state
         fileInput = new File(fileTemp);
-
+        // mark the flag as running
+        isRunning = true;
         // get some output about the processing progress
         launchMonitoringThread();
         // now get to read the source code files in sequence
