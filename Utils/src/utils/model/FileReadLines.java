@@ -102,7 +102,6 @@ public abstract class FileReadLines {
    
     /**
      * Go through all the files on the archive
-     * @param big           The bigzip we want to process
      */
     private void processLines(){
         String line;
@@ -128,10 +127,14 @@ public abstract class FileReadLines {
     }
    
     /**
-     * Do the line counting
-     * @param sourceCode    The code to process
+     * Do the line processing on a line-by-line basis
+     * @param textLine  The line to process
      */
-    public abstract void processTextLine(final String sourceCode);
+    public abstract void processTextLine(final String textLine);
+    
+    /**
+     * The message called when we have interest in seeing a progress message
+     */
     public abstract void monitorMessage();
 
     public int getMonitorWaitingTime() {
