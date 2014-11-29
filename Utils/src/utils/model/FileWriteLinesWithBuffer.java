@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 public class FileWriteLinesWithBuffer {
 
     private BufferedWriter out;
+    private FileWriter fileWriter;
     
     // should we hold all data into memory or not?
     private boolean holdInMemory = false;
@@ -40,9 +41,23 @@ public class FileWriteLinesWithBuffer {
     private String bufferLines = "";
     
     public FileWriteLinesWithBuffer(final File resultFile){
-    
     try {
-        out = new BufferedWriter(new FileWriter(resultFile));
+        fileWriter = new FileWriter(resultFile);
+        out = new BufferedWriter(fileWriter);
+        } catch (IOException e){
+                System.err.println("Error: " + e.getMessage());
+        }
+    }
+ 
+    /**
+     * Creates a new object but appends new lines to the end of a text file
+     * @param resultFile
+     * @param append 
+     */
+    public FileWriteLinesWithBuffer(final File resultFile, Boolean append){
+    try {
+        fileWriter = new FileWriter(resultFile, append);
+        out = new BufferedWriter(fileWriter);
         } catch (IOException e){
                 System.err.println("Error: " + e.getMessage());
         }
@@ -54,7 +69,9 @@ public class FileWriteLinesWithBuffer {
      */
     private void saveToDisk(final String text){
         try {
+            
             out.write(text);
+            
         } catch (IOException ex) {
             Logger.getLogger(FileWriteLinesWithBuffer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -135,6 +152,14 @@ public class FileWriteLinesWithBuffer {
                 System.err.println("Error: " + e.getMessage());
         }
     }
-    
+
+    public void flush() {
+        try {
+            out.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(FileWriteLinesWithBuffer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     
 }
