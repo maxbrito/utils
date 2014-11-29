@@ -108,11 +108,10 @@ public class files {
 // Deletes all files and subdirectories under dir.
 // Returns true if all deletions were successful.
 // If a deletion fails, the method stops attempting to delete and returns false.
-public static boolean deleteDir(File dir) {
+public static boolean deleteDir(final File dir) {
     if (dir.isDirectory()) {
-        String[] children = dir.list();
-        for (int i=0; i<children.length; i++) {
-            boolean success = deleteDir(new File(dir, children[i]));
+        for (String children : dir.list()) {
+            boolean success = deleteDir(new File(dir, children));
             if (!success) {
                 return false;
             }
