@@ -56,6 +56,17 @@ public class FileWriteLinesWithBuffer {
      */
     public FileWriteLinesWithBuffer(final File resultFile, Boolean append){
     try {
+        // does the folder for this file exists?
+        if(resultFile.getParentFile().exists() == false){
+            // create one
+            utils.files.mkdirs(resultFile.getParentFile());
+        }
+        
+        // try to create the file if it does not exist
+        if(resultFile.exists() == false){
+            utils.files.touch(resultFile);
+        }
+        
         fileWriter = new FileWriter(resultFile, append);
         out = new BufferedWriter(fileWriter);
         } catch (IOException e){
@@ -153,7 +164,7 @@ public class FileWriteLinesWithBuffer {
         }
     }
 
-    public void flush() {
+    private void flush() {
         try {
             out.flush();
         } catch (IOException ex) {

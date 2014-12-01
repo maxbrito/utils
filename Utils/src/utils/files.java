@@ -590,6 +590,58 @@ public static long folderSize(File where){
     }
   
     
+     /**
+     * Returns the last line from a given text file. This method is particularly
+     * well suited for very large text files that contain millions of text lines
+     * since it will just seek the end of the text file and seek the last line
+     * indicator. Please use only for large sized text files.
+     * @param file  A file on disk 
+     * @return The last line if available or an empty string if nothing
+     * was found
+     */
+    public static String getLastLine2(final File file){
+        String result = "";
+        
+        // file needs to exist
+        if(file.exists() == false || file.isDirectory()){
+            return "";
+        }
+        
+        // avoid empty files
+        if(file.length() == 0){
+            return "";
+        }
+        
+        try {
+            // open the file for read-only mode
+            RandomAccessFile fileAccess = new RandomAccessFile(file, "r");
+
+            // set initial position as last one, except if this is an empty line
+            long position = file.length()-2;
+            int breakLine = "\n".charAt(0);
+
+            // keep looking for a line break
+            while(position > 0){
+                // look for the offset
+                fileAccess.seek(position);
+                // read the new char
+                final int thisChar = fileAccess.read();
+                // do we have a match?
+                if(thisChar == breakLine){
+                    result = fileAccess.readLine();
+                    //System.out.println(position + ": " + fileAccess.readLine());
+                    break;
+                }
+                // decrease the offset
+                position--;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        // all done
+        return result;
+    }
+    
     /**
      * Looks inside a text file to discover the line that contains a given
      * keyword.
