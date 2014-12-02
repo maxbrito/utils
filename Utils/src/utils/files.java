@@ -5,6 +5,7 @@
 package utils;
 
 import java.io.*;
+import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -909,4 +910,31 @@ public static long folderSize(File where){
         return false;
     }
     
+    /**
+     * Copy one file to another location
+     * Based on snippet from: http://stackoverflow.com/a/19974236/1120206
+     * Copyright (c) 2013 user1079877 (http://stackoverflow.com/users/1079877/user1079877)
+     * @param f1 input file
+     * @param f2 output file
+     * @return True if copied, False if something went wrong
+     */
+    public static boolean copy(final File f1, final File f2){
+    
+      try {
+          f2.createNewFile();
+          
+          final RandomAccessFile file1 = new RandomAccessFile(f1, "r");
+          final RandomAccessFile file2 = new RandomAccessFile(f2, "rw");
+          
+          file2.getChannel().write(file1.getChannel().map(FileChannel.MapMode.READ_ONLY, 0, f1.length()));
+          
+          file1.close();
+          file2.close();
+          
+      } catch (IOException ex) {
+          return false;
+      }
+      // all ok
+      return true;
+    }
 }

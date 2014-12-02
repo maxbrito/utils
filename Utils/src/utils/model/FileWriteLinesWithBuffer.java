@@ -35,7 +35,10 @@ public class FileWriteLinesWithBuffer {
     private FileWriter fileWriter;
     
     // should we hold all data into memory or not?
-    private boolean holdInMemory = false;
+    private boolean 
+            holdInMemory = false,
+            isOpen = false;
+    
     
     private int bufferLimit = 20000;
     private String bufferLines = "";
@@ -69,6 +72,7 @@ public class FileWriteLinesWithBuffer {
         
         fileWriter = new FileWriter(resultFile, append);
         out = new BufferedWriter(fileWriter);
+        isOpen = true;
         } catch (IOException e){
                 System.err.println("Error: " + e.getMessage());
         }
@@ -80,8 +84,9 @@ public class FileWriteLinesWithBuffer {
      */
     private void saveToDisk(final String text){
         try {
-            
-            out.write(text);
+            if(out != null && isOpen){
+                out.write(text);
+            }
             
         } catch (IOException ex) {
             Logger.getLogger(FileWriteLinesWithBuffer.class.getName()).log(Level.SEVERE, null, ex);
@@ -155,6 +160,8 @@ public class FileWriteLinesWithBuffer {
             // write it up
             saveToDisk(bufferLines);
         }
+        
+        isOpen = false;
         // flush everything from memory
         out.flush();
         // close the stream
