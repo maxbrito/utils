@@ -18,6 +18,9 @@
 
 package utils.thirdparty;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 
@@ -29,7 +32,45 @@ import java.util.*;
 public class MiscMethods {
 
     
-     /**
+    /**
+     * Run a command on the local system
+     * @param command The command to read
+     * @author mkyong (January 8, 2014)  
+     * @return   The result from the console
+     * @origin http://www.mkyong.com/java/how-to-execute-shell-command-from-java/
+     * @license CC-BY-SA-3.0
+     * @retrieved 2014-12-01 by Nuno Brito
+     */
+    public static String executeCommand(final String command) {
+		
+        StringBuilder output = new StringBuilder();
+ 
+        Process p;
+        try {
+            p = Runtime.getRuntime().exec(command);
+            p.waitFor();
+            InputStreamReader i = new InputStreamReader(p.getInputStream());
+            BufferedReader reader = 
+                new BufferedReader(i);
+
+            String line;			
+            while ((line = reader.readLine())!= null) {
+                    output.append(line).append("\n");
+                    System.out.println(line);
+            }
+
+            i.close();
+            reader.close();
+        } catch (IOException e) {
+                e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return output.toString();
+    }
+    
+     
+    /**
      * Sort an hashmap according to its value.
      * @param unsortMap
      * @return      A sorted map according to the highest value

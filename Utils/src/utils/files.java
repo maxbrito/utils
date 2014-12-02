@@ -9,6 +9,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utils.thirdparty.MiscMethods;
 
 /**
  *
@@ -120,6 +121,22 @@ public static boolean deleteDir(final File dir) {
     // The directory is now empty so delete it
     return dir.delete();
 }
+
+public static void shellDeleteDir(final File dir) {
+    
+    // get the real path without shortcuts
+    final String path = getCanonical(dir);
+   
+    // needs to be bigger than 10 chars (avoid deleting stuff on root)
+    if(path.length() < 10){
+        return;
+    }
+    
+    // go ahead, delete stuff without recovery being possible
+    MiscMethods.executeCommand("rm -rf " + path);
+}
+
+
 
 /**
  * Counts the size of all files inside a given folder
@@ -599,7 +616,7 @@ public static long folderSize(File where){
      * @return The last line if available or an empty string if nothing
      * was found
      */
-    public static String getLastLine2(final File file){
+    public static String getLastLineFast(final File file){
         String result = "";
         
         // file needs to exist
@@ -826,6 +843,17 @@ public static long folderSize(File where){
             return null;
         }
     }
+    
+        
+    public static File getCanonicalFile(final File file){
+        try{
+          return new File(file.getCanonicalPath());
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
+    
 
     /**
      * Removes the path portion of a file when relative to a specific folder
@@ -852,5 +880,33 @@ public static long folderSize(File where){
         return result;
     }
 
+    
+       
+    /**
+     * Does a given folder contains at minimum a single file?
+     * @param folder    The target folder
+     * @param deep      How deep in the subfolder level do we want to look?
+     * @return          True if it has one file (or more), false when it is empty
+     */
+    public static boolean sourceFolderHasAtLeastOneFile(final File folder, final int deep){
+        File[] files = folder.listFiles();
+        // iterate the entries
+        for(File file: files){
+            if(deep == 0){
+                return false;
+            }
+            if(file.isFile()){
+                return true;
+            }else{
+                // it is a folder
+                boolean result = sourceFolderHasAtLeastOneFile(file, deep-1);
+                if(result){
+                    return true;
+                }
+            }
+        }
+        // no positive results up to this point? Mark as false then.
+        return false;
+    }
     
 }
