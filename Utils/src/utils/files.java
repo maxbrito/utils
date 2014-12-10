@@ -626,7 +626,7 @@ public static long folderSize(File where){
         }
         
         // avoid empty files
-        if(file.length() == 0){
+        if(file.length() <= 2){
             return "";
         }
         
@@ -653,6 +653,8 @@ public static long folderSize(File where){
                 // decrease the offset
                 position--;
             }
+            // close the stream
+            fileAccess.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

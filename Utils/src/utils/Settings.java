@@ -17,8 +17,8 @@ import java.util.logging.Logger;
 public class Settings {
     
 // 2013-MAY-11 psc create properties in constructor
-    private Properties properties;
-    private File settingsFile;
+    private final Properties properties;
+    private final File settingsFile;
     private String comment = "";
     
     
@@ -104,6 +104,8 @@ public class Settings {
     /**
      * Returns the value of a given key, if no key exists then the return value
      * is empty.
+     * @param key
+     * @return 
      */
     public String read(String key){
         return properties.getProperty(key);
@@ -114,9 +116,22 @@ public class Settings {
      * return the alternative value instead.
      * @param key
      * @param alternative
+     * @return 
      */
     public String read(String key, String alternative){
         return properties.getProperty(key, alternative);
+    }
+    
+    /**
+     * Reads a number from the settings
+     * @param key
+     * @param alternative
+     * @return 
+     */
+    public int readNumber(final String key, int alternative){
+        final String value = properties.getProperty(key, alternative + "");
+        final int valueNumber = Integer.parseInt(value);
+        return valueNumber;
     }
     
     

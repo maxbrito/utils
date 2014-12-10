@@ -47,25 +47,10 @@ public class bytecode {
             clazz = compiler.getClassLoader().loadClass(buildClassName(sourceCode, sourceFile));
             return clazz.newInstance();
             
-//        } catch (CompileException ex) {
-//            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CompileException ex) {
+        } catch (Exception ex) {
             System.out.println("Error processing this source code: \n" + sourceCode);
             Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Error processing this source code: \n" + sourceCode);
-            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            System.out.println("Error processing this source code: \n" + sourceCode);
-            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            System.out.println("Error processing this source code: \n" + sourceCode);
-            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
         return null;
     }
     
