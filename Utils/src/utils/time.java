@@ -88,13 +88,20 @@ public class time {
 
     /**
      * Converts a given date to a unique number
+     * @param yearTo
+     * @param monthTo
+     * @param dayTo
      * @return 
      */
    public static long textDateToMilliseconds(int yearTo, int monthTo, int dayTo){
        return textDateToMilliseconds(""+yearTo, ""+monthTo, ""+dayTo);
    } 
     
-   /** Convert from a normal date to correct milliseconds representation */ 
+   /** Convert from a normal date to correct milliseconds representation
+     * @param yearTo 
+     * @param monthTo 
+     * @param dayTo 
+     * @return  */ 
    public static long textDateToMilliseconds(String yearTo, String monthTo, String dayTo){
        
 //            Calendar calendar = Calendar.getInstance();
@@ -132,7 +139,12 @@ public class time {
         return textDate;
     }
     
-   /** Convert from a normal date to correct milliseconds representation */ 
+   /** Convert from a normal date to correct milliseconds representation
+     * @param yearTo 
+     * @param monthTo 
+     * @param dayTo 
+     * @return 
+     */ 
    public static Date getDate(int yearTo, int monthTo, int dayTo){
        DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd");
        Date date;
@@ -158,7 +170,8 @@ public class time {
     /** get the current time in a human readable manner */
 
    
-    /** get the current time in a human readable manner */
+    /** get the current time in a human readable manner
+     * @return  */
    public static String getDateTime() {
        // code adapted from http://goo.gl/rZ716
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -167,7 +180,12 @@ public class time {
         }
     /** get the current time in a human readable manner */
 
-   public static String getTimeFromLong(long time) {
+    /**
+     * get the current time in a human readable manner
+     * @param time
+     * @return 
+     */
+    public static String getTimeFromLong(long time) {
        // code adapted from http://goo.gl/rZ716
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         //Date date = new Date();
@@ -195,6 +213,8 @@ public class time {
    /** 
     * Returns the age of a given file using days as value
     * A result of "1" means today, "2" means more than 24 hours and so forth
+     * @param file
+     * @return 
     */
    public static int getFileAge(File file){
        long fileAge = System.currentTimeMillis() - file.lastModified();
@@ -217,6 +237,18 @@ public class time {
         return textDate.replace(" ", "T") + "Z";
     }
    
+           
+    /**
+     * Get the current time and date ready to be used as file name
+     * @return An ISO-style date representation
+     */
+    public static String getTimeStampAsFileName() {
+       // do the time calculation such as 2012-09-03T13:32:12Z
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        Date date = new Date();
+        final String textDate = dateFormat.format(date);
+        return textDate;
+    }
     
     /**
      * An error happened. This method will show a message and decreasing
