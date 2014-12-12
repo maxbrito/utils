@@ -20,6 +20,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -587,6 +589,19 @@ public class text {
             LOC++;
         }
         return LOC;
+    }
+    
+    /**
+     * Gets the text that is output to the System.err output console as a string
+     * that we can store and view.
+     * @param e
+     * @return A text with the full text of error
+     */
+    public static String getExceptionAsText(Exception e){
+         StringWriter stringWriter = new StringWriter();
+         PrintWriter printWriter = new PrintWriter(stringWriter);
+         e.printStackTrace(printWriter);
+         return stringWriter.toString();
     }
     
 }
