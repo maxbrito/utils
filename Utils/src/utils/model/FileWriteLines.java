@@ -76,7 +76,7 @@ public class FileWriteLines {
         try {
             if(out != null && isOpen){
                 out.write(text);
-                out.flush();
+                //out.flush();
             }
             
         } catch (IOException ex) {

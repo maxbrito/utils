@@ -120,7 +120,7 @@ public class Checksum {
         } finally{
             try {
                 cis.close();
-            } catch (IOException ex) {
+            } catch (Exception ex) {
              if(debug == true)
                Logger.getLogger(Checksum.class.getName()).log(Level.SEVERE, null, ex);
              return "";
@@ -132,7 +132,99 @@ public class Checksum {
     }
 
 
-     public static String generateStringSHA256(String content){
+    /**
+     * Generates an hash from a given string
+     * @param content
+     * @return 
+     * @throws java.security.NoSuchAlgorithmException 
+    */
+    public static String generateStringSHA1(final String content) throws NoSuchAlgorithmException{
+        
+        // Create the checksum digest
+        MessageDigest md = MessageDigest.getInstance("SHA-1");
+        md.update(content.getBytes());
+        // get the converted bytes
+        final byte byteData[] = md.digest();
+
+        //convert the byte to hex format method 1
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < byteData.length; i++) {
+         sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+
+        //convert the byte to hex format
+        @SuppressWarnings("StringBufferMayBeStringBuilder")
+        final StringBuffer hexString = new StringBuffer();
+    	for (int i=0;i<byteData.length;i++) {
+    		String hex=Integer.toHexString(0xff & byteData[i]);
+   	     	if(hex.length()==1) hexString.append('0');
+   	     	hexString.append(hex);
+    	}
+    	return hexString.toString();
+    }
+     
+    
+    /**
+     * Generates an hash from a given string
+     * @param byteData
+     * @return 
+    */
+    public static String convertSHA1(final byte byteData[]){
+        //convert the byte to hex format method 1
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < byteData.length; i++) {
+         sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+
+        //convert the byte to hex format
+        @SuppressWarnings("StringBufferMayBeStringBuilder")
+        final StringBuffer hexString = new StringBuffer();
+    	for (int i=0;i<byteData.length;i++) {
+    		final String hex=Integer.toHexString(0xff & byteData[i]);
+   	     	if(hex.length()==1) hexString.append('0');
+   	     	hexString.append(hex);
+    	}
+    	return hexString.toString();
+    }
+    
+    
+     /**
+     * Generates an hash from a given string
+     * @param content
+     * @return 
+     * @throws java.security.NoSuchAlgorithmException 
+    */
+    public static String generateStringMD5(final String content) throws NoSuchAlgorithmException{
+        
+        // Create the checksum digest
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(content.getBytes());
+        // get the converted bytes
+        final byte byteData[] = md.digest();
+
+        //convert the byte to hex format method 1
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < byteData.length; i++) {
+         sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+
+        //convert the byte to hex format
+        @SuppressWarnings("StringBufferMayBeStringBuilder")
+        final StringBuffer hexString = new StringBuffer();
+    	for (int i=0;i<byteData.length;i++) {
+    		String hex=Integer.toHexString(0xff & byteData[i]);
+   	     	if(hex.length()==1) hexString.append('0');
+   	     	hexString.append(hex);
+    	}
+    	return hexString.toString();
+    }
+    
+     /**
+      * Generates an hash from a given string
+      * @param content
+      * @return 
+      */
+     public static String generateStringSHA256(final String content){
 
         MessageDigest md = null;
         try {

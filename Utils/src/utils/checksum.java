@@ -20,7 +20,7 @@ import java.util.zip.CheckedInputStream;
  *
  * @author Nuno Brito
  */
-public class Checksum {
+public class checksum {
 
     // should we display debugging messages or not?
     protected static final boolean
@@ -65,12 +65,12 @@ public class Checksum {
             checksum = sb.toString();
         } catch (IOException ex) {
            if(debug == true)
-            Logger.getLogger(Checksum.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(checksum.class.getName()).log(Level.SEVERE, null, ex);
                 //log("error", "No Scanner_Checksum performed for " + filename);
                 return "";
         } catch (NoSuchAlgorithmException ex) {
            if(debug == true)
-            Logger.getLogger(Checksum.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(checksum.class.getName()).log(Level.SEVERE, null, ex);
                 //log("error", "No Scanner_Checksum performed for " + filename);
                 return "";
         } finally {
@@ -79,7 +79,7 @@ public class Checksum {
                     fis.close();
             } catch (IOException ex) {
              if(debug == true)
-               Logger.getLogger(Checksum.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(checksum.class.getName()).log(Level.SEVERE, null, ex);
                 return "";
             }
         }
@@ -116,7 +116,7 @@ public class Checksum {
                 cis.close();
             } catch (IOException ex) {
              if(debug == true)
-               Logger.getLogger(Checksum.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(checksum.class.getName()).log(Level.SEVERE, null, ex);
              return "";
             } finally {
             // return our output
@@ -132,7 +132,7 @@ public class Checksum {
         try {
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Checksum.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(checksum.class.getName()).log(Level.SEVERE, null, ex);
         }
         md.update(content.getBytes());
 

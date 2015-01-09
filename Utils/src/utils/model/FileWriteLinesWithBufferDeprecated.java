@@ -4,7 +4,7 @@
  * Creator: Organization: TripleCheck (contact@triplecheck.de)
  * Created: 2014-11-20T20:43:10Z
  * LicenseName: EUPL-1.1-without-appendix
- * FileName: FileWriteLinesWithBuffer.java  
+ * FileName: FileWriteLinesWithBufferDeprecated.java  
  * FileCopyrightText: <text> Copyright 2014 Nuno Brito, TripleCheck </text>
  * FileComment: <text> Makes it easier to handle portions of text being
     written to a text file. Sometimes we need to write millions of times
@@ -29,20 +29,21 @@ import java.util.logging.Logger;
  *
  * @author Nuno Brito, 20th of November 2014 in Paris, France
  */
-public class FileWriteLinesWithBuffer {
+public class FileWriteLinesWithBufferDeprecated {
 
     private BufferedWriter out;
     private FileWriter fileWriter;
     
     // should we hold all data into memory or not?
     private boolean 
+            holdInMemory = false,
             isOpen = false;
     
     
-    private int bufferLimit = 5000;
+    private int bufferLimit = 20000;
     private String bufferLines = "";
     
-    public FileWriteLinesWithBuffer(final File resultFile){
+    public FileWriteLinesWithBufferDeprecated(final File resultFile){
     try {
         fileWriter = new FileWriter(resultFile);
         out = new BufferedWriter(fileWriter);
@@ -56,7 +57,7 @@ public class FileWriteLinesWithBuffer {
      * @param resultFile
      * @param append 
      */
-    public FileWriteLinesWithBuffer(final File resultFile, Boolean append){
+    public FileWriteLinesWithBufferDeprecated(final File resultFile, Boolean append){
     try {
         // does the folder for this file exists?
         if(resultFile.getParentFile().exists() == false){
@@ -83,10 +84,12 @@ public class FileWriteLinesWithBuffer {
      */
     private void saveToDisk(final String text){
         try {
+            if(out != null && isOpen){
                 out.write(text);
+            }
             
         } catch (IOException ex) {
-            Logger.getLogger(FileWriteLinesWithBuffer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileWriteLinesWithBufferDeprecated.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -94,9 +97,15 @@ public class FileWriteLinesWithBuffer {
      * Adds a piece of text to our buffer
      * @param text 
      */
-    public synchronized void write(final String text){
+    public void write(final String text){
         // add the text to our buffer
         bufferLines = bufferLines.concat(text);
+        
+        // should we keep everything in memory for now?
+        if(holdInMemory){
+            return;
+        }
+        
         // do we need to flush this data to disk?
         if(bufferLines.length() > bufferLimit){
             saveToDisk(bufferLines);
@@ -104,7 +113,26 @@ public class FileWriteLinesWithBuffer {
         }
     }
 
+    public boolean isHoldInMemory() {
+        return holdInMemory;
+    }
+
+    public synchronized void setHoldInMemory(boolean holdInMemory) {
+        this.holdInMemory = holdInMemory;
+    }
     
+    /**
+     * Adds some text at the beginning of the buffer, this only works
+     * when we are in memory mode
+     * @param text 
+     */
+    public synchronized void setHeaderText(final String text){
+        if(isHoldInMemory()==false){
+            return;
+        }
+        // add the text in front of the buffer
+        bufferLines = text.concat(bufferLines);
+    }
 
     /**
      * How much data is being kept in RAM?
@@ -142,5 +170,14 @@ public class FileWriteLinesWithBuffer {
                 System.err.println("Error: " + e.getMessage());
         }
     }
+
+    private void flush() {
+        try {
+            out.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(FileWriteLinesWithBufferDeprecated.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     
 }
