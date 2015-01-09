@@ -1,4 +1,4 @@
-package utils;
+package utils.hashing;
 
 /*
  * SPDXVersion: SPDX-1.1
@@ -325,8 +325,8 @@ public class TLSH {
 			this.aBucket = new int [BUCKETS];
 		}
 		int [] slideWindow = new int [SLIDING_WND_SIZE];
-		for (int i : data) {
-			slideWindow[j] = i;
+		for (int i = 0; i < data.length; i++) {
+                    slideWindow[j] = (int)data[i] & 0xff;
 			if (fedLen >= 4) {
 				int j1 = (j + SLIDING_WND_SIZE - 1) % SLIDING_WND_SIZE;
 				int j2 = (j + SLIDING_WND_SIZE - 2) % SLIDING_WND_SIZE;

@@ -10,7 +10,7 @@
  * FileComment: <text> Methods related to SHA1 file signatures</text> 
  */
 
-package utils;
+package utils.hashing;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

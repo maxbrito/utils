@@ -10,7 +10,7 @@
  * FileComment: <text> Code for generation checksums </text> 
  */
 
-package utils.thirdparty;
+package utils.hashing;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -169,7 +169,7 @@ public class Checksum {
      * @param byteData
      * @return 
     */
-    public static String convertSHA1(final byte byteData[]){
+    public static String convertHash(final byte byteData[]){
         //convert the byte to hex format method 1
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < byteData.length; i++) {
