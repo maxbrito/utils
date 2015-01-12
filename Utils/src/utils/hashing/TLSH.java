@@ -70,6 +70,7 @@ public class TLSH {
 	}
 
 	private int []		aBucket = null;
+	private int [] 		slideWindow = new int [SLIDING_WND_SIZE];
 	private int		dataLen = 0;
 	private boolean		lshCodeValid = false; 
 	LshBinStruct	lshBin = new LshBinStruct();
@@ -282,9 +283,8 @@ public class TLSH {
 		if (this.aBucket == null) {
 			this.aBucket = new int [BUCKETS];
 		}
-		int [] slideWindow = new int [SLIDING_WND_SIZE];
 		for (int i = 0; i < data.length(); i++) {
-			slideWindow[j] = (int)data.charAt(i);
+			slideWindow[j] = (int)(data.charAt(i) & 0xff);
 			if (fedLen >= 4) {
 				int j1 = (j + SLIDING_WND_SIZE - 1) % SLIDING_WND_SIZE;
 				int j2 = (j + SLIDING_WND_SIZE - 2) % SLIDING_WND_SIZE;
@@ -324,7 +324,6 @@ public class TLSH {
 		if (this.aBucket == null) {
 			this.aBucket = new int [BUCKETS];
 		}
-		int [] slideWindow = new int [SLIDING_WND_SIZE];
 		for (int i = 0; i < data.length; i++) {
                     slideWindow[j] = (int)data[i] & 0xff;
 			if (fedLen >= 4) {
@@ -359,6 +358,7 @@ public class TLSH {
 		}
 		this.dataLen += data.length;
 	}
+	
 	public void finale() { /* word final is reserved */
 		if (this.dataLen < 512) {
 			this.aBucket = null;
