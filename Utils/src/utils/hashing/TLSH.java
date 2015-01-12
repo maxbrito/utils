@@ -44,7 +44,7 @@ public class TLSH {
 		(int)51, (int)65, (int)28, (int)144, (int)254, (int)221, (int)93, (int)189, (int)194, (int)139, (int)112, (int)43, (int)71, (int)109, (int)184, (int)209
 	};
 
-	static private int [][] bitPairsDiffTable = null;
+	static private int [][] bitPairsDiffTable;
 
 	private class LshBinStruct {
 		public int [] 	checksum = new int [TLSH_CHECKSUM_LEN];
@@ -70,7 +70,7 @@ public class TLSH {
 	}
 
 	private int []		aBucket = null;
-	private int [] 		slideWindow = new int [SLIDING_WND_SIZE];
+	private final int [] 		slideWindow = new int [SLIDING_WND_SIZE];
 	private int		dataLen = 0;
 	private boolean		lshCodeValid = false; 
 	LshBinStruct	lshBin = new LshBinStruct();
@@ -255,68 +255,79 @@ public class TLSH {
 		return diff;
 	}
 
-	/* class interface, public methods */
 
-	public TLSH() {
-		/* read data from file */
-		if (bitPairsDiffTable == null) {
-			bitPairsDiffTable = new int [256][256];
-			for (int i = 0; i < 256; i++) {
-				for (int j = 0; j < 256; j++) {
-					int x = i, y = j, d, diff = 0;
-					d = Math.abs(x % 4 - y % 4); diff += (d == 3 ? 6 : d);
-					x /= 4; y /= 4;
-					d = Math.abs(x % 4 - y % 4); diff += (d == 3 ? 6 : d);
-					x /= 4; y /= 4;
-					d = Math.abs(x % 4 - y % 4); diff += (d == 3 ? 6 : d);
-					x /= 4; y /= 4;
-					d = Math.abs(x % 4 - y % 4); diff += (d == 3 ? 6 : d);
-					bitPairsDiffTable[i][j] = diff;
-				}
-			}
-		}
-	}
+    public static int[][] generateTable(){
+        int[][] result = new int [256][256];
+        for (int i = 0; i < 256; i++) {
+            for (int j = 0; j < 256; j++) {
+                int x = i, y = j, d, diff = 0;
+                d = Math.abs(x % 4 - y % 4); diff += (d == 3 ? 6 : d);
+                x /= 4; y /= 4;
+                d = Math.abs(x % 4 - y % 4); diff += (d == 3 ? 6 : d);
+                x /= 4; y /= 4;
+                d = Math.abs(x % 4 - y % 4); diff += (d == 3 ? 6 : d);
+                x /= 4; y /= 4;
+                d = Math.abs(x % 4 - y % 4); diff += (d == 3 ? 6 : d);
+                result[i][j] = diff;
+            }
+        }  
+        return result;
+    }    
+    /**
+     * The default generator
+     */
+    public TLSH() {
+        bitPairsDiffTable = generateTable();
+    }
+        
+    /**
+     * class interface, public methods 
+     * @param assignedBitPairsDiffTable
+     */
+    public TLSH(final int[][] assignedBitPairsDiffTable) {
+        bitPairsDiffTable = assignedBitPairsDiffTable;
+    }
 
-	public void update(String data) {
-		int j = this.dataLen % SLIDING_WND_SIZE;
-		int fedLen = this.dataLen;
-		if (this.aBucket == null) {
-			this.aBucket = new int [BUCKETS];
-		}
-		for (int i = 0; i < data.length(); i++) {
-			slideWindow[j] = (int)(data.charAt(i) & 0xff);
-			if (fedLen >= 4) {
-				int j1 = (j + SLIDING_WND_SIZE - 1) % SLIDING_WND_SIZE;
-				int j2 = (j + SLIDING_WND_SIZE - 2) % SLIDING_WND_SIZE;
-				int j3 = (j + SLIDING_WND_SIZE - 3) % SLIDING_WND_SIZE;
-				int j4 = (j + SLIDING_WND_SIZE - 4) % SLIDING_WND_SIZE;
-				for (int k = 0; k < TLSH_CHECKSUM_LEN; k++) {
-					if (k == 0) {
-						this.lshBin.checksum[k] = bMapping((int) 0, slideWindow[j], slideWindow[j1], this.lshBin.checksum[k]);
-					} else {
-						this.lshBin.checksum[k] = bMapping(this.lshBin.checksum[k - 1], slideWindow[j], slideWindow[j1], this.lshBin.checksum[k]);
-					}
-				}
-				int r;
-			   	r = bMapping((int)2, slideWindow[j], slideWindow[j1], slideWindow[j2]);
-				this.aBucket[r]++;
-				r = bMapping((int)3, slideWindow[j], slideWindow[j1], slideWindow[j3]);
-				this.aBucket[r]++;
-				r = bMapping((int)5, slideWindow[j], slideWindow[j2], slideWindow[j3]);
-				this.aBucket[r]++;
-				r = bMapping((int) 7, slideWindow[j], slideWindow[j2], slideWindow[j4]);
-				this.aBucket[r]++;
-				r = bMapping((int) 11, slideWindow[j], slideWindow[j1], slideWindow[j4]);
-				this.aBucket[r]++;
-				r = bMapping((int) 13, slideWindow[j], slideWindow[j3], slideWindow[j4]);
-				this.aBucket[r]++;
-			}
+    public void update(final String data) {
+            int j = this.dataLen % SLIDING_WND_SIZE;
+            int fedLen = this.dataLen;
+            if (this.aBucket == null) {
+                    this.aBucket = new int [BUCKETS];
+            }
+            for (int i = 0; i < data.length(); i++) {
+                    slideWindow[j] = (int)(data.charAt(i) & 0xff);
+                    if (fedLen >= 4) {
+                            int j1 = (j + SLIDING_WND_SIZE - 1) % SLIDING_WND_SIZE;
+                            int j2 = (j + SLIDING_WND_SIZE - 2) % SLIDING_WND_SIZE;
+                            int j3 = (j + SLIDING_WND_SIZE - 3) % SLIDING_WND_SIZE;
+                            int j4 = (j + SLIDING_WND_SIZE - 4) % SLIDING_WND_SIZE;
+                            for (int k = 0; k < TLSH_CHECKSUM_LEN; k++) {
+                                    if (k == 0) {
+                                            this.lshBin.checksum[k] = bMapping((int) 0, slideWindow[j], slideWindow[j1], this.lshBin.checksum[k]);
+                                    } else {
+                                            this.lshBin.checksum[k] = bMapping(this.lshBin.checksum[k - 1], slideWindow[j], slideWindow[j1], this.lshBin.checksum[k]);
+                                    }
+                            }
+                            int r;
+                            r = bMapping((int)2, slideWindow[j], slideWindow[j1], slideWindow[j2]);
+                            this.aBucket[r]++;
+                            r = bMapping((int)3, slideWindow[j], slideWindow[j1], slideWindow[j3]);
+                            this.aBucket[r]++;
+                            r = bMapping((int)5, slideWindow[j], slideWindow[j2], slideWindow[j3]);
+                            this.aBucket[r]++;
+                            r = bMapping((int) 7, slideWindow[j], slideWindow[j2], slideWindow[j4]);
+                            this.aBucket[r]++;
+                            r = bMapping((int) 11, slideWindow[j], slideWindow[j1], slideWindow[j4]);
+                            this.aBucket[r]++;
+                            r = bMapping((int) 13, slideWindow[j], slideWindow[j3], slideWindow[j4]);
+                            this.aBucket[r]++;
+                    }
 
-			fedLen++;
-			j = (j + SLIDING_WND_SIZE + 1) % SLIDING_WND_SIZE;
-		}
-		this.dataLen += data.length();
-	}
+                    fedLen++;
+                    j = (j + SLIDING_WND_SIZE + 1) % SLIDING_WND_SIZE;
+            }
+            this.dataLen += data.length();
+    }
 
 	public void update(byte [] data) {
 		int j = this.dataLen % SLIDING_WND_SIZE;
