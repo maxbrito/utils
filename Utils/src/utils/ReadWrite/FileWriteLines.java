@@ -10,7 +10,7 @@
     written to a text file. </text> 
  */
 
-package utils.model;
+package utils.ReadWrite;
 
 import java.io.BufferedWriter;
 import java.io.File;

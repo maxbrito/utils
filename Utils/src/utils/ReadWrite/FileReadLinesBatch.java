@@ -10,7 +10,7 @@
  *  each line at maximum speed.</text> 
  */
 
-package utils.model;
+package utils.ReadWrite;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  *
  * @author Nuno Brito, 27th of November 2014 in Tettnang, Germany
  */
-public abstract class FileReadLines {
+public abstract class FileReadLinesBatch {
   
     // available options
     protected int 
@@ -42,7 +42,7 @@ public abstract class FileReadLines {
             currentLine = 0;
     
     
-    public FileReadLines(final File textFileTarget){
+    public FileReadLinesBatch(final File textFileTarget){
         try {
             // get the file where we want to store or read the variables from
             fileInput = textFileTarget;
@@ -59,9 +59,9 @@ public abstract class FileReadLines {
             reader = new BufferedReader(fileReader);
             
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileReadLines.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileReadLinesBatch.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(FileReadLines.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileReadLinesBatch.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             isRunning = false;
         }
@@ -96,7 +96,7 @@ public abstract class FileReadLines {
             fileReader.close();
             
         } catch (IOException ex) {
-            Logger.getLogger(FileReadLines.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileReadLinesBatch.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
    

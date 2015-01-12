@@ -912,6 +912,33 @@ public static long folderSize(File where){
         return false;
     }
     
+    
+    /**
+     * This method counts the number of lines inside a text files
+     * @param file A file on disk
+     * @return 
+     * @throws java.io.FileNotFoundException
+     */
+    public static long countLines(final File file) throws Exception{
+        long lineCounter = 0;
+        
+        // initialise the objects from where to read text
+        FileReader fileReader = new FileReader(file);
+        BufferedReader reader = new BufferedReader(fileReader);
+        
+        // count the lines to infinitum
+        while(reader.readLine() != null){
+            lineCounter++;
+        }
+        
+        // close the streams
+        reader.close();
+        fileReader.close();
+        
+        return lineCounter;
+    }
+    
+    
     /**
      * Copy one file to another location
      * Based on snippet from: http://stackoverflow.com/a/19974236/1120206
