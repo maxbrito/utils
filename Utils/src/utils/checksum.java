@@ -26,7 +26,6 @@ public class checksum {
     protected static final boolean
             debug = false;
 
-     @SuppressWarnings("empty-statement")
 /**
  * This method will generate a SHA-256 Scanner_Checksum of a given file
  *
@@ -48,7 +47,7 @@ public class checksum {
 //
 //                return "";
 //            }
-            byte[] dataBytes = new byte[1024];
+            byte[] dataBytes = new byte[4096];
             int nread = 0;
             while ((nread = fis.read(dataBytes)) != -1) {
                 md.update(dataBytes, 0, nread);
