@@ -15,19 +15,19 @@ package utils.hashing;
 import java.util.Arrays;
 
 public class TLSH {
-	final private int	BUCKETS 		= 256;
-	final private int	EFF_BUCKETS 		= 128;
-	final private int	CODE_SIZE 		= 32;
-	final private int	TLSH_CHECKSUM_LEN 	= 1;
-	final private int	TLSH_STRING_LEN 	= 70;
-	final private int	SLIDING_WND_SIZE 	= 5;
-	final private int	RANGE_LVALUE		= 256;
-	final private int	RANGE_QRATIO		= 16;
-	final private float	LOG_1_5 = 0.4054651f;
-	final private float	LOG_1_3 = 0.26236426f;
-	final private float	LOG_1_1 = 0.095310180f;
+	static final private int	BUCKETS 		= 256;
+	static final private int	EFF_BUCKETS 		= 128;
+	static final private int	CODE_SIZE 		= 32;
+	static final private int	TLSH_CHECKSUM_LEN 	= 1;
+	static final private int	TLSH_STRING_LEN 	= 70;
+	static final private int	SLIDING_WND_SIZE 	= 5;
+	static final private int	RANGE_LVALUE		= 256;
+	static final private int	RANGE_QRATIO		= 16;
+	static final private float	LOG_1_5 = 0.4054651f;
+	static final private float	LOG_1_3 = 0.26236426f;
+	static final private float	LOG_1_1 = 0.095310180f;
 
-	final private int []	vTable = {
+	static final private int []	vTable = {
 		(int)1, (int)87, (int)49, (int)12, (int)176, (int)178, (int)102, (int)166, (int)121, (int)193, (int)6, (int)84, (int)249, (int)230, (int)44, (int)163,
 		(int)14, (int)197, (int)213, (int)181, (int)161, (int)85, (int)218, (int)80, (int)64, (int)239, (int)24, (int)226, (int)236, (int)142, (int)38, (int)200,
 		(int)110, (int)177, (int)104, (int)103, (int)141, (int)253, (int)255, (int)50, (int)77, (int)101, (int)81, (int)18, (int)45, (int)96, (int)31, (int)222,
@@ -72,7 +72,7 @@ public class TLSH {
 	}
 
 	private int []		aBucket = null;
-	private final int [] 		slideWindow = new int [SLIDING_WND_SIZE];
+	private int [] 		slideWindow = new int [SLIDING_WND_SIZE];
 	private int		dataLen = 0;
 	private boolean		lshCodeValid = false; 
 	LshBinStruct	lshBin = new LshBinStruct();
@@ -96,7 +96,7 @@ public class TLSH {
 		return ret.toUpperCase();
 	}
 
-	private int [] fromHex(String s) {
+	static private int [] fromHex(String s) {
 		int [] ret = new int [s.length() / 2];
 		for (int i = 0; i < s.length(); i += 2) {
 			ret[i / 2] = Integer.parseInt(s.substring(i, i + 2), 16);
@@ -241,7 +241,7 @@ public class TLSH {
 		return (int) (i & 0xFF);
 	}
 	
-	private int modDiff(int x, int y, int R){
+	static private int modDiff(int x, int y, int R){
 		int dl;
 		int dr;
 		if (y > x){
@@ -256,7 +256,7 @@ public class TLSH {
 		return dl;
 	}
 
-	private int hDistance(int [] x, int [] y)
+	static private int hDistance(int [] x, int [] y)
 	{
 		int diff = 0;
 		for (int i = 0; i < x.length; i++) {
@@ -492,7 +492,7 @@ public class TLSH {
 		return diff;
 	}
 
-	final public int totalDiff(String hash1, String hash2, boolean lenDiff) {
+	static final public int totalDiff(String hash1, String hash2, boolean lenDiff) {
 		int diff = 0;
 		int [] iHash1 = fromHex(hash1);
 		int [] iHash2 = fromHex(hash2);
@@ -530,8 +530,7 @@ public class TLSH {
 	
 		return diff;
 	}
-	/* this method for testing only */
-	/* coincides with simple_unit */
+
 	public static void main(String [] args) {
 		try {
 			TLSH ti1 = new TLSH();
