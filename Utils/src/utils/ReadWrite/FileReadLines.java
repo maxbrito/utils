@@ -68,6 +68,7 @@ public class FileReadLines {
      */
     public String getNextLine() throws IOException{
            final String line = reader.readLine();
+           
             // increase the line count
            if(line != null){
                 currentLine++;
