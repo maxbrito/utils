@@ -10,7 +10,7 @@
  *  each line at maximum speed.</text> 
  */
 
-package utils.ReadWrite;
+package utils.ReadWrite.deprecated;
 
 import java.io.BufferedReader;
 import java.io.File;

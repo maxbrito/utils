@@ -12,7 +12,6 @@
 
 package utils.ReadWrite;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -24,10 +23,10 @@ import java.util.logging.Logger;
  *
  * @author Nuno Brito, 10th of January 2015 in Darmstadt, Germany
  */
-public class FileReadLines {
+public class FileReadLinesCharArray {
   
     // internal variables
-    private BufferedReader reader = null;
+    private BufferedReaderReadLineChar reader = null;
     private FileReader fileReader = null;
     private File fileInput = null;
     
@@ -37,7 +36,7 @@ public class FileReadLines {
             currentLine = 0;
     
     
-    public FileReadLines(final File textFileTarget){
+    public FileReadLinesCharArray(final File textFileTarget){
         try {
             // get the file where we want to store or read the variables from
             fileInput = textFileTarget;
@@ -51,13 +50,13 @@ public class FileReadLines {
            
             // initialise the objects from where to read text
             fileReader = new FileReader(fileInput);
-            reader = new BufferedReader(fileReader);
+            reader = new BufferedReaderReadLineChar(fileReader);
             
             
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileReadLines.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileReadLinesCharArray.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(FileReadLines.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileReadLinesCharArray.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
         }
     }
@@ -67,24 +66,18 @@ public class FileReadLines {
      * @return The next line that was available, or null when nothing was read
      * @throws java.io.IOException
      */
-    public StringBuilder getNextLine() throws IOException{
-           final String line = reader.readLine();
+    public char[] getNextLine() throws IOException{
+           final char[] line = reader.readLine();
            
             // increase the line count
            if(line != null){
                 currentLine++;
-                increaseCounterOffset(line.length() + 1);
-                return new StringBuilder().append(line);
-           }else{
-               return null;
+                currentOffset += line.length + 1;
            }
+           return line;
     }
 
-    private synchronized void increaseCounterOffset(final long value){
-        currentOffset += value;
-    }
-    
-    public synchronized long getCurrentOffset() {
+    public long getCurrentOffset() {
         return currentOffset;
     }
 
@@ -102,8 +95,29 @@ public class FileReadLines {
             fileReader.close();
             
         } catch (IOException ex) {
-            Logger.getLogger(FileReadLines.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileReadLinesCharArray.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
    
+    
+    /**
+     * Test if this implementation is working as expected.
+     * @param args 
+     * @throws java.io.IOException 
+     */
+    public static void main(String[] args) throws IOException{
+        
+        File testFile = new File("build.xml");
+        
+        FileReadLinesCharArray test = new FileReadLinesCharArray(testFile);
+        char[] line = null;
+        
+        while((line = test.getNextLine())!= null){
+            StringBuilder result = new StringBuilder();
+            result.append(line);
+            System.out.println(result);
+        }
+    }
+    
+    
 }
