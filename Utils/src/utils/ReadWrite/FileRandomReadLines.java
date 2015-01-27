@@ -40,8 +40,7 @@ public class FileRandomReadLines {
     
     // mark the offset on disk
     private long 
-            currentLine = 0,
-           currentOffset = 0;
+            currentLine = 0;
     
     private final int bufferSize = 8192;
     
@@ -88,9 +87,6 @@ public class FileRandomReadLines {
             // increase the line count
            if(line != null){
                 currentLine++;
-                synchronized (this) {
-                    currentOffset += line.length() + 1;
-                }
                 return line.toCharArray();
            }else{
                return null;
@@ -98,10 +94,7 @@ public class FileRandomReadLines {
     }
 
     public synchronized long getCurrentOffset() throws IOException {
-        //return fileRaf.getFilePointer();
-        // 8192
         return fileRaf.getChannel().position() - bufferSize;
-        //return currentOffset;
     }
 
     public long getCurrentLine() {
@@ -111,9 +104,10 @@ public class FileRandomReadLines {
     /**
      * Moves to a specific position of the file that is being read
      * @param position 
+     * @throws java.io.IOException 
      */
-    public void seek(final long position){
-        try {
+    public void seek(final long position) throws IOException{
+            // avoid non-valid values from being requested
             if(position < 0){
                 return;
             }
@@ -121,12 +115,13 @@ public class FileRandomReadLines {
             if(position > file.length()){
                 return;
             }
-            
+            // move pointer to selected position
             fileRaf.seek(position);
-
-        } catch (IOException ex) {
-            Logger.getLogger(FileRandomReadLines.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            // restart the BufferedReader because we changed the stream
+            reader = new BufferedReader(isr, bufferSize);
+            //TODO on purpose we don't close reader() before the new object
+            // is created. It was causing exceptions to occur, the current
+            // approach might create a memory leak but it wasn't confirmed yet.
     }
     
     /**
