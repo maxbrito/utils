@@ -81,13 +81,13 @@ public class FileRandomReadLines {
      * @return The next line that was available, or null when nothing was read
      * @throws java.io.IOException
      */
-    public char[] getNextLine() throws IOException{
+    public String getNextLine() throws IOException{
         
         final String line = reader.readLine();
             // increase the line count
            if(line != null){
                 currentLine++;
-                return line.toCharArray();
+                return line;
            }else{
                return null;
            }
@@ -153,11 +153,9 @@ public class FileRandomReadLines {
         test.seek(3000);
         
         // show the file contents on the console
-        char[] line = null;
+        String line = null;
         while((line = test.getNextLine())!= null){
-            StringBuilder result = new StringBuilder();
-            result.append(line);
-            System.out.println(result);
+            System.out.println(line);
         }
     }
     
