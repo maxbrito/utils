@@ -43,7 +43,7 @@ public class similarity {
      * @param s1
      * @return 
      */
-    public static int nunoSteinPercentage(final String s0, final String s1) {
+    public static int nunoshteinPercentage(final String s0, final String s1) {
         int points = 0;
         
         final char[] c1 = s0.toCharArray();
@@ -70,7 +70,7 @@ public class similarity {
     public static void main(String[] args){
         String a1 = "HelloHelloHelloHelloHelloHelloHello";
         String a2 = "HalloHall1HfllfHalloHalloHalloHalloHalloHallow";
-        int result = nunoSteinPercentage(a1, a2);
+        int result = nunoshteinPercentage(a1, a2);
         System.out.println(result);
     }
     
