@@ -39,15 +39,12 @@ public class similarity {
     /**
      * It seems that the Levenshtein Distance algorithm is too expensive in
      * terms of computation. So I wrote a cheaper way to get similar result.
-     * @param s0
-     * @param s1
+     * @param c1
+     * @param c2
      * @return 
      */
-    public static int nunoshteinPercentage(final String s0, final String s1) {
+    public static int nunoshteinPercentage(final char[] c1, final char[] c2) {
         int points = 0;
-        
-        final char[] c1 = s0.toCharArray();
-        final char[] c2 = s1.toCharArray();
         
         int size;
         if(c1.length > c2.length){
@@ -70,7 +67,7 @@ public class similarity {
     public static void main(String[] args){
         String a1 = "HelloHelloHelloHelloHelloHelloHello";
         String a2 = "HalloHall1HfllfHalloHalloHalloHalloHalloHallow";
-        int result = nunoshteinPercentage(a1, a2);
+        int result = nunoshteinPercentage(a1.toCharArray(), a2.toCharArray());
         System.out.println(result);
     }
     
