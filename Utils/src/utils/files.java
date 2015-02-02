@@ -853,7 +853,8 @@ public static long folderSize(File where){
           return new File(file.getCanonicalPath());
         }
         catch (Exception e){
-            return null;
+            // something went wrong, just give back the original file
+            return file;
         }
     }
     
