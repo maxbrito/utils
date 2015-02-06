@@ -9,7 +9,29 @@ package utils.hashing;
  * LicenseName: Apache-2.0
  * FileName: TLSH.java  
  * FileCopyrightText: <text> Copyright 2014 Vasiliy Vadimov, Nuno Brito </text>
- * FileComment: <text> Java version of the TLSH similarity hashing algorithm </text> 
+ * FileCopyrightText: <text> Copyright 2013 Trend Micro Incorporated </text>
+ * FileComment: <text> Java version of the TLSH similarity hashing algorithm.
+    
+    This code was based on the TLSH implementation from TrendMicro that is
+    available on the following repository: https://github.com/trendmicro/tlsh
+
+    The original source header indicates: 
+/*
+ * Copyright 2013 Trend Micro Incorporated
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+    
+    </text> 
  */
 
 import java.util.Arrays;

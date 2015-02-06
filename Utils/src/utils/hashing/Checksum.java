@@ -138,7 +138,7 @@ public class Checksum {
      * @return 
      * @throws java.security.NoSuchAlgorithmException 
     */
-    public static String generateStringSHA1(final String content) throws NoSuchAlgorithmException{
+    public static String generateStringSHA1(final String content) throws Exception{
         
         // Create the checksum digest
         MessageDigest md = MessageDigest.getInstance("SHA-1");
