@@ -23,7 +23,7 @@
  * questions.
  */
 
-package utils.ReadWrite;
+package utils.ReadWrite.deprecated;
 
 import java.io.IOException;
 import java.io.Reader;

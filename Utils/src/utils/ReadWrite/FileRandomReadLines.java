@@ -82,7 +82,7 @@ public class FileRandomReadLines {
      * @throws java.io.IOException
      */
     public String getNextLine() throws IOException{
-        
+        // get the line to see what this is all about
         final String line = reader.readLine();
             // increase the line count
            if(line != null){
