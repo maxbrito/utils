@@ -36,59 +36,13 @@ public class similarity {
         return percentage;
     }
 
-    /**
-     * It seems that the Levenshtein Distance algorithm is too expensive in
-     * terms of computation. So I wrote a cheaper way to get similar result.
-     * @param c1
-     * @param c2
-     * @return 
-     */
-    public static int nunoshteinPercentage2014v1(final char[] c1, final char[] c2) {
-        int points = 0;
-        // get the smallest of the two arrays to compare
-        final int size = Math.min(c1.length, c2.length);
-        // compare each case
-        for(int i = 0; i < size; i++){
-            if(c1[i] == c2[i]){
-                points++;
-            }
-        }
-        
-        // get the percentual value
-        return (points * 100) / size;
-    }
-    
-    
-  // Example implementation of the Levenshtein Edit Distance
-  // See http://rosettacode.org/wiki/Levenshtein_distance#Java
-  // based on http://stackoverflow.com/a/16018452/1120206  
-  public static int editDistance(final char[] c1, final char[] c2) {
-
-    final int[] costs = new int[c2.length + 1];
-    for (int i = 0; i <= c1.length; i++) {
-      int lastValue = i;
-      for (int j = 0; j <= c2.length; j++) {
-        if (i == 0)
-          costs[j] = j;
-        else {
-          if (j > 0) {
-            int newValue = costs[j - 1];
-            if (c1[i - 1] != c2[j - 1])
-              newValue = Math.min(Math.min(newValue, lastValue),
-                  costs[j]) + 1;
-            costs[j - 1] = lastValue;
-            lastValue = newValue;
-          }
-        }
-      }
-      if (i > 0)
-        costs[c2.length] = lastValue;
-    }
-    return costs[c2.length];
-  }
-    
-  
-  public static int nunoshteinPercentage(final char[] c1, final char[] c2) {
+  /**
+   * Enjoy life, keep similarity matching as simple as possible.
+   * @param c1 The string in your archive
+   * @param c2 The string that might be modified
+   * @return A percentage of how closely related both strings might be
+   */
+  public static int britoshteinPercentage(final char[] c1, final char[] c2) {
          // get the smallest of the two arrays to compare
         final int size = Math.min(c1.length, c2.length);
         int points = 0;
@@ -112,7 +66,7 @@ public class similarity {
         
         String b1 = "TR{IV=V;IF(V>V){V=VM(V[0]);}TestHandlerV=NM();V.ProcessorV=NVM(V);TServerSocketV=NM(V);TProtocolFactoryV=NVM();TServerV;V=NM(V,V,V);VM(##+V+##);VM();}CA(EVceptionV){VM();}VM(##);";
         String b2 = "TR{IV=V;IF(V>V){V=VM(V[0]);}TestHandlerV=NM();V.ProcessorV=NVM(V);,,,V,TServerSocketV=NM(V);TProtocolFactoryV=NVM();TServerV;V=NM(V,V,V);VM(##+fdfdfsV+##);VM();}CA(EVceptionV){VM();}VM(##);";
-        int result = nunoshteinPercentage(b1.toCharArray(), b2.toCharArray());
+        int result = britoshteinPercentage(b1.toCharArray(), b2.toCharArray());
         System.out.println(result);
     }
     
