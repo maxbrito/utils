@@ -61,12 +61,11 @@ public class similarity {
   
     
     public static void main(String[] args){
+        // test two example strings where relevant characters are not repeated
         String a1  = "abcdefghijklmnopqrstuvwxyz0123456789";
         String a2 = "ab..-cdefghij..klmnopqrstuvwxyz0..123456789";
         
-        String b1 = "TR{IV=V;IF(V>V){V=VM(V[0]);}TestHandlerV=NM();V.ProcessorV=NVM(V);TServerSocketV=NM(V);TProtocolFactoryV=NVM();TServerV;V=NM(V,V,V);VM(##+V+##);VM();}CA(EVceptionV){VM();}VM(##);";
-        String b2 = "TR{IV=V;IF(V>V){V=VM(V[0]);}TestHandlerV=NM();V.ProcessorV=NVM(V);,,,V,TServerSocketV=NM(V);TProtocolFactoryV=NVM();TServerV;V=NM(V,V,V);VM(##+fdfdfsV+##);VM();}CA(EVceptionV){VM();}VM(##);";
-        int result = britoshteinPercentage(b1.toCharArray(), b2.toCharArray());
+        int result = britoshteinPercentage(a1.toCharArray(), a2.toCharArray());
         System.out.println(result);
     }
     
