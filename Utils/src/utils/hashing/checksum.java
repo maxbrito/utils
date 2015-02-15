@@ -4,7 +4,7 @@
  * a consistent and uniform result.
  */
 
-package utils;
+package utils.hashing;
 
 import java.io.File;
 import java.io.FileInputStream;
