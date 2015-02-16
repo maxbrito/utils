@@ -1,4 +1,4 @@
-package ssdeep;
+package utils.hashing.ssdeep;
 
 public class EditDistance
 {

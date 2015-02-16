@@ -12,7 +12,7 @@
 </text> 
  */
 
-package utils;
+package utils.hashing;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -58,14 +58,45 @@ public class similarity {
         return (points * 100) / size;
     }
 
-  
-    
+    public static int britoshteinPercentage2(final char[] c1, final char[] c2) {
+         // get the smallest of the two arrays to compare
+        final int smallestSize = Math.min(c1.length, c2.length);
+        int 
+            points = 0,
+            pointer = 0;
+        // compare each case
+        for(int index = 0; index < smallestSize; index++){
+            
+            if(c1[index] == c2[index]){
+                points++;
+                pointer++;
+            }else
+            if(c1[pointer] == c2[index]){
+                points++;
+                pointer++;
+            }
+            else
+            if(c1[index] == c2[pointer]){
+                points++;
+                pointer++;
+            }
+        }
+        // get the percentual value
+        return (points * 100) / smallestSize;
+    }
+
     public static void main(String[] args){
         // test two example strings where relevant characters are not repeated
         String a1  = "abcdefghijklmnopqrstuvwxyz0123456789";
         String a2 = "ab..-cdefghij..klmnopqrstuvwxyz0..123456789";
         
-        int result = britoshteinPercentage(a1.toCharArray(), a2.toCharArray());
+        String n1 = "Nuno Garcia da Silva Brito";
+        String n2 = "Nun.o Garcia da Silva Brito";
+        
+        
+        int result = britoshteinPercentage2(n1.toCharArray(), n2.toCharArray());
+        System.out.println(result);
+        result = britoshteinPercentage2(n2.toCharArray(), n1.toCharArray());
         System.out.println(result);
     }
     

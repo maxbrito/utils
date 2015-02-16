@@ -9,7 +9,7 @@
  * Created on Jun 29, 2012, 6:49:54 PM
  */
 
-package ssdeep;
+package utils.hashing.ssdeep;
 
 import java.awt.Toolkit;
 import java.io.File;
