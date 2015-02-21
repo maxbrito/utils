@@ -161,7 +161,12 @@ public static String sendEmail(String emailAddress,
    }
 
 
-       /** get a given page from a given URL address */
+       
+   /** 
+    * Get a given page from an URL address
+    * @param address
+    * @return  
+    */
    static public String webget(String address) {
         // perhaps in the future we can use something like http://goo.gl/03WQp
         // provide a holder for the reply
@@ -178,16 +183,9 @@ public static String sendEmail(String emailAddress,
                 result = result.concat(inputLine);
             }
             in.close();
-        } catch (MalformedURLException me) {
-//            System.err.println("webGet operation has failed, MalFormedException: "
-//                    + me.toString());
+        } catch (Exception me) {
             return me.toString();
-        } catch (IOException ioe) {
-//            System.err.println("webGet operation has failed, IOException: "
-//                    + ioe.toString());
-            return ioe.toString();
         }
-
         return result;
     }
 
