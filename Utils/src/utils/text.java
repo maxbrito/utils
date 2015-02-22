@@ -17,9 +17,12 @@
 package utils;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -33,6 +36,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 /**
  *
@@ -603,5 +608,49 @@ public class text {
          e.printStackTrace(printWriter);
          return stringWriter.toString();
     }
+    
+    /**
+     * Compressed a portion of text
+     * @param str
+     * @return
+     * @throws IOException 
+     * This code was retrieved on 2015-02-21 from:
+     * http://www.softraction.com/2011/10/compressing-and-decompressing-string-in.html
+     * Copyright 2011 Pankaj Mandaliya
+    */
+    public static String compress(String str) throws IOException {
+        if (str == null || str.length() == 0) {
+            return str;
+        }
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        GZIPOutputStream gzip = new GZIPOutputStream(out);
+        gzip.write(str.getBytes());
+        gzip.close();
+        String outStr = out.toString("ISO-8859-1");
+        return outStr;
+     }
+    
+    /**
+     * Decompress a portion of text
+     * @param str
+     * @return
+     * @throws IOException
+     * This code was retrieved on 2015-02-21 from:
+     * http://www.softraction.com/2011/10/compressing-and-decompressing-string-in.html
+     * Copyright 2011 Pankaj Mandaliya
+     */
+    public static String decompress(String str) throws IOException {
+        if (str == null || str.length() == 0) {
+            return str;
+        }
+        GZIPInputStream gis = new GZIPInputStream(new ByteArrayInputStream(str.getBytes("ISO-8859-1")));
+        BufferedReader bf = new BufferedReader(new InputStreamReader(gis, "ISO-8859-1"));
+        String outStr = "";
+        String line;
+        while ((line=bf.readLine())!=null) {
+          outStr += line;
+        }
+        return outStr;
+     }
     
 }
