@@ -58,9 +58,7 @@ public abstract class FileReadLinesBatch {
             fileReader = new FileReader(fileInput);
             reader = new BufferedReader(fileReader);
             
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileReadLinesBatch.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(FileReadLinesBatch.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             isRunning = false;

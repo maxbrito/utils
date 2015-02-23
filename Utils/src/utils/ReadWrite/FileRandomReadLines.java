@@ -68,9 +68,7 @@ public class FileRandomReadLines {
             reader = new BufferedReader(isr, bufferSize);
             
             
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileRandomReadLines.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(FileRandomReadLines.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
         }

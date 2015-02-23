@@ -53,9 +53,7 @@ public class FileReadLinesCharArray {
             reader = new BufferedReaderReadLineChar(fileReader);
             
             
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileReadLinesCharArray.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(FileReadLinesCharArray.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
         }

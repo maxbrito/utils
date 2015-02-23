@@ -10,11 +10,11 @@
 
 package utils;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -29,6 +29,7 @@ public class serialize {
      * @param obj
      * @return 
      */
+    @SuppressWarnings("ConvertToTryWithResources")
     public static String objectToString(Object obj){
         String output = null;
         try {
@@ -36,7 +37,7 @@ public class serialize {
             ObjectOutputStream so = new ObjectOutputStream(bo);
             so.writeObject(obj);
             so.flush();
-            output = Base64.encode(bo.toByteArray());
+            output = DatatypeConverter.printBase64Binary(bo.toByteArray());
             so.close();
             bo.close();
         } catch (Exception e) {
@@ -50,9 +51,7 @@ public class serialize {
         Object output = null;
         try {
             // convert from base 64 to a byte sequence
-            byte b[] = Base64.decode(
-                   text.getBytes()
-            );
+            byte b[] = DatatypeConverter.parseBase64Binary(text);
             // move the object from text to binary form
             ByteArrayInputStream bi = new ByteArrayInputStream(b);
             ObjectInputStream si = new ObjectInputStream(bi);
