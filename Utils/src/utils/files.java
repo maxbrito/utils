@@ -17,10 +17,12 @@ import utils.thirdparty.MiscMethods;
  * @author Nuno Brito, 6th of June 2011 in Darmstadt, Germany.
  */
 public class files {
-
-     
-  /** Writes an inputstream back into a file */  
-  static public void inputFileStreamToFile(InputStream inputStream, 
+  
+    /** Writes an inputstream back into a file
+     * @param inputStream
+     * @param outFile 
+     */  
+    static public void inputFileStreamToFile(InputStream inputStream, 
           File outFile){  
     
       OutputStream out = null;
@@ -35,15 +37,18 @@ public class files {
       catch (IOException e){}
       finally {
             try {
-                out.close();
+                if(out != null)
+                    out.close();
             } catch (IOException ex) {
             }
        
       }
+    }
 
-}
-
-  /** Returns the extension of a file*/
+  /** Returns the extension of a file on disk
+     * @param file
+     * @return 
+     */
   public static String getExtension(File file){
       String result;
       String filename = file.getName();
@@ -57,6 +62,22 @@ public class files {
       result = result.toLowerCase();
     return result;
   }
+  
+
+  /**
+   * Returns the extension from a given file name. If the file name has no
+   * dots then it will return null as result.
+   * @param filename
+   * @return 
+   */
+  public static String getExtension(final String filename){
+      // no dot found? no need to proceed
+      if(filename.contains(".") == false){
+          return null;
+      }
+      final int pos = filename.lastIndexOf(".");
+      return filename.substring(pos + 1).toLowerCase();
+    }
   
 
   /**
