@@ -43,7 +43,17 @@ public class misc {
         double dValue = value;
         double per = (dValue*100)/ dMax;
         DecimalFormat df = new DecimalFormat("#.#");
-        return df.format(per);
+        String result =  df.format(per);
+        // don't output a plain 0%, go to deeper decimal levels as needed
+        if(result.equals("0")){
+        df = new DecimalFormat("#.##");
+        result =  df.format(per);
+        }
+        if(result.equals("0")){
+        df = new DecimalFormat("#.###");
+        result =  df.format(per);
+        }
+        return result;
     }
     
     
