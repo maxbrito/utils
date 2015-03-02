@@ -108,8 +108,8 @@ public class files {
   
   
     public static String readAsString(File file){
-        long length = file.length();
-        byte[] bytes = new byte[(int) length];
+        final long length = file.length();
+        final byte[] bytes = new byte[(int) length];
         InputStream is = null;
         try{
         is = new FileInputStream(file);
