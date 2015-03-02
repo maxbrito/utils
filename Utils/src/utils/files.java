@@ -531,20 +531,20 @@ public static long folderSize(File where){
      *
      * @author Nuno Brito
      * @version 1.1
-     * @param inputFile     The file that we want to write
-     * @param inputString   The string that will be written to the file
+     * @param file     The file that we want to write
+     * @param text   The string that will be written to the file
      * @return              True if operation has success, False otherwise
      * @date 2010/06/06
      * @modified 2014-07-11
     */
-   public static boolean SaveStringToFile(final File inputFile, 
-           final String inputString){
+   public static boolean SaveStringToFile(final File file, 
+           final String text){
        FileWriter fileWriter = null;
        BufferedWriter out = null;
         try {
-            fileWriter = new FileWriter(inputFile);
+            fileWriter = new FileWriter(file);
             out = new BufferedWriter(fileWriter);
-            out.write(inputString);
+            out.write(text);
             
             // now close everything
             fileWriter.flush();
