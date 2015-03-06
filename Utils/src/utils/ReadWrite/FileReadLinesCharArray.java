@@ -3,7 +3,7 @@
  * Creator: Person: Nuno Brito (nuno.brito@triplecheck.de)
  * Creator: Organization: TripleCheck (contact@triplecheck.de)
  * Created: 2015-01-10T10:21:23Z
- * LicenseName: EUPL-1.1-without-appendix
+ * LicenseName: AGPL-3.0+
  * FileName: FileReadLinesSimple.java  
  * FileCopyrightText: <text> Copyright 2015 Nuno Brito, TripleCheck </text>
  * FileComment: <text> A model to read a large text file from disk, processing

@@ -3,7 +3,7 @@
  * Creator: Person: Nuno Brito (nuno.brito@triplecheck.de)
  * Creator: Organization: TripleCheck (contact@triplecheck.de)
  * Created: 2015-01-26T16:31:23Z
- * LicenseName: EUPL-1.1-without-appendix
+ * LicenseName: AGPL-3.0+
  * FileName: FileRandomReadLines.java  
  * FileCopyrightText: <text> Copyright 2015 Nuno Brito, TripleCheck </text>
  * FileComment: <text> Reads text files from any position of the
@@ -14,7 +14,6 @@ package utils.ReadWrite;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
