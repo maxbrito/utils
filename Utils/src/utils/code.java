@@ -49,24 +49,28 @@ public class code {
      * @return              The output as HTML code
      */
     static public String convertToHTML(final String sourceCode){
-//        Java2HtmlOptionsPanel optionsPanel = new Java2HtmlOptionsPanel();
-//        JavaSourceConversionSettings options = optionsPanel.getConversionSettings();
-//        options.getConversionOptions().setShowJava2HtmlLink(false);
-//        options.getConversionOptions().setShowTableBorder(false);
-//        options.getConversionOptions().setShowFileName(false);
-//        options.getConversionOptions().setAddLineAnchors(false);
-//        
-//        // convert the code to HTML
-//        String code = Java2Html.convertToHtmlPage(sourceCode, options);
-//        // remove everything before and after the <body> tags
-//        int i1 = code.indexOf("<body>");
-//        int i2 = code.indexOf("</body>");
-//        // cut the code
-//        code = code.substring(i1+6, i2-1);
-//        
-//        // remove the code tags to make the text looks better
-//        code = code.replaceAll("<code>", "");
-//        code = code.replaceAll("</font></code>", "</font>");
+        Java2HtmlOptionsPanel optionsPanel = new Java2HtmlOptionsPanel();
+        JavaSourceConversionSettings options = optionsPanel.getConversionSettings();
+        options.getConversionOptions().setShowJava2HtmlLink(false);
+        options.getConversionOptions().setShowTableBorder(false);
+        options.getConversionOptions().setShowFileName(false);
+        options.getConversionOptions().setAddLineAnchors(false);
+        
+        final String 
+                s1 = "<!-- = Java Sourcecode to HTML automatically converted code = -->",
+                s2 = "<!-- =       END of automatically generated HTML code       = -->";
+        
+        // convert the code to HTML
+        String code = Java2Html.convertToHtmlPage(sourceCode, options);
+        // remove everything before and after the <body> tags
+        int i1 = code.indexOf(s1);
+        int i2 = code.indexOf(s2);
+        // cut the code
+        code = code.substring(i1 + s1.length(), i2 - s2.length());
+        
+        // remove the code tags to make the text looks better
+        code = code.replaceAll("<code>", "");
+        code = code.replaceAll("</font></code>", "</font>");
         
         
         return sourceCode;
