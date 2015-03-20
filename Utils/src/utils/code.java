@@ -73,7 +73,7 @@ public class code {
         code = code.replaceAll("</font></code>", "</font>");
         
         
-        return sourceCode;
+        return code;
     }
     
     

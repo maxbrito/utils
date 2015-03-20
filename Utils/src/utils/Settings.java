@@ -54,7 +54,7 @@ public class Settings {
     public void write(String key, String value){
         // for some odd reason we need to physically delete old values
         properties.remove(key);
-        save();
+        //save();
         // only now can we write them back
         properties.setProperty(key, value);
         save();
@@ -160,6 +160,10 @@ public class Settings {
 
     public Properties getProperties() {
         return properties;
+    }
+
+    public File getFile() {
+        return this.settingsFile;
     }
     
     
