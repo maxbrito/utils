@@ -1,5 +1,16 @@
 package utils.hashing.ssdeep;
-
+/*
+ * SPDXVersion: SPDX-1.1
+ * Creator: Person: Nuno Brito
+ * Created: 2014-05-14T19:16:46Z
+ * LicenseName: APACHE-2.0
+ * FileCategory: SOURCE
+ * FileCopyrightText: <text> Copyright (c) 2014, Nuno Brito </text>
+ * FileComment: <text> 
+    The code inside this file has been adapted from the SSDEEP code 
+    authored by Jesse Kornblum at http://jessekornblum.com/
+    </text> 
+ */
 public class EditDistance
 {
     /*

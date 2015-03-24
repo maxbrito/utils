@@ -1,17 +1,28 @@
 package utils.hashing.ssdeep;
-
+/*
+ * SPDXVersion: SPDX-1.1
+ * Creator: Person: Nuno Brito (nuno.brito@triplecheck.de)
+ * Creator: Organization: TripleCheck (contact@triplecheck.de)
+ * Created: 2012-06-29T18:49:54Z
+ * LicenseName: APACHE-2.0
+ * FileCopyrightText: <text> Copyright 2012 Nuno Brito, TripleCheck </text>
+ * FileComment: <text> 
+    The code inside this file has been adapted from the SSDEEP code 
+    authored by Jesse Kornblum at http://jessekornblum.com/
+    </text> 
+ */
 public class SpamSumSignature
 {
     /*****************************************************
-         * FIELDS
-         *****************************************************/
+    * FIELDS
+    *****************************************************/
     private /*uint*/long blockSize;
     private byte[] hash1;
     private byte[] hash2;
 
     /*****************************************************
-         * UTILS
-         *****************************************************/
+     * UTILS
+     *****************************************************/
      /**
      * <p>
      * Change a string into an array of bytes
@@ -38,8 +49,8 @@ public class SpamSumSignature
         return r;
     }
     /*****************************************************
-         * CONSTRUCTOR
-         *****************************************************/
+     * CONSTRUCTOR
+     *****************************************************/
 
     /**
      * <p>
@@ -74,8 +85,8 @@ public class SpamSumSignature
     }
 
     /*****************************************************
-         * METHODS
-         *****************************************************/
+     * METHODS
+     *****************************************************/
 
     @Override
     public boolean equals(Object obj)
@@ -121,8 +132,8 @@ public class SpamSumSignature
     }
 
     /*****************************************************
-         * PROPERTIES
-         *****************************************************/
+     * PROPERTIES
+     *****************************************************/
 
     /**
      * <p>

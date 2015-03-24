@@ -1,14 +1,15 @@
 package utils.hashing.ssdeep;
 /*
  * SPDXVersion: SPDX-1.1
- * Creator: Person: Nuno Brito
+ * Creator: Person: Nuno Brito (nuno.brito@triplecheck.de)
+ * Creator: Organization: TripleCheck (contact@triplecheck.de)
  * Created: 2014-05-14T19:16:46Z
- * LicenseName: EUPL-1.1-without-appendix
- * FileCategory: SOURCE
+ * LicenseName: APACHE-2.0
  * FileCopyrightText: <text> Copyright (c) 2014, Nuno Brito </text>
- * FileComment: <text> This code is based on the original SSDEEP implementation
- *         
- * </text> 
+ * FileComment: <text> 
+    The code inside this file has been adapted from the SSDEEP code 
+    authored by Jesse Kornblum at http://jessekornblum.com/
+    </text> 
  */
 
 import java.io.*;

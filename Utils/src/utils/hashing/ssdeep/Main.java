@@ -1,6 +1,14 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * SPDXVersion: SPDX-1.1
+ * Creator: Person: Nuno Brito (nuno.brito@triplecheck.de)
+ * Creator: Organization: TripleCheck (contact@triplecheck.de)
+ * Created: 2012-06-29T18:49:54Z
+ * LicenseName: APACHE-2.0
+ * FileCopyrightText: <text> Copyright 2012 Nuno Brito, TripleCheck </text>
+ * FileCopyrightText: <text> Copyright 2012 duc_huy_ctlk</text>
+ * FileComment: <text> 
+    The test form of the SSDEEP implementation in Java.
+    </text> 
  */
 
 /*
