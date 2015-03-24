@@ -1,14 +1,18 @@
 package utils.hashing.ssdeep;
 /*
  * SPDXVersion: SPDX-1.1
- * Creator: Person: Nuno Brito
+ * Creator: Person: Nuno Brito (nuno.brito@triplecheck.de)
+ * Creator: Organization: TripleCheck (contact@triplecheck.de)
  * Created: 2014-05-14T19:16:46Z
- * LicenseName: APACHE-2.0
+ * LicenseName: GPL-2.0+
  * FileCategory: SOURCE
  * FileCopyrightText: <text> Copyright (c) 2014, Nuno Brito </text>
+ * FileCopyrightText: <text> Copyright Jesse Kornblum </text>
  * FileComment: <text> 
     The code inside this file has been adapted from the SSDEEP code 
     authored by Jesse Kornblum at http://jessekornblum.com/
+
+    Other portions of the code may derive from spamsum/TRN.
     </text> 
  */
 public class EditDistance
