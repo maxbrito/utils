@@ -32,6 +32,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -74,7 +75,10 @@ public class text {
 
         
 
-          /** When given a text string, compute the SHA 256 result */
+          /** When given a text string, compute the SHA 256 result
+     * @param content
+     * @return  */
+        @SuppressWarnings("null")
   public static String generateStringMD5(String content){
 
         MessageDigest md = null;
@@ -106,7 +110,10 @@ public class text {
     }
       
   
-  /** When given a text string, compute the SHA 256 result */
+  /** When given a text string, compute the SHA 256 result
+     * @param content
+     * @return  */
+        @SuppressWarnings("null")
   public static String generateStringSHA256(String content){
 
         MessageDigest md = null;
@@ -143,6 +150,8 @@ public class text {
       * Get safe string
       * Picks a given string and cleans out any invalid characters, replacing
       * spaces with "_"
+     * @param input
+     * @return 
       */
        public static String safeString(String input){
 
@@ -198,7 +207,9 @@ public class text {
 
   
        
-       /** Disarm potential injections*/
+       /** Disarm potential injection
+     * @param input
+     * @return */
        public static String safeHTML(String input){
 
            String output = input;
@@ -218,6 +229,9 @@ public class text {
        
      /** Convert an array of strings to one string.
       *  Put the 'separator' string between each element.
+     * @param a
+     * @param separator
+     * @return 
       */
     public static String arrayToString(String[] a, String separator) {
         StringBuilder result = new StringBuilder();
@@ -231,10 +245,29 @@ public class text {
         return result.toString();
     }
 
+    public static String arrayToString(ArrayList<String> a, String separator) {
+        StringBuilder result = new StringBuilder();
+        if (a.isEmpty()) {
+            return "";
+        }
+           
+        for(String line : a){
+            result.append(line);
+            result.append(separator);
+        }
+        
+        // grab the final result and remove the last separator, create a new output String
+        String output = result.toString().substring(0, result.toString().length() - separator.length());
+        
+        return output;
+    }
     
     /** Provides the index number of a given string inside an array.
      Returns -1 if the string was not found, 0 equals to the first item and
-     so forth.*/
+     so forth
+     * @param find.
+     * @param fields
+     * @return */
     public static int arrayIndex(String find, final String[] fields){
         int result = -1;
         int count = 0;
@@ -253,6 +286,8 @@ public class text {
      * This method tests if a given string is empty or null
      * It is required to ensure that we can compile this application using
      * Java 1.5
+     * @param input
+     * @return 
      */
     public static Boolean isEmpty(String input){
         Boolean result = (input == null) || (input.length() == 0);
@@ -263,6 +298,9 @@ public class text {
     /**
      * Provides a text that will match a desired dimension, reducing
      * it if necessary.
+     * @param text
+     * @param maxLength
+     * @return 
      */
     public static String shortText(String text, int maxLength){
         String result = text;
@@ -279,24 +317,36 @@ public class text {
     }
 
 
-    /** get the string ready for output as debug */
+    /** get the string ready for output as debug
+     * @param title
+     * @param value
+     * @return  */
      public static String doFormat(String title, String value){
          return title + " = " +value+ "; ";
      }
 
-    /** convert an int value to hex */
+    /** convert an int value to hex
+     * @param title
+     * @param value
+     * @return  */
      public static String getHex(final String title, final int value){
          String result = java.lang.Integer.toHexString (value);
          return doFormat(title, "0x"+result.toUpperCase());
      }
 
-    /** convert a Long value to hex */
+    /** convert a Long value to hex
+     * @param title
+     * @param value
+     * @return  */
     public static String getHex(final String title, final long value){
          String result = java.lang.Long.toHexString (value);
           return doFormat(title, "0x"+result.toUpperCase());
      }
 
-    /** Add a new element to a static String array */
+    /** Add a new element to a static String array
+     * @param input
+     * @param newText
+     * @return  */
      public static String[] stringArrayAdd(final String[] input,
              final String newText){
          String result = "";
@@ -309,7 +359,11 @@ public class text {
         return result.split(";");
      }
 
-   /** Remove an element from a static String array */
+   /** Remove an element from a static String array
+     * @param input
+     * @param removeText
+     * @return  */
+        @SuppressWarnings("UnnecessaryContinue")
      public static String[] stringArrayRemove(final String[] input,
              final String removeText){
         String result = "";
@@ -324,13 +378,14 @@ public class text {
      }
 
 
-   /** Remove an element from a static String array */
+   /** Remove an element from a static String array
+     * @param input
+     * @return  */
      public static String[] stringPrune(final String[] input){
         String result = "";
         for(String current : input){
-            if (current.isEmpty())
-                continue;
-            else
+            if (current.isEmpty()) {
+            } else
                 result = result.concat(current + ";");
         }
        // write back our list
@@ -340,7 +395,9 @@ public class text {
      
      
      
-    /** Converts a given record onto a string that can be written on a file */
+    /** Converts a given record onto a string that can be written on a file
+     * @param record
+     * @return  */
     public static String convertRecordToString(String[] record){
         String result = "";
         // iterate all fields of this record
@@ -353,7 +410,9 @@ public class text {
 
 
    /** Replaces empty elements with space to ensure compatibility with
-    * string.split */
+    * string.split
+     * @param input
+     * @return  */
      public static String[] stringClean(final String[] input){
         String result = "";
         for(String current : input){
@@ -372,7 +431,9 @@ public class text {
         return result.split(";");
      }
 
-    /** Picks a string and makes it URL safe */
+    /** Picks a string and makes it URL safe
+     * @param input
+     * @return  */
     public static String quickEncode(String input){
         String
                 result = input.replace(" ", "%20");
@@ -383,7 +444,9 @@ public class text {
                 result = result.replace("?", ".!.question");
         return result;
     }
-    /** Decodes a URL safe string  */
+    /** Decodes a URL safe string
+     * @param input
+     * @return  */
     public static String quickDecode(String input){
         String
                 result = input.replace("%20", " ");
@@ -399,6 +462,9 @@ public class text {
      * Gets a given repeated entry inside an array 
      * (TextTest unit provides a demonstration of this function)
      * Nov 2011, NB
+     * @param input
+     * @param filter
+     * @return 
      */
     public static String getMultiple(String input, String filter){
             // split everything
