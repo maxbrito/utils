@@ -2,7 +2,7 @@
  * Methods to ease the handling of files
  */
 
-package old.utils;
+package old_obsolete.utils;
 
 import java.io.*;
 import java.text.DecimalFormat;
