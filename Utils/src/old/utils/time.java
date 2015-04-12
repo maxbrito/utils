@@ -2,7 +2,7 @@
  * Some handy routines to help on everyday tasks
  */
 
-package old_obsolete.utils;
+package old.utils;
 
 import java.io.File;
 import java.text.DateFormat;
