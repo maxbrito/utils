@@ -171,10 +171,10 @@ public class checksum {
     */
     public static String convertHash(final byte byteData[]){
         //convert the byte to hex format method 1
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < byteData.length; i++) {
-         sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-        }
+//        StringBuilder sb = new StringBuilder();
+//        for (int i = 0; i < byteData.length; i++) {
+//            sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+//        }
 
         //convert the byte to hex format
         @SuppressWarnings("StringBufferMayBeStringBuilder")

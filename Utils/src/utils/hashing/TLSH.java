@@ -37,17 +37,21 @@ package utils.hashing;
 import java.util.Arrays;
 
 public class TLSH {
-	static final private int	BUCKETS 		= 256;
-	static final private int	EFF_BUCKETS 		= 128;
-	static final private int	CODE_SIZE 		= 32;
-	static final private int	TLSH_CHECKSUM_LEN 	= 1;
-	static final private int	TLSH_STRING_LEN 	= 70;
-	static final private int	SLIDING_WND_SIZE 	= 5;
-	static final private int	RANGE_LVALUE		= 256;
-	static final private int	RANGE_QRATIO		= 16;
-	static final private float	LOG_1_5 = 0.4054651f;
-	static final private float	LOG_1_3 = 0.26236426f;
-	static final private float	LOG_1_1 = 0.095310180f;
+	
+    static final public int	
+        BUCKETS 	= 256,
+        EFF_BUCKETS = 128,
+        CODE_SIZE = 32,
+        TLSH_CHECKSUM_LEN = 1,
+        TLSH_STRING_LEN = 70,
+        SLIDING_WND_SIZE = 5,
+        RANGE_LVALUE = 256,
+        RANGE_QRATIO = 16;
+    
+    static final public float
+        LOG_1_5 = 0.4054651f,
+        LOG_1_3 = 0.26236426f,
+        LOG_1_1 = 0.095310180f;
 
 	static final private int []	vTable = {
 		(int)1, (int)87, (int)49, (int)12, (int)176, (int)178, (int)102, (int)166, (int)121, (int)193, (int)6, (int)84, (int)249, (int)230, (int)44, (int)163,
@@ -68,8 +72,24 @@ public class TLSH {
 		(int)51, (int)65, (int)28, (int)144, (int)254, (int)221, (int)93, (int)189, (int)194, (int)139, (int)112, (int)43, (int)71, (int)109, (int)184, (int)209
 	};
 
-	static private int [][] bitPairsDiffTable;
+	
+    static private int [][] bitPairsDiffTable;
 
+    /**
+     * The default generator
+     */
+    public TLSH() {
+        bitPairsDiffTable = generateTable();
+    }
+        
+    /**
+     * class interface, public methods 
+     * @param assignedBitPairsDiffTable
+     */
+    public TLSH(final int[][] assignedBitPairsDiffTable) {
+        bitPairsDiffTable = assignedBitPairsDiffTable;
+    }
+    
 	private class LshBinStruct {
 		public int [] 	checksum = new int [TLSH_CHECKSUM_LEN];
 		public int	lValue = 0;
@@ -108,23 +128,26 @@ public class TLSH {
 		return ret;
 	}
 
-	private String toHex(int [] buf) {
-		String ret = "";
-		for (int i = 0; i < buf.length; i++) {
-			if (buf[i] < 16)
-				ret += "0";
-			ret += Integer.toHexString(buf[i]);
-		}
-		return ret.toUpperCase();
-	}
+    private String toHex(int [] buf) {
+        StringBuilder ret = new StringBuilder();
+        
+        for (int i = 0; i < buf.length; i++) {
+            if (buf[i] < 16){
+                ret.append("0");
+            }
+            ret.append(Integer.toHexString(buf[i]));
+        }
+        
+        return ret.toString().toUpperCase();
+    }
 
-	static private int [] fromHex(String s) {
-		int [] ret = new int [s.length() / 2];
-		for (int i = 0; i < s.length(); i += 2) {
-			ret[i / 2] = Integer.parseInt(s.substring(i, i + 2), 16);
-		}
-		return ret;
-	}
+    static protected int [] fromHex(String s) {
+        int [] ret = new int [s.length() / 2];
+        for (int i = 0; i < s.length(); i += 2) {
+                ret[i / 2] = Integer.parseInt(s.substring(i, i + 2), 16);
+        }
+        return ret;
+    }
 
 	private int bMapping(int salt, int i, int j, int k) {
 		int h = 0;
@@ -263,29 +286,31 @@ public class TLSH {
 		return (int) (i & 0xFF);
 	}
 	
-	static private int modDiff(int x, int y, int R){
-		int dl;
-		int dr;
-		if (y > x){
-			dl = (y - x);
-			dr = (x + R - y);
-		} else {
-			dl = (x - y);
-			dr = (y + R - x);
-		}
-		if (dl > dr)
-			return dr;
-		return dl;
+	static protected int modDiff(final int x, final int y, final int R){
+            final int 
+                dl,
+                dr;
+            
+            if (y > x){
+                dl = (y - x);
+                dr = (x + R - y);
+            } else {
+                dl = (x - y);
+                dr = (y + R - x);
+            }
+            if (dl > dr)
+                return dr;
+            else
+                return dl;
 	}
 
-	static private int hDistance(int [] x, int [] y)
-	{
-		int diff = 0;
-		for (int i = 0; i < x.length; i++) {
-			diff += bitPairsDiffTable[x[i]][y[i]];
-		}
-		return diff;
-	}
+    static protected int hDistance(final int[] x, final int[] y){
+        int diff = 0;
+        for (int i = 0; i < x.length; i++) {
+                diff += bitPairsDiffTable[x[i]][y[i]];
+        }
+        return diff;
+    }
 
 
     public static int[][] generateTable(){
@@ -305,21 +330,7 @@ public class TLSH {
         }  
         return result;
     }    
-    /**
-     * The default generator
-     */
-    public TLSH() {
-        bitPairsDiffTable = generateTable();
-    }
-        
-    /**
-     * class interface, public methods 
-     * @param assignedBitPairsDiffTable
-     */
-    public TLSH(final int[][] assignedBitPairsDiffTable) {
-        bitPairsDiffTable = assignedBitPairsDiffTable;
-    }
-
+    
     public void update(final String data) {
             int j = this.dataLen % SLIDING_WND_SIZE;
             int fedLen = this.dataLen;

@@ -719,4 +719,18 @@ public class text {
         return outStr;
      }
     
+    
+    
+    public static String capitalizeString(final String text){
+        if(text.isEmpty()){
+            return "";
+        }else
+        if(text.length() == 1){
+            return text.toUpperCase();
+        }else{
+            return    text.substring(0,1).toUpperCase()
+                    + text.substring(1).toLowerCase();
+        }
+    }
+    
 }
