@@ -111,9 +111,9 @@ public class misc {
  * get date a class was compiled by looking at the corresponding class file in the jar.
  * @origin http://mindprod.com/jgloss/compiletimestamp.html
  * @retrieved in 2013-11-17 by Nuno Brito
-     * @param cls   Class that we want to evaluate the time stamp
-     * @return      The time/date result
-     * @throws java.io.IOException
+ * @param cls   Class that we want to evaluate the time stamp
+ * @return      The time/date result
+ * @throws java.io.IOException
  */
 public static Date getCompileTimeStamp( Class<?> cls ) throws IOException
 {
