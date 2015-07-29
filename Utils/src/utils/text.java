@@ -442,6 +442,7 @@ public class text {
                 result = result.replace("/", ".!.fslash");
                 result = result.replace("\\", ".!.bslash");
                 result = result.replace("?", ".!.question");
+                result = result.replace("\\+", ".!.plus");
         return result;
     }
     /** Decodes a URL safe string
@@ -455,6 +456,7 @@ public class text {
                 result = result.replace(".!.fslash", "/");
                 result = result.replace(".!.bslash", "\\");
                 result = result.replace(".!.question", "?");
+                result = result.replace(".!.plus", "+");
         return result;
     }
 

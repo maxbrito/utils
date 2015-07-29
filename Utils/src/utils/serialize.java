@@ -14,6 +14,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.DatatypeConverter;
 
 /**
@@ -46,7 +48,7 @@ public class serialize {
         return output;
     }
     
-    
+   
     public static Object StringToObject(final String text){
         Object output = null;
         try {
@@ -62,6 +64,25 @@ public class serialize {
             e.printStackTrace();
         }
         return output;
+    }
+    
+    
+    public static String textToBase64(final String text){
+         return DatatypeConverter.printBase64Binary(text.getBytes());
+    }
+    
+    public static String base64ToText(final String text){
+            byte[] testDeconvertBytes =DatatypeConverter.parseBase64Binary(text);
+            return new String(testDeconvertBytes);
+    }
+    
+    public static void main(String[] args){
+            String test = "Proprietary";
+            String convertedText = textToBase64(test);
+            System.out.println(convertedText);
+            
+            String testDeconvert = base64ToText(convertedText);
+            System.out.println(testDeconvert);
     }
     
     
