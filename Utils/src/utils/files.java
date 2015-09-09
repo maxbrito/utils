@@ -8,6 +8,7 @@ import java.io.*;
 import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.thirdparty.MiscMethods;
@@ -628,60 +629,77 @@ public static long folderSize(File where){
         return result;
     }
   
-    
-     /**
+    /**
      * Returns the last line from a given text file. This method is particularly
      * well suited for very large text files that contain millions of text lines
      * since it will just seek the end of the text file and seek the last line
      * indicator. Please use only for large sized text files.
-     * @param file  A file on disk 
-     * @return The last line if available or an empty string if nothing
-     * was found
+     * 
+     * @param file A file on disk
+     * @return The last line or an empty string if nothing was found
+     * 
+     * @author Nuno Brito
+     * @author Michael Schierl
+     * @license MIT
+     * @date 2014-11-01
      */
-    public static String getLastLineFast(final File file){
-        String result = "";
-        
+    public static String getLastLineFast(final File file) {
         // file needs to exist
-        if(file.exists() == false || file.isDirectory()){
-            return "";
+        if (file.exists() == false || file.isDirectory()) {
+                return "";
         }
-        
+
         // avoid empty files
-        if(file.length() <= 2){
-            return "";
+        if (file.length() <= 2) {
+                return "";
         }
-        
+
+        // open the file for read-only mode
         try {
-            // open the file for read-only mode
             RandomAccessFile fileAccess = new RandomAccessFile(file, "r");
-
-            // set initial position as last one, except if this is an empty line
-            long position = file.length()-2;
-            int breakLine = "\n".charAt(0);
-
-            // keep looking for a line break
-            while(position > 0){
-                // look for the offset
-                fileAccess.seek(position);
-                // read the new char
-                final int thisChar = fileAccess.read();
-                // do we have a match?
-                if(thisChar == breakLine){
-                    result = fileAccess.readLine();
-                    //System.out.println(position + ": " + fileAccess.readLine());
-                    break;
+            char breakLine = '\n';
+            // offset of the current filesystem block - start with the last one
+            long blockStart = (file.length() - 1) / 4096 * 4096;
+            // hold the current block
+            byte[] currentBlock = new byte[(int) (file.length() - blockStart)];
+            // later (previously read) blocks
+            List<byte[]> laterBlocks = new ArrayList<byte[]>();
+            while (blockStart >= 0) {
+                fileAccess.seek(blockStart);
+                fileAccess.readFully(currentBlock);
+                // ignore the last 2 bytes of the block if it is the first one
+                int lengthToScan = currentBlock.length - (laterBlocks.isEmpty() ? 2 : 0);
+                for (int i = lengthToScan - 1; i >= 0; i--) {
+                    if (currentBlock[i] == breakLine) {
+                        // we found our end of line!
+                        StringBuilder result = new StringBuilder();
+                        // RandomAccessFile#readLine uses ISO-8859-1, therefore
+                        // we do here too
+                        result.append(new String(currentBlock, i + 1, currentBlock.length - (i + 1), "ISO-8859-1"));
+                        for (byte[] laterBlock : laterBlocks) {
+                                result.append(new String(laterBlock, "ISO-8859-1"));
+                        }
+                        // maybe we had a newline at end of file? Strip it.
+                        if (result.charAt(result.length() - 1) == breakLine) {
+                                // newline can be \r\n or \n, so check which one to strip
+                                int newlineLength = result.charAt(result.length() - 2) == '\r' ? 2 : 1;
+                                result.setLength(result.length() - newlineLength);
+                        }
+                        return result.toString();
+                    }
                 }
-                // decrease the offset
-                position--;
+                // no end of line found - we need to read more
+                laterBlocks.add(0, currentBlock);
+                blockStart -= 4096;
+                currentBlock = new byte[4096];
             }
-            // close the stream
-            fileAccess.close();
         } catch (Exception ex) {
-            ex.printStackTrace();
+                ex.printStackTrace();
         }
-        // all done
-        return result;
+        // oops, no line break found or some exception happened
+        return "";
     }
+    
     
     /**
      * Looks inside a text file to discover the line that contains a given

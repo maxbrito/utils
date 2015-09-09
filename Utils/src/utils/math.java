@@ -31,4 +31,32 @@ public class math {
         return random.nextInt(max - min) + min;
     }
     
+     /**
+     * A distance is not a percentage, but we simplify and compare them to 
+     * ease life of the end-user and avoid confusions since a smaller distance,
+     * means a higher similarity and this might be understood as smaller percentage
+     * of similarity
+     * @param distanceProposed
+     * @return 
+     */
+    public static int convertTlshDistanceToTemptivePercentage(final int distanceProposed){
+        double distance = distanceProposed;
+        // no distance? Assumed as exact match (small possibility this isn't exact)
+        if(distance == 0){
+            return 100;
+        }
+        // do the inverse rule of proportion
+        double value = 200 / distance; // 200 is the max distance to 0%
+        value = 100 / value; // divide the value by 100%
+        value = 100 - value; // get the inverse value
+        // remove the decimal values, we want a single number
+        int result = (int) value;
+//        System.out.println("---> Distance: "
+//                + distance
+//                + "-->"
+//                + result
+//                + "%");
+        return result;
+    }
+    
 }
