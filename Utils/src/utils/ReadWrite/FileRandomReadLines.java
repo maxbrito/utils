@@ -76,9 +76,9 @@ public class FileRandomReadLines {
     /**
      * Provides the next line on our text file
      * @return The next line that was available, or null when nothing was read
-     * @throws java.io.IOException
      */
-    public String getNextLine() throws IOException{
+    public String getNextLine(){
+        try{
         // get the line to see what this is all about
         final String line = reader.readLine();
             // increase the line count
@@ -88,6 +88,10 @@ public class FileRandomReadLines {
            }else{
                return null;
            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }   
     }
 
     public synchronized long getCurrentOffset() throws IOException {
