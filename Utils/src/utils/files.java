@@ -190,6 +190,7 @@ public static long folderSize(File where){
  /**
  * Find all files in a given folder and respective subfolders
  * @param where A file object of the start folder
+ * @param what
  * @param maxDeep How deep is the crawl allowed to proceed
  * @return An array containing all the found files, returns null if none is
  * found
