@@ -49,6 +49,32 @@ import java.util.zip.GZIPOutputStream;
 public class text {
 
 
+    
+    /**
+     * Get a given text between two anchor keywords
+     * @param text  A line of text
+     * @param keyword1  beginning keyword
+     * @param keyword2  finishing keyword
+     * @return empty if nothing found, otherwise returns the result
+     */    
+    public static String getBetweenExpressions(final String text, 
+            String keyword1, String keyword2) {
+       // the regular expression to capture what we are interested to find
+        final String patternString = ""
+                + keyword1
+                + "(.*)"
+                + keyword2
+                ;
+        
+        Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(text);
+        
+        if(matcher.find()) {
+            return matcher.group(1);
+        }
+        return "";
+    }
+    
      /**
         * Gets a string value from laptop characteristics based on a given pattern.
         * A Matcher object is used internally.
