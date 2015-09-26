@@ -396,8 +396,18 @@ public static long folderSize(File where){
        String output;
 
                 long b;
+                long TERABYTE = 1024L * 1024L * 1024L * 1024L;
+                long GIGABYTE = 1024L * 1024L * 1024L;
                 long MEGABYTE = 1024L * 1024L;
                 long KILOBYTE = 1024;
+                if (l > TERABYTE){
+                    b = l / TERABYTE;
+                    output = Long.toString(b)+" Tb";}
+                else
+                if (l > GIGABYTE){
+                    b = l / GIGABYTE;
+                    output = Long.toString(b)+" Gb";}
+                else
                 if (l > MEGABYTE){
                     b = l / MEGABYTE;
                     output = Long.toString(b)+" Mb";}
