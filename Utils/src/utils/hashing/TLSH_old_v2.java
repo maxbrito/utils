@@ -7,12 +7,12 @@ package utils.hashing;
  * Creator: Organization: TripleCheck (contact@triplecheck.de)
  * Created: 2014-12-22T13:34:56Z
  * LicenseName: Apache-2.0
- * FileName: TLSH_deprecated.java  
+ * FileName: TLSH_old_v2.java  
  * FileCopyrightText: <text> Copyright 2014 Vasiliy Vadimov, Nuno Brito </text>
  * FileCopyrightText: <text> Copyright 2013 Trend Micro Incorporated </text>
- * FileComment: <text> Java version of the TLSH_deprecated similarity hashing algorithm.
+ * FileComment: <text> Java version of the TLSH_old_v2 similarity hashing algorithm.
     
-    This code was based on the TLSH_deprecated implementation from TrendMicro that is
+    This code was based on the TLSH_old_v2 implementation from TrendMicro that is
     available on the following repository: https://github.com/trendmicro/tlsh
 
     The original source header indicates: 
@@ -36,7 +36,7 @@ package utils.hashing;
 
 import java.util.Arrays;
 
-public class TLSH_deprecated {
+public class TLSH_old_v2 {
 	
     static final public int	
         BUCKETS 	= 256,
@@ -78,7 +78,7 @@ public class TLSH_deprecated {
     /**
      * The default generator
      */
-    public TLSH_deprecated() {
+    public TLSH_old_v2() {
         bitPairsDiffTable = generateTable();
     }
         
@@ -86,7 +86,7 @@ public class TLSH_deprecated {
      * class interface, public methods 
      * @param assignedBitPairsDiffTable
      */
-    public TLSH_deprecated(final int[][] assignedBitPairsDiffTable) {
+    public TLSH_old_v2(final int[][] assignedBitPairsDiffTable) {
         bitPairsDiffTable = assignedBitPairsDiffTable;
     }
     
@@ -484,11 +484,11 @@ public class TLSH_deprecated {
 		return this.lshCode;
 	}
 
-	public boolean compare(TLSH_deprecated other) {
+	public boolean compare(TLSH_old_v2 other) {
 		return this.lshCode.equals(other.lshCode);
 	}
 
-	final public int totalDiff(TLSH_deprecated other, boolean lenDiff) {
+	final public int totalDiff(TLSH_old_v2 other, boolean lenDiff) {
 		int diff = 0;
 		
 		if (lenDiff) {
@@ -567,8 +567,8 @@ public class TLSH_deprecated {
 
 	public static void main(String [] args) {
 		try {
-			TLSH_deprecated ti1 = new TLSH_deprecated();
-			TLSH_deprecated ti2 = new TLSH_deprecated();
+			TLSH_old_v2 ti1 = new TLSH_old_v2();
+			TLSH_old_v2 ti2 = new TLSH_old_v2();
 
 			String s = "This is a test for Jon Oliver. This is a string. Hello Hello Hello ";
 			while (s.length() < 1023) {
@@ -596,7 +596,7 @@ public class TLSH_deprecated {
 			s = "fgsfds";
 			for (int i = 0; i < 100000; i++)
 				s += (char)('A' + i % 26);
-			TLSH_deprecated ti3 = new TLSH_deprecated();
+			TLSH_old_v2 ti3 = new TLSH_old_v2();
 			ti3.update(s);
 			ti3.finale();
 			System.out.println("hash3 = " + ti3.hash());
