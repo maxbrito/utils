@@ -15,10 +15,12 @@ package utils.hashing;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -92,9 +94,9 @@ public class SHA1 {
                 // no need to continue
                 return;
             }
-            BufferedReader reader;
             // first step is reading the older files
-            reader = new BufferedReader(new FileReader(indexFile));
+            InputStreamReader fileReader = new InputStreamReader(new FileInputStream(indexFile), "UTF-8");
+            BufferedReader reader = new BufferedReader(fileReader);
             // skip the header line
 //            reader.readLine();
             // declare the variables used in the loop
@@ -110,7 +112,8 @@ public class SHA1 {
             }
             reader.close();
             // if we got this far, it means we don't have this signature yet
-            BufferedWriter writer = new BufferedWriter(new FileWriter(indexFile, true));
+            OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(indexFile), "UTF-8");
+            BufferedWriter writer = new BufferedWriter(fileWriter);
             writer.append("\n" + fileName);
             writer.close();
         } catch (FileNotFoundException ex) {

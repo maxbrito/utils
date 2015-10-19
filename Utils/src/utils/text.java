@@ -20,7 +20,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -632,11 +632,13 @@ public class text {
      * @return      The number of line
      */
     public static int countLines(File file){
+        InputStreamReader fileReader;
         BufferedReader reader;
         int counter = 0;
         try {
             // first step is reading the older files
-            reader = new BufferedReader(new FileReader(file));
+            fileReader = new InputStreamReader(new FileInputStream(file), "UTF-8");
+            reader = new BufferedReader(fileReader);
             // go through each line on our large start
             while(reader.readLine() != null){
                counter++;
