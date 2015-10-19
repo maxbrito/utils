@@ -37,15 +37,15 @@ import java.io.Reader;
  * default is large enough for most purposes.
  *
  * <p> In general, each read request made of a Reader causes a corresponding
- read request to be made of the underlying character or byte stream.  It is
- therefore advisable to wrap a BufferedReaderNotSynchronized around any Reader whose read()
- operations may be costly, such as FileReaders and InputStreamReaders.  For
- example,
-
- <pre>
- BufferedReaderNotSynchronized in
-   = new BufferedReaderNotSynchronized(new FileReader("foo.in"));
- </pre>
+ * read request to be made of the underlying character or byte stream.  It is
+ * therefore advisable to wrap a BufferedReaderNotSynchronized around any Reader whose read()
+ * operations may be costly, such as FileReaders and InputStreamReaders.  For
+ * example,
+ *
+ * <pre>
+ * BufferedReaderNotSynchronized in
+ *   = new BufferedReaderNotSynchronized(new FileReader("foo.in"));
+ * </pre>
  *
  * will buffer the input from the specified file.  Without buffering, each
  * invocation of read() or readLine() could cause bytes to be read from the
@@ -53,7 +53,7 @@ import java.io.Reader;
  * inefficient.
  *
  * <p> Programs that use DataInputStreams for textual input can be localized by
- replacing each DataInputStream with an appropriate BufferedReaderNotSynchronized.
+ * replacing each DataInputStream with an appropriate BufferedReaderNotSynchronized.
  *
  * @see FileReader
  * @see InputStreamReader
