@@ -23,3 +23,10 @@ tasks.withType(JavaCompile) {
     options.compilerArgs << '-Xlint:all'
     options.encoding = 'UTF-8'
 }
+
+jar {
+    // Build a "Fat Jar" containing all dependencies.
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

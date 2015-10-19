@@ -13,7 +13,8 @@
 package utils.ReadWrite;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +27,7 @@ public class FileReadLinesCharArray {
   
     // internal variables
     private BufferedReaderReadLineChar reader = null;
-    private FileReader fileReader = null;
+    private InputStreamReader fileReader = null;
     private File fileInput = null;
     
     // mark the offset on disk
@@ -48,7 +49,7 @@ public class FileReadLinesCharArray {
             }
            
             // initialise the objects from where to read text
-            fileReader = new FileReader(fileInput);
+            fileReader = new InputStreamReader(new FileInputStream(fileInput), "UTF-8");
             reader = new BufferedReaderReadLineChar(fileReader);
             
             
