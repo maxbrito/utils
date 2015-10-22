@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-<comment>testing the settings to see how they work</comment>
-<entry key="test1">1234aas</entry>
-<entry key="test">1234343</entry>
-</properties>

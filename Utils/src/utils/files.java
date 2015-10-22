@@ -91,7 +91,8 @@ public class files {
   public static ArrayList<String[]> readAsStringArray(File file){
       ArrayList<String[]> result = new ArrayList();
       try {
-          BufferedReader reader = new BufferedReader(new FileReader(file));
+          InputStreamReader fileReader = new InputStreamReader(new FileInputStream(file), "UTF-8");
+          BufferedReader reader = new BufferedReader(fileReader);
           String temp;
           // iterate through all lines
             while ((temp = reader.readLine()) != null) {
@@ -600,7 +601,7 @@ public static long folderSize(File where){
       int len;
       char[] chr = new char[4096];
       final StringBuffer buffer = new StringBuffer();
-      final FileReader reader = new FileReader(file);
+      final InputStreamReader reader = new InputStreamReader(new FileInputStream(file), "UTF-8");
       try {
           while ((len = reader.read(chr)) > 0) {
               buffer.append(chr, 0, len);
@@ -621,7 +622,7 @@ public static long folderSize(File where){
         String result = "";
         BufferedReader reader;
         try {
-            FileReader fileReader = new FileReader(file);
+            InputStreamReader fileReader = new InputStreamReader(new FileInputStream(file), "UTF-8");
             reader = new BufferedReader(fileReader);
             String line = "";
             while (line != null) {
@@ -726,7 +727,7 @@ public static long folderSize(File where){
         String result = "";
         BufferedReader reader;
         try {
-            FileReader fileReader = new FileReader(file);
+            InputStreamReader fileReader = new InputStreamReader(new FileInputStream(file), "UTF-8");
             reader = new BufferedReader(fileReader);
             String line = "";
             while (line != null) {
@@ -974,7 +975,7 @@ public static long folderSize(File where){
         long lineCounter = 0;
         
         // initialise the objects from where to read text
-        FileReader fileReader = new FileReader(file);
+        InputStreamReader fileReader = new InputStreamReader(new FileInputStream(file), "UTF-8");
         BufferedReader reader = new BufferedReader(fileReader);
         
         // count the lines to infinitum
