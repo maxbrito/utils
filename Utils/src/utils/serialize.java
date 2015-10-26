@@ -14,8 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.UnsupportedEncodingException;
 import javax.xml.bind.DatatypeConverter;
 
 /**
@@ -72,8 +71,12 @@ public class serialize {
     }
     
     public static String base64ToText(final String text){
-            byte[] testDeconvertBytes =DatatypeConverter.parseBase64Binary(text);
-            return new String(testDeconvertBytes);
+        byte[] testDeconvertBytes =DatatypeConverter.parseBase64Binary(text);
+        try {
+            return new String(testDeconvertBytes, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
     }
     
     public static void main(String[] args){

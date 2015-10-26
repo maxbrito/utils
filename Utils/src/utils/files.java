@@ -126,7 +126,12 @@ public class files {
                 return null;
             }
         }
-        return new String(bytes);
+
+        try {
+            return new String(bytes, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
     }
 
 
@@ -687,9 +692,9 @@ public static long folderSize(File where){
                         StringBuilder result = new StringBuilder();
                         // RandomAccessFile#readLine uses ISO-8859-1, therefore
                         // we do here too
-                        result.append(new String(currentBlock, i + 1, currentBlock.length - (i + 1), "ISO-8859-1"));
+                        result.append(new String(currentBlock, i + 1, currentBlock.length - (i + 1), "UTF-8"));
                         for (byte[] laterBlock : laterBlocks) {
-                                result.append(new String(laterBlock, "ISO-8859-1"));
+                                result.append(new String(laterBlock, "UTF-8"));
                         }
                         // maybe we had a newline at end of file? Strip it.
                         if (result.charAt(result.length() - 1) == breakLine) {
