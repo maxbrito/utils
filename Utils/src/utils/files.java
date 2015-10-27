@@ -513,7 +513,7 @@ public static long folderSize(File where){
    public static boolean SaveLargeStringToFile(File inputFile, 
            ArrayList<String[]> listLines){
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(inputFile));
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(inputFile), "UTF-8"));
             for(String[] lines : listLines){
                 for(String line : lines){
                     out.write(line + "\n");
@@ -530,7 +530,7 @@ public static long folderSize(File where){
    
     public static boolean SaveLargeStringToFile(File inputFile, String[] lines){
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(inputFile));
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(inputFile), "UTF-8"));
             for(String line : lines){
                 out.write(line + "\n");
             }
@@ -557,10 +557,10 @@ public static long folderSize(File where){
     */
    public static boolean SaveStringToFile(final File file, 
            final String text){
-       FileWriter fileWriter = null;
+       OutputStreamWriter fileWriter = null;
        BufferedWriter out = null;
         try {
-            fileWriter = new FileWriter(file);
+            fileWriter = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
             out = new BufferedWriter(fileWriter);
             out.write(text);
             
@@ -760,7 +760,7 @@ public static long folderSize(File where){
     public static void addTextToFile(final File file, final String text){
       try {
           // the object that will write our file
-          FileWriter fileWriter = new FileWriter(file, true);
+          OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(file, true), "UTF-8");
           BufferedWriter writer = new BufferedWriter(fileWriter, 8192);
           // write the expected text
           writer.write(text);

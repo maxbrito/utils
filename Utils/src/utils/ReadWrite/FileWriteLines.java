@@ -14,7 +14,8 @@ package utils.ReadWrite;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +27,7 @@ import java.util.logging.Logger;
 public class FileWriteLines {
 
     private BufferedWriter out;
-    private FileWriter fileWriter;
+    private OutputStreamWriter fileWriter;
     
     // should we hold all data into memory or not?
     private boolean 
@@ -34,7 +35,7 @@ public class FileWriteLines {
     
     public FileWriteLines(final File resultFile){
     try {
-        fileWriter = new FileWriter(resultFile);
+        fileWriter = new OutputStreamWriter(new FileOutputStream(resultFile), "UTF-8");
         out = new BufferedWriter(fileWriter);
         isOpen = true;
         } catch (IOException e){
@@ -60,7 +61,7 @@ public class FileWriteLines {
             utils.files.touch(resultFile);
         }
         
-        fileWriter = new FileWriter(resultFile, append);
+        fileWriter = new OutputStreamWriter(new FileOutputStream(resultFile, append), "UTF-8");
         out = new BufferedWriter(fileWriter);
         isOpen = true;
         } catch (IOException e){
