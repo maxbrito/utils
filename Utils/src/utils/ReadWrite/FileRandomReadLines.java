@@ -76,22 +76,21 @@ public class FileRandomReadLines {
     /**
      * Provides the next line on our text file
      * @return The next line that was available, or null when nothing was read
+     * @throws java.lang.Exception
      */
-    public String getNextLine(){
-        try{
+    public String getNextLine() throws Exception{
+        currentLine++;
         // get the line to see what this is all about
-        final String line = reader.readLine();
-            // increase the line count
-           if(line != null){
-                currentLine++;
-                return line;
-           }else{
-               return null;
-           }
-        }catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }   
+        return reader.readLine();
+//            // increase the line count
+////           if(line != null){
+//                currentLine++;
+//                return line;
+////           }else{
+////               return null;
+////               
+////           }
+        
     }
 
     public synchronized long getCurrentOffset() throws IOException {
@@ -145,7 +144,7 @@ public class FileRandomReadLines {
      * @param args 
      * @throws java.io.IOException 
      */
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws Exception{
         
         File testFile = new File("build.xml");
         FileRandomReadLines test = new FileRandomReadLines(testFile);

@@ -566,14 +566,19 @@ public class text {
         }else{
             NumberFormat numberFormat = NumberFormat.getInstance();
             String prettyNumber = numberFormat.format(value);
-
-            
-            
             return prettyNumber + " " + text + "s";  
         }
     }
     
-    
+     public static String pluralize(long value, String text){
+        if(value == 1){
+            return value + " " + text;
+        }else{
+            NumberFormat numberFormat = NumberFormat.getInstance();
+            String prettyNumber = numberFormat.format(value);
+            return prettyNumber + " " + text + "s";  
+        }
+    }   
     /**
      * Compares two exact strings based on their hashes. This method is
      * optimized for speed. Be sure to always use one of the strings as final

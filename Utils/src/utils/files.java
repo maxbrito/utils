@@ -79,6 +79,30 @@ public class files {
       final int pos = filename.lastIndexOf(".");
       return filename.substring(pos + 1).toLowerCase();
     }
+
+    /**
+     * Retrieves the extension portion from a file name. Attempts to provide
+     * an extension for cases where two dots are used. E.g. Archive.tar.gz
+     * @param filename
+     * @return 
+     */
+    public static String getExtensionFlexible(final String filename){
+      // no dot found? use the same file name then
+      if(filename.contains(".") == false){
+          return filename;
+      }
+      // does the file has more than two dots?
+      String[] portions = filename.split("\\.");
+      if(portions.length > 2){
+          return 
+                  portions[portions.length-2] 
+                  + "."
+                  + portions[portions.length-1];
+      }
+      
+      final int pos = filename.lastIndexOf(".");
+      return filename.substring(pos + 1);
+    }
   
 
   /**
