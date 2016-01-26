@@ -90,7 +90,7 @@ public class TLSH {
         bitPairsDiffTable = assignedBitPairsDiffTable;
     }
     
-    protected class LshBinStruct {
+    public class LshBinStruct {
         public int [] 	checksum = new int [TLSH_CHECKSUM_LEN];
         public int	lValue = 0;
         public int	Q = 0;
@@ -461,6 +461,47 @@ public class TLSH {
         this.lshCodeValid = true;   
     }
 
+    /**
+     * Provide the hash in raw bytes
+     * @return 
+     */
+    final public byte[] hashRaw() {
+        byte res[] = new byte[TLSH_CHECKSUM_LEN + CODE_SIZE + 2];
+        int idx = 0;
+        
+        for (int k = 0; k < TLSH_CHECKSUM_LEN; k++) {
+            res[idx++] = (byte)lshBin.checksum[k];
+        }
+        
+        res[idx++] = (byte)lshBin.lValue;
+        res[idx++] = (byte)lshBin.Q;
+        
+        for (int k=0; k < CODE_SIZE; k++) {
+            res[idx++] = (byte)lshBin.tmpCode[k];
+        }
+        
+        return res;
+    }
+    
+    /**
+     * Reconstruct the hash for this object
+     * @param bytes 
+     */    
+    final public void constructFromRaw(byte[] bytes) {
+        int idx = 0;
+        
+        for (int k = 0; k < TLSH_CHECKSUM_LEN; k++) {
+            lshBin.checksum[k] = bytes[idx++] & (0xFF);
+        }
+        
+        lshBin.lValue = bytes[idx++] & (0xFF);
+        lshBin.Q = bytes[idx++] & (0xFF);
+        
+        for (int k=0; k < CODE_SIZE; k++) {
+            lshBin.tmpCode[k] = bytes[idx++] & (0xFF);
+        }
+    }
+    
     public String hash() {
         if (this.lshCode != null) {
             return this.lshCode;
