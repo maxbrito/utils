@@ -32,16 +32,16 @@ import java.util.logging.Logger;
  */
 public class FileWriteLinesWithBuffer {
 
-    private BufferedWriter out;
-    private OutputStreamWriter fileWriter;
+    protected BufferedWriter out;
+    protected OutputStreamWriter fileWriter;
     
     // should we hold all data into memory or not?
     private boolean 
             isOpen = false;
     
     
-    private int bufferLimit = 5000;
-    private String bufferLines = "";
+    protected int bufferLimit = 5000;
+    protected String bufferLines = "";
     
     public FileWriteLinesWithBuffer(final File resultFile){
     try {
@@ -82,7 +82,7 @@ public class FileWriteLinesWithBuffer {
      * Physically write this text to disk
      * @param text 
      */
-    private void saveToDisk(final String text){
+    protected void saveToDisk(final String text){
         try {
                 out.write(text);
             

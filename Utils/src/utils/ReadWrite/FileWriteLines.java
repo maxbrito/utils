@@ -93,6 +93,14 @@ public class FileWriteLines {
         saveToDisk(text);
     }
 
+    public void flush(){
+        try {
+            out.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(FileWriteLines.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     /**
      * Close the buffer and write changes to disk
      */
