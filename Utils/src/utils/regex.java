@@ -15,9 +15,6 @@
 
 package utils;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  *
  * @author Nuno Brito, 5th of August 2014 in Darmstadt, Germany
@@ -32,14 +29,8 @@ public class regex {
      */
     public static String replaceQuotesWithKeyword(final String line){
         String text = line; //"some \"\" string with \"hello\" inside \"and inside\"";
-        Pattern pattern = Pattern.compile("\"[^\"]*\"");
-        Matcher matcher = pattern.matcher(text);
-        while(matcher.find()){
-            text = text.replace(matcher.group(), "##");
-            //System.out.println(matcher.group());
-        }
-//        System.out.println("->" + text);
-//        System.exit(-1);
+        text = text.replaceAll("\"[^\"]*\"", "##");
+
         return text;
     }
     
@@ -50,31 +41,11 @@ public class regex {
      */
     public static String replaceMethodsWithKeyword(final String line){
         String text = line;
-        Pattern pattern = Pattern.compile(
-                "\\b[a-z\\.A-Z]+\\b(?=\\([a-z\\[\\]]*)"
-               // \b[a-z\.A-Z]+\b(?=\([a-z\[\]]*)
-        );
-        Matcher matcher = pattern.matcher(text);
-        while(matcher.find()){
-            // get what was found
-            final String match = matcher.group().toLowerCase();
-            // set the default result
-            String result = "ºM";
-            
-            // was this a boolean literal?
-            if(utils.text.equals(match, "if")){
-                result = "ºIF";
-            }else
-            if(utils.text.equals(match, "for")){
-                result = "ºFOR";
-            }else
-            if(utils.text.equals(match, "while")){
-                result = "ºWH";
-            }
-                
-                
-            text = text.replace(matcher.group(), result);
-        }
+        text = text.replaceAll("\\b(if|IF|If)\\b(?=\\([a-z\\[\\]]*)", "ºIF");
+        text = text.replaceAll("\\b(for|FOR|For)\\b(?=\\([a-z\\[\\]]*)", "ºFOR");
+        text = text.replaceAll("\\b(while|WHILE|While)\\b(?=\\([a-z\\[\\]]*)", "ºWH");
+        text = text.replaceAll("\\b[a-z\\.A-Z]+\\b(?=\\([a-z\\[\\]]*)", "ºM");
+
         return text;
     }
 
@@ -85,33 +56,12 @@ public class regex {
      */
     public static String replaceVariablesWithKeyword(final String line){
         String text = line;
-        Pattern pattern = Pattern.compile("([_A-Za-z0-9\\.]{1,50})(?=(| )[\\;\\,\\+-\\=\\<\\>\\)\\[\\!])");
-        Matcher matcher = pattern.matcher(text);
-        while(matcher.find()){
-            // get what was found
-            final String match = matcher.group();
-            // set the default result
-            String result = "ºV";
-            
-            // was this a boolean literal?
-            if(utils.text.equals(match, "true")){
-                result = "ºTE";
-            }else
-            if(utils.text.equals(match, "false")){
-                result = "ºF";
-            }else
-            if(utils.text.equals(match, "null")){
-                result = "ºNU";
-            }
-            else
-            if(utils.text.equals(match, "return")){
-                result = "ºR";
-            }
-            
-            // do the normal variable convert
-            text = text.replace(matcher.group(), result);
-            
-        }
+        text = text.replaceAll("(true)(?=(| )[\\;\\,\\+-\\=\\<\\>\\)\\[\\!])", "ºTE");
+        text = text.replaceAll("(false)(?=(| )[\\;\\,\\+-\\=\\<\\>\\)\\[\\!])", "ºF");
+        text = text.replaceAll("(null)(?=(| )[\\;\\,\\+-\\=\\<\\>\\)\\[\\!])", "ºNU");
+        text = text.replaceAll("(return)(?=(| )[\\;\\,\\+-\\=\\<\\>\\)\\[\\!])", "ºR");
+        text = text.replaceAll("([_A-Za-z0-9\\.]{1,50})(?=(| )[\\;\\,\\+-\\=\\<\\>\\)\\[\\!])", "ºV");
+
         return text;
     }
     
@@ -127,13 +77,8 @@ public class regex {
     public static String replaceWithKeyword(final String oldKeyword, final String newKeyword,
             final String line){
         String text = line;
-        Pattern pattern = Pattern.compile(""
-                + "\\b"+oldKeyword+"\\b"
-        ); 
-        Matcher matcher = pattern.matcher(text);
-        while(matcher.find()){
-            text = text.replace(matcher.group(), newKeyword);
-        }
+        text = text.replaceAll("\\b"+oldKeyword+"\\b", newKeyword);
+
         return text;
     }
     
@@ -146,7 +91,4 @@ public class regex {
     public static String removeWhiteSpaces(final String line){
         return line.replaceAll("\\s+","");
     }
-    
-    
-    
 }
