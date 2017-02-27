@@ -34,6 +34,10 @@ package utils.hashing;
     </text> 
  */
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Arrays;
 
 public class TLSH {
@@ -88,6 +92,28 @@ public class TLSH {
      */
     public TLSH(final int[][] assignedBitPairsDiffTable) {
         bitPairsDiffTable = assignedBitPairsDiffTable;
+    }
+
+    /**
+     * Build a new TLSH object directly from a file
+     * @param file
+     * @return
+     * @throws Exception 
+     */
+    public static TLSH buildFromFile(File file) throws Exception {
+        TLSH tlshObject = new TLSH();
+        final byte[] buffer = new byte[16384];
+        final InputStream inputStream = new FileInputStream(file);
+        // main loop of byte copy, calculate all checksums together
+        while(inputStream.read(buffer) >= 0){
+            // update the hash for the signature hash (typically SHA1)
+            tlshObject.update(buffer);
+        }
+        // no need to keep this stream open
+        inputStream.close();
+        
+        tlshObject.finale();
+        return tlshObject;
     }
     
     public class LshBinStruct {

@@ -248,6 +248,38 @@ public static long folderSize(File where){
     return result;
     }
  
+   /**
+    * Find all files in a given folder and respective subfolders
+    * @param where A file object of the start folder
+    * @param what
+    * @param maxDeep How deep is the crawl allowed to proceed
+    * @return An array containing all the found files, returns null if none is
+    * found
+    */
+ public static ArrayList<File> findFilesByExtension(File where, final String what, int maxDeep){
+
+    File[] files = where.listFiles();
+    ArrayList<File> result = new ArrayList<File>();
+
+    if(files != null)
+        for (File file : files) {
+          if (file.isFile()){
+              if(file.getName().endsWith(what))
+                 result.add(file);}
+          else
+          if ( (file.isDirectory())
+             &&( maxDeep-1 > 0 ) ){
+                // do the recursive crawling
+                ArrayList<File> temp = findFilesByExtension(file, what, maxDeep-1);
+
+                    for(File thisFile : temp)
+                            result.add(thisFile);
+          }
+        }
+    return result;
+    }
+ 
+ 
 /**
  * Find all files in a given folder and respective subfolders
  * @param where A file object of the start folder
@@ -1047,4 +1079,25 @@ public static long folderSize(File where){
       // all ok
       return true;
     }
+    
+    /**
+     * Delete the annoying DS_Store files
+     * @param folder 
+     * @param showMessage Enable or disable a text message for each
+     * file that was deleted.
+     */
+    public static void deleteDsStoreFiles(File folder, boolean showMessage) {
+        if(folder.exists() == false || folder.isFile()){
+            return;
+        }
+        ArrayList<File> files = utils.files
+                .findFilesFiltered(folder, ".DS_Store", 25);
+        for(File file : files){
+            file.delete();
+            if(showMessage){
+                System.out.println("Deleted: " + file.getPath());
+            }
+        }
+    }
+    
 }
