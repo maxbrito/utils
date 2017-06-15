@@ -172,7 +172,7 @@ public class checksum {
 
         //convert the byte to hex format
         @SuppressWarnings("StringBufferMayBeStringBuilder")
-        final StringBuffer hexString = new StringBuffer();
+        final StringBuilder hexString = new StringBuilder();
     	for (int i=0;i<byteData.length;i++) {
     		final String hex=Integer.toHexString(0xff & byteData[i]);
    	     	if(hex.length()==1) hexString.append('0');

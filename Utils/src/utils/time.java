@@ -83,6 +83,10 @@ public class time {
         time=time+seconds
                 +(seconds == 1 ? " second" : " seconds");
 
+        if(hours == 0 && minutes == 0 && seconds == 0 && ms > 0){
+            time = ms + " milliseconds"; 
+        }
+        
         return time;
                 }
 

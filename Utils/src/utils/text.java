@@ -569,6 +569,14 @@ public class text {
             return prettyNumber + " " + text + "s";  
         }
     }
+        
+    public static String pluralize(String value, String text){
+        if(value.equals("1")){
+            return value + " " + text;
+        }else{
+            return value + " " + text + "s";  
+        }
+    }
     
      public static String pluralize(long value, String text){
         if(value == 1){

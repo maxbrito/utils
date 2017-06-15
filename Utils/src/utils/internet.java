@@ -216,7 +216,8 @@ public static String sendEmail(String emailAddress,
             }
             in.close();
         } catch (Exception me) {
-            return me.toString();
+            //System.err.println(text.getExceptionAsText(me));
+            return "";
         }
         return result;
     }
