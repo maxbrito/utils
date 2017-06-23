@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  *
  * @author Nuno Brito, 26th of January 2015 in Darmstadt, Germany
  */
-public class FileRandomReadLines {
+public final class FileRandomReadLines {
   
     // internal variables
     private BufferedReader reader = null;
@@ -62,16 +62,45 @@ public class FileRandomReadLines {
             fileRaf = new RandomAccessFile(fileInput, "r");
 	
             is = Channels.newInputStream(fileRaf.getChannel());
-            isr = new InputStreamReader(is, Charset.forName("UTF-8"));
+            isr = new InputStreamReader(is);
+            //isr = new InputStreamReader(is, Charset.forName("UTF-8"));
             
             reader = new BufferedReader(isr, bufferSize);
-            
-            
         } catch (Exception ex) {
             Logger.getLogger(FileRandomReadLines.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
         }
     }
+    
+        
+    public FileRandomReadLines(final File textFileTarget, long position){
+        try {
+            // get the file where we want to store or read the variables from
+            fileInput = textFileTarget;
+           
+            // doublecheck if the file was really created
+            if(fileInput.exists() == false){
+                System.out.println("FRLS52 - Critical error, unable to create"
+                        + " variable file: " + fileInput.getAbsolutePath());
+                return;
+            }
+           
+            // associate the file
+            file = textFileTarget;
+            
+            // initialise the objects from where to read text
+            fileRaf = new RandomAccessFile(fileInput, "r");
+	
+            is = Channels.newInputStream(fileRaf.getChannel());
+            isr = new InputStreamReader(is);
+            // move to the intended position
+            seek(position);
+        } catch (Exception ex) {
+            Logger.getLogger(FileRandomReadLines.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+        }
+    }
+
       
     /**
      * Provides the next line on our text file

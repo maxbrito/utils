@@ -49,7 +49,7 @@ public class FileReadLines {
             }
            
             // initialise the objects from where to read text
-            InputStreamReader fileReader = new InputStreamReader(new FileInputStream(fileInput), "UTF-8");
+            InputStreamReader fileReader = new InputStreamReader(new FileInputStream(fileInput));
             reader = new BufferedReader(fileReader);
             
             
