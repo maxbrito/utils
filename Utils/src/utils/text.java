@@ -307,7 +307,7 @@ public class text {
 
     public static String arrayToString(ArrayList<String> a, String separator) {
         StringBuilder result = new StringBuilder();
-        if (a.isEmpty()) {
+        if (a == null || a.isEmpty()) {
             return "";
         }
            
@@ -532,19 +532,20 @@ public class text {
             // split everything
             String[] split = input.split("&");
             String result = "";
-            // iterate them all
-            for(int i = 0; i < split.length; i++){
-                // continue to the next one if we don't like this one
-                if(split[i].contains(filter)==false)
-                    continue;
-                // get only the last part that contains the value
-                String snip = split[i].substring(split[i].indexOf("=")+1);
-                // clean it
-                //snip = org.htmlparser.util.Translate.decode(snip);
-                snip = java.net.URLDecoder.decode(snip);
-                // add it up
-                result = result.concat(snip + "|");
+        // iterate them all
+        for (String split1 : split) {
+            // continue to the next one if we don't like this one
+            if (split1.contains(filter) == false) {
+                continue;
             }
+            // get only the last part that contains the value
+            String snip = split1.substring(split1.indexOf("=") + 1);
+            // clean it
+            //snip = org.htmlparser.util.Translate.decode(snip);
+            snip = java.net.URLDecoder.decode(snip);
+            // add it up
+            result = result.concat(snip + "|");
+        }
             // add the inital splitter
             if(result.length()>0)
                 result = "|" + result;
@@ -808,6 +809,17 @@ public class text {
             return    text.substring(0,1).toUpperCase()
                     + text.substring(1).toLowerCase();
         }
+    }
+    
+    
+    /**
+     * Verifies that a given text is not null and some content different
+     * from empty spaces.
+     * @param text
+     * @return 
+     */
+    public static boolean hasText(String text){
+        return text != null && text.trim().isEmpty() == false;
     }
     
 }
