@@ -127,6 +127,9 @@ public class FileWriteLinesWithBuffer {
      * Close the buffer and write changes to disk
      */
     public void close(){
+        if(isOpen == false){
+            return;
+        }
     try {
         // do we still have any data left to write?
         if(bufferLines.length() > 0){

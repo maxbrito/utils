@@ -88,7 +88,8 @@ public class time {
         }
         
         return time;
-                }
+                
+    }
 
     /**
      * Converts a given date to a unique number
