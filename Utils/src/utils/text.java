@@ -75,6 +75,34 @@ public class text {
         return "";
     }
     
+    /**
+     * Get a given text between two anchor keywords
+     * @param text  A line of text
+     * @param keyword1  beginning keyword
+     * @param keyword2  finishing keyword
+     * @return empty if nothing found, otherwise returns the result
+     */    
+    public static ArrayList<String> getTextBlockArray(final String text, 
+            String keyword1, String keyword2) {
+       // the regular expression to capture what we are interested to find
+        final String patternString = ""
+                + keyword1
+                + "(.*)"
+                + keyword2
+                ;
+        
+        Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(text);
+        ArrayList<String> output = new ArrayList();
+        
+        while(matcher.find()) {
+            output.add(matcher.group());
+        }
+        return output;
+    }
+    
+    
+    
      /**
         * Gets a string value from laptop characteristics based on a given pattern.
         * A Matcher object is used internally.
@@ -235,7 +263,7 @@ public class text {
      /**
       * Only returns numbers from a given string
       * @param input
-      * @return 
+      * @return -1 when it is not possible to extract a number
       */  
      public static int justNumbers(String input){
          try{
@@ -820,6 +848,30 @@ public class text {
      */
     public static boolean hasText(String text){
         return text != null && text.trim().isEmpty() == false;
+    }
+    
+        
+    /**
+     * Looks for the first match of anchorStart, stops copying the text until
+     * the anchorFinish portion is found. If either of the anchors does not
+     * exist, then the result is null
+     * @param text
+     * @param anchorStart
+     * @return 
+     */
+    public static String getText(String text, String anchorStart, 
+            String anchorFinish) {
+        int pos1 = text.indexOf(anchorStart);
+        if(pos1 == -1){
+            return null;
+        }
+        final String line = text.substring(pos1 + anchorStart.length());
+        int pos2 = line.indexOf(anchorFinish);
+        if(pos2 == -1){
+            return null;
+        }
+        // give back what we have found
+        return line.substring(0, pos2);
     }
     
 }

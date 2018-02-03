@@ -38,6 +38,13 @@ public class TestInternet {
         // this page will be redirected to http://api.jqueryui.com/resizable/
         String urlNew = utils.internet.getRedirection(urlOriginal);
         Assert.assertEquals("http://api.jqueryui.com/resizable/", urlNew);
+        
+        
+        // check if this is the final redirect
+        // http://learn.jquery.com/UI/Widget
+        // http://learn.jquery.com/jquery-ui/widget-factory/
+       
+               
     }
     
     

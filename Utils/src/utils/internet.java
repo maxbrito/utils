@@ -130,21 +130,26 @@ public class internet {
         HttpURLConnection conn;
         
         try {
-                resourceUrl = new URL(urlOriginal);
-                conn = (HttpURLConnection) resourceUrl.openConnection();
-                conn.setConnectTimeout(15000);
-                conn.setReadTimeout(15000);
-                conn.setInstanceFollowRedirects(false);
-                conn.setRequestProperty("User-Agent", "maxbrito/utils");
+            resourceUrl = new URL(urlOriginal);
+            conn = (HttpURLConnection) resourceUrl.openConnection();
+            conn.setConnectTimeout(15000);
+            conn.setReadTimeout(15000);
+            conn.setInstanceFollowRedirects(false);
+            conn.setRequestProperty("User-Agent", "maxbrito/utils");
 
-                switch (conn.getResponseCode()){
-                case HttpURLConnection.HTTP_MOVED_PERM:
-                case HttpURLConnection.HTTP_MOVED_TEMP:
-                   location = conn.getHeaderField("Location");
-                   location = URLDecoder.decode(location, "UTF-8");
-                    return location;
-                }
-                } catch (Exception me) {
+            switch (conn.getResponseCode()){
+            case HttpURLConnection.HTTP_MOVED_PERM:
+            case HttpURLConnection.HTTP_MOVED_TEMP:
+               location = conn.getHeaderField("Location");
+               location = URLDecoder.decode(location, "UTF-8");
+//               // check if this is the final redirect
+//               String test = getRedirection(location);
+//               if(test.hashCode() != location.hashCode()){
+//                   return test;
+//               }
+               return location;
+            }
+            } catch (Exception me) {
             return null;
         }
         return null;
