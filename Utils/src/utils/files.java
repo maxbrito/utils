@@ -5,7 +5,9 @@
 package utils;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.channels.FileChannel;
+import java.security.CodeSource;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,58 @@ import utils.thirdparty.MiscMethods;
  */
 public class files {
   
+    /**
+     * Provides back the folder where the running jar is placed.
+     * This is useful for cases where you launch a jar file from some
+     * other folder but need that jar file to access specific sub-folders
+     * where it is placed.
+     * 
+     * This method tries to detect when you are running the code from
+     * an IDE and attempt to correct the file path accordingly.
+     * @return 
+     */
+    public static File getFolderForJar(){
+        try {
+            // get the folder where the jar is located
+            CodeSource codeSource = files.class.getProtectionDomain().getCodeSource();
+            File jarFile = new File(codeSource.getLocation().toURI().getPath());
+            // if we are running this internally from the IDE, fix it to the base folder
+            if(jarFile.getParentFile().getPath().endsWith("/build")){
+                // return the ./run/ folder that is defined by the IDE
+                return new File(System.getProperty("user.dir"));
+            }else{
+                // return the folder where the jar can be found
+                return jarFile.getParentFile();
+            }
+        } catch (URISyntaxException ex) {
+            return null;
+        }
+    }
+    
+    /**
+     * Tries to discover if we are running this code from the netbeans IDE
+     * or from a normal .jar mode
+     * @return 
+     */
+    public static boolean weAreInDevMode(){
+    try {
+            // get the folder where the jar is located
+            CodeSource codeSource = files.class.getProtectionDomain().getCodeSource();
+            File jarFile = new File(codeSource.getLocation().toURI().getPath());
+            // if we are running this internally from the IDE, fix it to the base folder
+            if(jarFile.getParentFile().getPath().endsWith("/build")){
+                // return the ./run/ folder that is defined by the IDE
+                return true;
+            }else{
+                // return the folder where the jar can be found
+                return false;
+            }
+        } catch (URISyntaxException ex) {
+            return false;
+        }
+    }
+    
+    
     /** Writes an inputstream back into a file
      * @param inputStream
      * @param outFile 

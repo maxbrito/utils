@@ -94,7 +94,9 @@ public class FileReadLines {
     public void close(){
         try {
             // close the streams
-            reader.close();
+            if(reader != null){
+                reader.close();
+            }
         } catch (IOException ex) {
             Logger.getLogger(FileReadLines.class.getName()).log(Level.SEVERE, null, ex);
         }
