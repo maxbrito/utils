@@ -33,6 +33,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -343,12 +344,27 @@ public class text {
             result.append(line);
             result.append(separator);
         }
-        
         // grab the final result and remove the last separator, create a new output String
         String output = result.toString().substring(0, result.toString().length() - separator.length());
-        
         return output;
     }
+    
+    public static String arrayToString(CopyOnWriteArrayList<String> a, String separator) {
+        StringBuilder result = new StringBuilder();
+        if (a == null || a.isEmpty()) {
+            return "";
+        }
+           
+        for(String line : a){
+            result.append(line);
+            result.append(separator);
+        }
+        // grab the final result and remove the last separator, create a new output String
+        String output = result.toString().substring(0, result.toString().length() - separator.length());
+        return output;
+    }
+    
+    
     
     /** Provides the index number of a given string inside an array.
      Returns -1 if the string was not found, 0 equals to the first item and
