@@ -19,7 +19,6 @@
 package utils.thirdparty;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
@@ -41,7 +40,7 @@ public class MiscMethods {
      * @license CC-BY-SA-3.0
      * @retrieved 2014-12-01 by Nuno Brito
      */
-    public static String executeCommand(final String command) {
+    public static String executeCommand(final String... command) {
 		
         StringBuilder output = new StringBuilder();
  
@@ -56,15 +55,13 @@ public class MiscMethods {
             String line;			
             while ((line = reader.readLine())!= null) {
                     output.append(line).append("\n");
-                    System.out.println(line);
+                    //System.out.println(line);
             }
 
             i.close();
             reader.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
                 e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
         return output.toString();
     }
