@@ -33,6 +33,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,7 +51,20 @@ import java.util.zip.GZIPOutputStream;
 public class text {
 
 
-    
+    /**
+     * Repeat a specific sequence of text the amount of times needed.
+     * This is useful for creating strings with a specific pattern and size.
+     * @param text
+     * @param timesToRepeat
+     * @return 
+     */
+    public static String doRepeatText(String text, int timesToRepeat){
+        StringBuilder output = new StringBuilder();
+        for(int i = 0; i < timesToRepeat; i++){
+            output.append(text);
+        }
+        return output.toString();
+    }
     /**
      * Get a given text between two anchor keywords
      * @param text  A line of text
@@ -349,6 +363,22 @@ public class text {
         return output;
     }
     
+    public static String arrayToString(List<String> a, String separator) {
+        StringBuilder result = new StringBuilder();
+        if (a == null || a.isEmpty()) {
+            return "";
+        }
+           
+        for(String line : a){
+            result.append(line);
+            result.append(separator);
+        }
+        // grab the final result and remove the last separator, create a new output String
+        String output = result.toString().substring(0, result.toString().length() - separator.length());
+        return output;
+    }
+   
+    
     public static String arrayToString(CopyOnWriteArrayList<String> a, String separator) {
         StringBuilder result = new StringBuilder();
         if (a == null || a.isEmpty()) {
@@ -632,6 +662,17 @@ public class text {
             return prettyNumber + " " + text + "s";  
         }
     }   
+     
+         
+     public static String pluralize(double value, String text){
+        if(value == 1){
+            return value + " " + text;
+        }else{
+            NumberFormat numberFormat = NumberFormat.getInstance();
+            String prettyNumber = numberFormat.format(value);
+            return prettyNumber + " " + text + "s";  
+        }
+    } 
     /**
      * Compares two exact strings based on their hashes. This method is
      * optimized for speed. Be sure to always use one of the strings as final
@@ -687,21 +728,23 @@ public class text {
     /**
      * Count the number of lines inside a given file
      * @param file  A target text file
-     * @return      The number of line
+     * @return The number of lines
      */
-    public static int countLines(File file){
+    public static long countLines(File file){
         InputStreamReader fileReader;
         BufferedReader reader;
-        int counter = 0;
+        long counter = 0;
         try {
-            // first step is reading the older files
-            fileReader = new InputStreamReader(new FileInputStream(file), "UTF-8");
+            FileInputStream fileInput = new FileInputStream(file);
+            fileReader = new InputStreamReader(fileInput, "UTF-8");
             reader = new BufferedReader(fileReader);
             // go through each line on our large start
             while(reader.readLine() != null){
                counter++;
             }
             reader.close();
+            fileReader.close();
+            fileInput.close();
         }
         catch (IOException e){
             System.err.println("IV359 - Error while counting files");

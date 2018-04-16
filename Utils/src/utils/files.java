@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utils.ReadWrite.FileReadLines;
 import utils.thirdparty.MiscMethods;
 
 /**
@@ -128,7 +129,7 @@ public class files {
   public static String getExtension(final String filename){
       // no dot found? no need to proceed
       if(filename.contains(".") == false){
-          return null;
+          return filename;
       }
       final int pos = filename.lastIndexOf(".");
       return filename.substring(pos + 1).toLowerCase();
@@ -263,7 +264,6 @@ public static long folderSize(File where){
 /**
  * Find all files in a given folder and respective subfolders
  * @param where A file object of the start folder
- * @param maxDeep How deep is the crawl allowed to proceed
  * @return An array containing all the found files, returns null if none is
  * found
  */
@@ -285,20 +285,20 @@ public static long folderSize(File where){
     ArrayList<File> result = new ArrayList<File>();
 
     if(files != null)
-    for (File file : files) {
-      if (file.isFile()){
-          if(file.getName().contains(what))
-             result.add(file);}
-      else
-      if ( (file.isDirectory())
-         &&( maxDeep-1 > 0 ) ){
-            // do the recursive crawling
-            ArrayList<File> temp = findFilesFiltered(file, what, maxDeep-1);
+        for (File file : files) {
+            if (file.isFile()){
+                if(file.getName().contains(what))
+                   result.add(file);}
+            else
+            if ( (file.isDirectory())
+               &&( maxDeep-1 > 0 ) ){
+                  // do the recursive crawling
+                  ArrayList<File> temp = findFilesFiltered(file, what, maxDeep-1);
 
-                for(File thisFile : temp)
-                        result.add(thisFile);
-      }
-    }
+                      for(File thisFile : temp)
+                              result.add(thisFile);
+            }
+        }
     return result;
     }
  
@@ -392,17 +392,21 @@ public static long folderSize(File where){
     }
  
  
- /** Get the size of a given folder and respective files inside subfolders */
-  public static long getFolderSize(File where, int maxDeep){
-      // output variable
-      long result = 0;
-      // get all files from the given folder
-      ArrayList<File> files = findFiles(where, 25);
-      // iterate each file and sum the value
-      for(File file : files)
-          result += file.length();
-      // output our result
-     return result;
+    /**
+     * @param where Get the size of a given folder and respective files inside subfolders 
+     * @param maxDeep 
+     * @return  
+     */
+    public static long getFolderSize(File where, int maxDeep){
+        // output variable
+        long result = 0;
+        // get all files from the given folder
+        ArrayList<File> files = findFiles(where, 25);
+        // iterate each file and sum the value
+        for(File file : files)
+            result += file.length();
+        // output our result
+    return result;
     }
  
   
@@ -428,18 +432,18 @@ public static long folderSize(File where){
     ArrayList<File> result = new ArrayList<File>();
 
     if(files != null)
-    for (File file : files) {
-      
-      if ( (file.isDirectory())
-         &&( maxDeep-1 > 0 ) ){
-          result.add(file);
-          // do the recursive crawling
-          ArrayList<File> temp = findFolders(file, maxDeep-1);
+        for (File file : files) {
 
-                for(File thisFile : temp)
-                        result.add(thisFile);
-      }
-    }
+          if ( (file.isDirectory())
+             &&( maxDeep-1 > 0 ) ){
+              result.add(file);
+              // do the recursive crawling
+              ArrayList<File> temp = findFolders(file, maxDeep-1);
+
+                    for(File thisFile : temp)
+                            result.add(thisFile);
+          }
+        }
     return result;
   }
 
@@ -456,20 +460,20 @@ public static long folderSize(File where){
     ArrayList<File> result = new ArrayList<File>();
 
     if(files != null)
-    for (File file : files) {
-      if (file.isFile())
-         result.add(file);
-      else
-      if ( (file.isDirectory())
-         &&( maxDeep-1 > 0 ) ){
-          result.add(file);
-          // do the recursive crawling
-          ArrayList<File> temp = findAll(file, maxDeep-1);
+        for (File file : files) {
+          if (file.isFile())
+             result.add(file);
+          else
+          if ( (file.isDirectory())
+             &&( maxDeep-1 > 0 ) ){
+              result.add(file);
+              // do the recursive crawling
+              ArrayList<File> temp = findAll(file, maxDeep-1);
 
-                for(File thisFile : temp)
-                        result.add(thisFile);
-      }
-    }
+                    for(File thisFile : temp)
+                            result.add(thisFile);
+          }
+        }
     return result;
   }
 
@@ -485,11 +489,11 @@ public static long folderSize(File where){
     ArrayList<File> result = new ArrayList<File>();
 
     if(files != null)
-    for (File file : files) {
-      if (file.isDirectory()) {
-         result.add(file);
-      }
-    }
+        for (File file : files) {
+          if (file.isDirectory()) {
+             result.add(file);
+          }
+        }
     return result;
   }
 
@@ -498,7 +502,7 @@ public static long folderSize(File where){
    
 
 
-/**
+   /**
     * Ensures that we can pick on a value and present a readable
     * size of the file instead of plain bytes
     *
@@ -537,7 +541,10 @@ public static long folderSize(File where){
    }
 
 
-   /** get the folder where our user documents are placed */
+   /** 
+    * get the folder where our user documents are placed
+    * @return  
+    */
    public static synchronized String getDocumentsDirectory(){
 
        String result = "";
@@ -554,14 +561,20 @@ public static long folderSize(File where){
             return result;
    }
 
-   /** get the desktop folder  */
+   /** 
+    * get the desktop folder
+    * @return  
+    */
    public static synchronized String getDesktopDirectory(){
                javax.swing.JFileChooser jFileChooser1 = new javax.swing.JFileChooser();
             return jFileChooser1.getFileSystemView().getHomeDirectory()
                     .getAbsolutePath();
    }
 
-   /** get our home folder (under windows this value is not certain)*/
+   /** 
+    * get our home folder (under windows this value is not certain
+    * @return )
+    */
    public static synchronized String getHomeDirectory(){
                javax.swing.JFileChooser jFileChooser1
                        = new javax.swing.JFileChooser();
@@ -572,8 +585,12 @@ public static long folderSize(File where){
     }
 
 
-   /** create a folder along with respective parent folders if needed */
-   public static Boolean mkdirs(String folder){
+   /** 
+    * create a folder along with respective parent folders if needed
+    * @param folder
+    * @return  
+    */
+    public static Boolean mkdirs(String folder){
        boolean result;
 
         File docs = new File(folder);
@@ -582,7 +599,11 @@ public static long folderSize(File where){
         return result;
     }
 
-  /** create a folder along with respective parent folders if needed */
+  /** 
+    * create a folder along with respective parent folders if needed
+    * @param docs
+    * @return  
+    */
    public static Boolean mkdirs(File docs){
        boolean result;
         result = docs.mkdirs();
@@ -703,8 +724,8 @@ public static long folderSize(File where){
 
 
    /**
-   * Load a text file contents as a <code>String<code>.
-   * This method does not perform enconding conversions
+   * Load a text file contents as a <code>String</code>.
+   * This method does not perform encoding conversions
    *
    * @param file The input file
    * @return The file contents as a <code>String</code>
@@ -1152,6 +1173,45 @@ public static long folderSize(File where){
                 System.out.println("Deleted: " + file.getPath());
             }
         }
+    }
+
+    /**
+     * Reads a portion of text from a file
+     * @param file
+     * @param lineStart Where we start reading
+     * @param lineEnd   Where we stop reading
+     * @return null when something goes wrong
+     */
+    public static String readFileBetweenLines(File file, int lineStart, int lineEnd) {
+        try {
+            // make sure that the file is existing
+            if(file == null || file.exists() == false || file.isDirectory()){
+                return null;
+            }
+            if(lineStart >= lineEnd){
+                return null;
+            }
+            FileReadLines fileReader = new FileReadLines(file);
+            String output = "";
+            StringBuilder line;
+            int counter = 0;
+            // look for the lines we want
+            while((line = fileReader.getNextLine()) != null){
+                counter++;
+                if(counter >= lineStart && counter <= lineEnd){
+                    output = output.concat(line.toString()).concat("\n");
+                }
+                // no need to keep reading
+                if(counter > lineEnd){
+                    break;
+                }
+            }
+            fileReader.close();
+            return output;
+        } catch (IOException ex) {
+            Logger.getLogger(files.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
 }

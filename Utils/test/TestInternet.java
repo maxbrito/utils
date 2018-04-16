@@ -5,6 +5,7 @@
 
 import junit.framework.Assert;
 import org.junit.Test;
+import utils.internet;
 
 /**
  * Test if the internet class is working as expected
@@ -43,10 +44,15 @@ public class TestInternet {
         // check if this is the final redirect
         // http://learn.jquery.com/UI/Widget
         // http://learn.jquery.com/jquery-ui/widget-factory/
-       
-               
     }
     
+    
+    @Test
+    public void testNetworkConnected(){
+        // this test only works when a network cable is connected
+        boolean isConnected = internet.checkThatNetworkIsAvailable();
+        Assert.assertTrue(isConnected);
+    }
     
     
     

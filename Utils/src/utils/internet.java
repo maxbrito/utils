@@ -12,6 +12,9 @@ import java.io.InputStreamReader;
 import java.net.*;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -259,6 +262,28 @@ public class internet {
    }
  
    
+    /**
+     * Checks if the network adapters are connected, it does not check
+     * that we can connect to the Internet.
+     * @return 
+     */
+    public static boolean checkThatNetworkIsAvailable(){
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface interf = interfaces.nextElement();
+                if (interf.isUp() && !interf.isLoopback()) {
+                    List<InterfaceAddress> adrs = interf.getInterfaceAddresses();
+                    for (InterfaceAddress adr : adrs) {
+                        InetAddress inadr = adr.getAddress();
+                        if (inadr instanceof Inet4Address) return true;
+                    }
+                }
+            }       } catch (SocketException ex) {
+            Logger.getLogger(internet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
      
 }
 class WebGetThread extends Thread{
@@ -275,5 +300,4 @@ class WebGetThread extends Thread{
         utils.internet.getWebPage(URL);
     }
     
-     
 }
