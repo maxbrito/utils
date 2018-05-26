@@ -321,11 +321,21 @@ public class html {
 
     /**
      * Outputs an error message about something that went wrong
+     * @param error_message
+     * @return 
      */
     public static String errorMessage(String error_message) {
         return "<b>" + error_message + "</b>";
     }
     
+    /**
+     * Adds a number of tabs
+     * @param numberOfTabs
+     * @return 
+     */
+    public static String tab(int numberOfTabs){
+        return utils.text.doRepeatText("\t", numberOfTabs);
+    }
     
     
 }

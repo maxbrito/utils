@@ -57,6 +57,22 @@ public class similarity {
         // get the percentual value
         return (points * 100) / size;
     }
+  
+    public static int britoshteinPercentage(final StringBuffer c1, final char[] c2) {
+         // get the smallest of the two arrays to compare
+        final int size = Math.min(c1.length(), c2.length);
+        int points = 0;
+        int pointer = 0;
+        // compare each case
+        for(int i = 0; i < size; i++){
+            if(c1.charAt(pointer) == c2[i]){
+                points++;
+                pointer++;
+            }
+        }
+        // get the percentual value
+        return (points * 100) / size;
+    }
 
     public static int britoshteinPercentage2(final char[] c1, final char[] c2) {
          // get the smallest of the two arrays to compare

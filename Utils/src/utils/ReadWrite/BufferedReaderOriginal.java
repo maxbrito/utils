@@ -414,8 +414,10 @@ public class BufferedReaderOriginal extends Reader {
      * stream is ready if the buffer is not empty, or if the underlying
      * character stream is ready.
      *
+     * @return 
      * @exception  IOException  If an I/O error occurs
      */
+    @Override
     public boolean ready() throws IOException {
 	synchronized (lock) {
 	    ensureOpen();
@@ -466,6 +468,7 @@ public class BufferedReaderOriginal extends Reader {
      * @exception  IllegalArgumentException  If readAheadLimit is < 0
      * @exception  IOException  If an I/O error occurs
      */
+    @Override
     public void mark(int readAheadLimit) throws IOException {
 	if (readAheadLimit < 0) {
 	    throw new IllegalArgumentException("Read-ahead limit < 0");
@@ -484,6 +487,7 @@ public class BufferedReaderOriginal extends Reader {
      * @exception  IOException  If the stream has never been marked,
      *                          or if the mark has been invalidated
      */
+    @Override
     public void reset() throws IOException {
 	synchronized (lock) {
 	    ensureOpen();
@@ -496,6 +500,7 @@ public class BufferedReaderOriginal extends Reader {
 	}
     }
 
+    @Override
     public void close() throws IOException {
 	synchronized (lock) {
 	    if (in == null)

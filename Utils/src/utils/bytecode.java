@@ -21,7 +21,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.codehaus.commons.compiler.CompileException;
 import org.codehaus.janino.SimpleCompiler;
 
 /**
@@ -29,6 +28,28 @@ import org.codehaus.janino.SimpleCompiler;
  * @author Nuno Brito, 25th of May in Darmstadt, Germany.
  */
 public class bytecode {
+    
+    /**
+     * Given a file on disk, this method will try to convert a source code
+     * file into a compiled bytecode class
+     * @param sourceCode
+     * @param sourceFile
+     * @return              The compiled object
+     */
+    public static Object getObject(final String sourceCode, File sourceFile){
+        final Class clazz;
+        try {
+            SimpleCompiler compiler = new SimpleCompiler();
+            compiler.cook(sourceCode);
+            clazz = compiler.getClassLoader().loadClass(buildClassName(sourceCode, sourceFile));
+            return clazz.newInstance();
+            
+        } catch (Exception ex) {
+            System.out.println("Error processing this source code: \n" + sourceCode);
+            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return null;
+    }
     
     /**
      * Given a file on disk, this method will try to convert a source code
@@ -62,21 +83,15 @@ public class bytecode {
      * @return              The compiled object
      */
     public static Object getObjectNoPackage(final File sourceFile, final String className){
-        Class clazz;
         try {
+            Class clazz;
             String sourceCode = utils.files.readAsString(sourceFile);
             SimpleCompiler compiler = new SimpleCompiler();
             compiler.cook(sourceCode);
             clazz = compiler.getClassLoader().loadClass(className);
             return clazz.newInstance();
             
-        } catch (CompileException ex) {
-            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Object.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -97,13 +112,14 @@ public class bytecode {
            new Object[]{"Hello"});
     }
     
-  static void invoke(String aClass, String aMethod, Class[] params, Object[] args) {
-    try {
-      Class c = Class.forName(aClass);
+    @SuppressWarnings("CallToPrintStackTrace")
+    public static void invoke(String aClass, String aMethod, Class[] params, Object[] args) {
+        try {
+            Class c = Class.forName(aClass);
       
-      for(Method method : c.getDeclaredMethods()){
-          System.err.println("--------->" + method.getName());
-      }
+        for(Method method : c.getDeclaredMethods()){
+            System.err.println("--------->" + method.getName());
+        }
       
       
       Method m = c.getDeclaredMethod(aMethod, params);

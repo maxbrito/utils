@@ -916,6 +916,7 @@ public class text {
      * exist, then the result is null
      * @param text
      * @param anchorStart
+     * @param anchorFinish
      * @return 
      */
     public static String getText(String text, String anchorStart, 

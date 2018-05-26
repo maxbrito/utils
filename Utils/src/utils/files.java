@@ -122,7 +122,7 @@ public class files {
 
   /**
    * Returns the extension from a given file name. If the file name has no
-   * dots then it will return null as result.
+   * dots then it will return the whole filename as result.
    * @param filename
    * @return 
    */
@@ -1111,7 +1111,8 @@ public static long folderSize(File where){
         long lineCounter = 0;
         
         // initialise the objects from where to read text
-        InputStreamReader fileReader = new InputStreamReader(new FileInputStream(file), "UTF-8");
+        FileInputStream fileInputStream = new FileInputStream(file);
+        InputStreamReader fileReader = new InputStreamReader(fileInputStream, "UTF-8");
         BufferedReader reader = new BufferedReader(fileReader);
         
         // count the lines to infinitum
@@ -1122,6 +1123,7 @@ public static long folderSize(File where){
         // close the streams
         reader.close();
         fileReader.close();
+        fileInputStream.close();
         
         return lineCounter;
     }
