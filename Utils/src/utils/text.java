@@ -249,6 +249,30 @@ public class text {
     	return hexString.toString();
     }
   
+    /**
+     * Removes characters that are non-printable.
+     * Copied from a tutorial website on 2018-08-14
+     * @source https://howtodoinjava.com/regex/java-clean-ascii-text-non-printable-chars/
+     * @param text
+     * @return null if the text is invalid
+     */
+    public static String cleanAsciiText(String text){
+        if(utils.text.isEmpty(text)){
+            return null;
+        }
+        // strips off all non-ASCII characters
+        text = text.replaceAll("[^\\x00-\\x7F\\x80-\\x9F]", "");
+        //text = text.replaceAll("[^\\x00-\\x7F]", "");
+
+        // erases all the ASCII control characters
+        text = text.replaceAll("[\\p{Cntrl}&&[^\r\n\t]]", "");
+
+        // removes non-printable characters from Unicode
+        text = text.replaceAll("\\p{C}", "");
+ 
+    return text.trim();
+    }
+    
      /**
       * Get safe string
       * Picks a given string and cleans out any invalid characters, replacing
@@ -267,9 +291,9 @@ public class text {
           //input = input.replace(";", ".");
  
            
-           String output =
+            String output =
                 utils.text.findRegEx( // only accept a-Z, 0-9 and -, _ chars
-                        input,"[a-zA-Z0-9-_@\\.]+$", 0);
+                        input,"[a-zA-Z0-9-_@\\.\\:]+$", 0);
 
        return output;
        }

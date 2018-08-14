@@ -56,7 +56,7 @@ public class files {
      * @return 
      */
     public static boolean weAreInDevMode(){
-    try {
+        try {
             // get the folder where the jar is located
             CodeSource codeSource = files.class.getProtectionDomain().getCodeSource();
             File jarFile = new File(codeSource.getLocation().toURI().getPath());
