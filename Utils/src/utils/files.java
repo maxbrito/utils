@@ -1216,4 +1216,71 @@ public static long folderSize(File where){
         return null;
     }
     
+    /**
+     * Changes all occurrences of a text for another one.
+     * This method is specially designed to handle large text files that would
+     * not normally fit in RAM, reason why it the data is streamed to another
+     * file.
+     * @param textExisting
+     * @param textNew
+     * @param file 
+     * @throws java.lang.Exception 
+     */
+    @SuppressWarnings("CallToPrintStackTrace")
+    public static void searchAndReplace(String textExisting,
+            String textNew, File file){
+        File fileTemp = new File(file.getParentFile(), file.getName() + ".tmp");
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
+        FileOutputStream fileOutput = null;
+        try{
+            fileReader = new FileReader(file);
+            bufferedReader = new BufferedReader(fileReader);
+            fileOutput = new FileOutputStream(fileTemp);
+            String line;
+            String input;
+            while ((line = bufferedReader.readLine()) != null) {
+                // replace the old text
+                if (line.contains(textExisting)){
+                    line = line.replace(textExisting, textNew);
+                }
+                input = line + '\n';
+                fileOutput.write(input.getBytes());
+            }
+            // drop the last bytes
+            fileOutput.flush();
+            
+            // close things up
+            fileReader.close();
+            bufferedReader.close();
+            fileOutput.close();
+            
+            // delete the original file
+            file.delete();
+            // rename the temp file to the original file name
+            fileTemp.renameTo(file);
+            // all done
+        
+        }catch (Exception e){
+            System.err.println("Problem reading file: " + file.getPath());
+            e.printStackTrace();
+        }finally{
+            try{
+            // close things up
+            if(fileReader != null){
+                fileReader.close();
+            }
+            if(bufferedReader != null){
+                bufferedReader.close();
+            }
+            if(fileOutput != null){
+                fileOutput.close();
+            }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    
 }
