@@ -261,8 +261,8 @@ public class text {
             return null;
         }
         // strips off all non-ASCII characters
-        text = text.replaceAll("[^\\x00-\\x7F\\x80-\\x9F]", "");
-        //text = text.replaceAll("[^\\x00-\\x7F]", "");
+        //text = text.replaceAll("[^\\x00-\\x7F\\x80-\\x9F]", "");
+        text = text.replaceAll("[^\\x00-\\x7F]", "");
 
         // erases all the ASCII control characters
         text = text.replaceAll("[\\p{Cntrl}&&[^\r\n\t]]", "");
@@ -448,8 +448,13 @@ public class text {
      * @return 
      */
     public static Boolean isEmpty(String input){
-        Boolean result = (input == null) || (input.length() == 0);
-    return result;
+        if(input == null){
+            return true;
+        }
+        String output = input;
+        // remove some of the invisible characters
+        output = output.replaceAll("[\n\r\t]", "").trim();
+        return output == null || output.isEmpty();
     }
 
 
@@ -930,7 +935,13 @@ public class text {
      * @return 
      */
     public static boolean hasText(String text){
-        return text != null && text.trim().isEmpty() == false;
+        if(text == null){
+            return false;
+        }
+        String output = text;
+        // remove some of the invisible characters
+        output = output.replaceAll("[\n\r\t]", "").trim();
+        return output != null && output.isEmpty() == false;
     }
     
         
