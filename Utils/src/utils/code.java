@@ -57,14 +57,14 @@ public class code {
         options.getConversionOptions().setAddLineAnchors(false);
         
         final String 
-                s1 = "<!-- = Java Sourcecode to HTML automatically converted code = -->",
+                //s1 = "<!-- = Java Sourcecode to HTML automatically converted code = -->",
                 s2 = "<!-- =       END of automatically generated HTML code       = -->";
         
         // convert the code to HTML
         String code = Java2Html.convertToHtmlPage(sourceCode, options);
         // remove everything before and after the <body> tags
         int i0 = code.indexOf("<font color=");
-        int i1 = code.indexOf(s1);
+        //int i1 = code.indexOf(s1);
         int i2 = code.indexOf(s2);
         // cut the code
         code = code.substring(i0, i2 - s2.length());

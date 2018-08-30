@@ -45,17 +45,15 @@ public class math {
         if(distance == 0){
             return 100;
         }
+        if(distance > 200){
+            return 0;
+        }
         // do the inverse rule of proportion
         double value = 200 / distance; // 200 is the max distance to 0%
         value = 100 / value; // divide the value by 100%
         value = 100 - value; // get the inverse value
         // remove the decimal values, we want a single number
         int result = (int) value;
-//        System.out.println("---> Distance: "
-//                + distance
-//                + "-->"
-//                + result
-//                + "%");
         return result;
     }
     
