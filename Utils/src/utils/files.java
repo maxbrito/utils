@@ -1224,7 +1224,6 @@ public static long folderSize(File where){
      * @param textExisting
      * @param textNew
      * @param file 
-     * @throws java.lang.Exception 
      */
     @SuppressWarnings("CallToPrintStackTrace")
     public static void searchAndReplace(String textExisting,
@@ -1281,6 +1280,55 @@ public static long folderSize(File where){
             }
         }
     }
+    
+    /**
+     * Streams a file looking for a text snippet. This is useful for large
+     * files that will not fit in RAM, and faster since the search will stop
+     * once at least one match was found.
+     * @param text
+     * @param file
+     * @return 
+     */
+    @SuppressWarnings("CallToPrintStackTrace")
+    public static boolean hasText(String text, File file){
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
+        boolean hasText = false;
+        try{
+            fileReader = new FileReader(file);
+            bufferedReader = new BufferedReader(fileReader);
+            String line;
+            String input;
+            while ((line = bufferedReader.readLine()) != null) {
+                // replace the old text
+                if (line.contains(text)){
+                    hasText = true;
+                    break;
+                }
+            }
+            // close things up
+            fileReader.close();
+            bufferedReader.close();
+        }catch (Exception e){
+            System.err.println("Problem reading file: " + file.getPath());
+            e.printStackTrace();
+        }finally{
+            try{
+            // close things up
+            if(fileReader != null){
+                fileReader.close();
+            }
+            if(bufferedReader != null){
+                bufferedReader.close();
+            }
+            
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return hasText;
+    }
+
     
     
 }

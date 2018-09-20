@@ -167,7 +167,22 @@ public class internet {
     * @see https://stackoverflow.com/a/26046079
     * @license CC-BY-SA-3.0 
     */
-    public static String getWebPage(String url) {
+   public static String getWebPage(String url) {
+        return getWebPage(url, false);
+    }
+    
+    
+   /** 
+    * Get a given page from an URL address. This method also handles the cases
+    * of www redirection to somewhere else.
+    * @param url
+     * @param followRedirect
+    * @return  
+    * @author Nathan Reynolds, https://stackoverflow.com/users/294317/nathan
+    * @see https://stackoverflow.com/a/26046079
+    * @license CC-BY-SA-3.0 
+    */
+    public static String getWebPage(String url, boolean followRedirect) {
         // perhaps in the future we can use something like http://goo.gl/03WQp
         // provide a holder for the reply
         String result = "";
@@ -181,7 +196,7 @@ public class internet {
                 conn = (HttpURLConnection) resourceUrl.openConnection();
                 conn.setConnectTimeout(15000);
                 conn.setReadTimeout(15000);
-                conn.setInstanceFollowRedirects(false);   // Make the logic below easier to detect redirections
+                conn.setInstanceFollowRedirects(followRedirect);   // Make the logic below easier to detect redirections
                 conn.setRequestProperty("User-Agent", "maxbrito/utils");
 
                 switch (conn.getResponseCode()){
@@ -203,13 +218,19 @@ public class internet {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 // Process each line.
-                result = result.concat(inputLine);
+                result = result.concat(inputLine + "\n");
             }
             in.close();
         } catch (Exception me) {
             //System.err.println(text.getExceptionAsText(me));
-            return "";
+            result = "";
         }
+        
+        // if the default way didn't work, try now with normal redirect
+        if(followRedirect == false && utils.text.isEmpty(result)){
+            return getWebPage(url, true);
+        }
+        
         return result;
     }
 
