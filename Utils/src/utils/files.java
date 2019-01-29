@@ -187,6 +187,33 @@ public class files {
       return result;
   }
   
+  /**
+   * This method will read the contents from a text file onto
+   * a text array. It is useful to speed the text reading operation
+   * @param file    the file on disk
+   * @return        an array with the text lines. This array is never null,
+   * it will return empty when nothing usable was found
+   * @date 2014-05-09
+   */
+  public static ArrayList<String> readAsStringArrayList(File file){
+      ArrayList<String> result = new ArrayList();
+      try {
+          InputStreamReader fileReader = new InputStreamReader(new FileInputStream(file), "UTF-8");
+          BufferedReader reader = new BufferedReader(fileReader);
+          String temp;
+          // iterate through all lines
+            while ((temp = reader.readLine()) != null) {
+                // add the line
+                result.add(temp);
+            }
+          
+      } catch (IOException ex) {
+          Logger.getLogger(files.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      //System.out.println("files81 - read string array with " + result.size() + " elements");
+      return result;
+  }
+  
   
     public static String readAsString(File file){
         final long length = file.length();
