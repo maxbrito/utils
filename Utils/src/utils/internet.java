@@ -28,6 +28,7 @@ import javax.swing.JOptionPane;
  */
 public class internet {
 
+    public static String userAgent = "Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:40.0) Gecko/20100101 Firefox/40.0";
     
     
      /**
@@ -138,7 +139,7 @@ public class internet {
             conn.setConnectTimeout(15000);
             conn.setReadTimeout(15000);
             conn.setInstanceFollowRedirects(false);
-            conn.setRequestProperty("User-Agent", "maxbrito/utils");
+            conn.setRequestProperty("User-Agent", userAgent);
 
             switch (conn.getResponseCode()){
             case HttpURLConnection.HTTP_MOVED_PERM:
@@ -197,7 +198,7 @@ public class internet {
                 conn.setConnectTimeout(15000);
                 conn.setReadTimeout(15000);
                 conn.setInstanceFollowRedirects(followRedirect);   // Make the logic below easier to detect redirections
-                conn.setRequestProperty("User-Agent", "maxbrito/utils");
+                conn.setRequestProperty("User-Agent", userAgent);
 
                 switch (conn.getResponseCode()){
                 case HttpURLConnection.HTTP_MOVED_PERM:

@@ -34,6 +34,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -373,6 +374,21 @@ public class text {
     }
 
     public static String arrayToString(ArrayList<String> a, String separator) {
+        StringBuilder result = new StringBuilder();
+        if (a == null || a.isEmpty()) {
+            return "";
+        }
+           
+        for(String line : a){
+            result.append(line);
+            result.append(separator);
+        }
+        // grab the final result and remove the last separator, create a new output String
+        String output = result.toString().substring(0, result.toString().length() - separator.length());
+        return output;
+    }
+    
+        public static String arrayToString(TreeSet<String> a, String separator) {
         StringBuilder result = new StringBuilder();
         if (a == null || a.isEmpty()) {
             return "";
