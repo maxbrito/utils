@@ -38,7 +38,8 @@ public class files {
             CodeSource codeSource = files.class.getProtectionDomain().getCodeSource();
             File jarFile = new File(codeSource.getLocation().toURI().getPath());
             // if we are running this internally from the IDE, fix it to the base folder
-            if(jarFile.getParentFile().getPath().endsWith("build")){
+            String buildPath =  File.separatorChar + "build";
+            if(jarFile.getParentFile().getPath().contains(buildPath)){
                 // return the ./run/ folder that is defined by the IDE
                 return new File(System.getProperty("user.dir"));
             }else{
